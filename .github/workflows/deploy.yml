@@ -1,0 +1,39 @@
+name: Build and Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Get your repo code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Setup Node.js
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # 3. Install dependencies (npm install)
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Build project
+      - name: Build project
+        run: npm run build
+
+      # 5. Deploy to GitHub Pages (npm run deploy)
+      - name: Deploy to GitHub Pages
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          npm run deploy
