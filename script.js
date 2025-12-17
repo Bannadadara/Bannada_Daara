@@ -1,52 +1,65 @@
+// Full product data from the 2024 Catalogue
 const products = [
-    // BAGS
-    { name: "Reversible Tote Bag", price: "Rs. 500/-", category: "Bags", img: "images/reversible-tote.jpg" },
-    { name: "Box Tote (Plain)", price: "Rs. 350/-", category: "Bags", img: "images/box-plain.jpg" },
-    { name: "Box Tote (Patch-work)", price: "Rs. 500/-", category: "Bags", img: "images/box-patch.jpg" },
-    { name: "String Sling Bag", price: "Rs. 150/-", category: "Bags", img: "images/string-sling.jpg" },
-    { name: "Regular Sling Bag", price: "Rs. 250/-", category: "Bags", img: "images/regular-sling.jpg" },
-    { name: "Medium Sling Bag", price: "Rs. 450/-", category: "Bags", img: "images/medium-sling.jpg" },
-    { name: "Sling Bag (Patch-work S)", price: "Rs. 200/- to 250/-", category: "Bags", img: "images/sling-s.jpg" },
-    { name: "Sling Bag (Patch-work L)", price: "Rs. 550/-", category: "Bags", img: "images/sling-l.jpg" },
-    { name: "Laptop Bag (50-50)", price: "Rs. 800/-", category: "Bags", img: "images/laptop.jpg" },
-    { name: "Potli Bag", price: "Rs. 250/-", category: "Bags", img: "images/potli.jpg" },
-    { name: "Foldable Grocery Bag", price: "Rs. 250/-", category: "Bags", img: "images/grocery.jpg" },
-    
-    // POUCHES
-    { name: "U-Shape Pouch (S)", price: "Rs. 100/-", category: "Pouches", img: "images/u-pouch.jpg" },
-    { name: "Travel Kit", price: "Rs. 170/-", category: "Pouches", img: "images/travel-kit.jpg" },
-    { name: "Pad-Holder", price: "Rs. 100/-", category: "Pouches", img: "images/pad-holder.jpg" },
-    { name: "Flat Pouch", price: "Rs. 80/-", category: "Pouches", img: "images/flat-pouch.jpg" },
-    { name: "Box Pouch", price: "Rs. 170/-", category: "Pouches", img: "images/box-pouch.jpg" },
-    { name: "Trinket", price: "Rs. 40/-", category: "Pouches", img: "images/trinket.jpg" },
-    
-    // STATIONERY
-    { name: "A4 Files", price: "Rs. 200/-", category: "Stationery", img: "images/files.jpg" },
-    { name: "Pen Pouch", price: "Rs. 100/-", category: "Stationery", img: "images/pouch.jpg" },
-    { name: "Book (Embroidered Cover)", price: "Rs. 450/-", category: "Stationery", img: "images/book.jpg" },
-    
-    // ACCESSORIES & DECOR
-    { name: "Cutlery Kit", price: "Rs. 260/-", category: "Accessories", img: "images/cutlery.jpg" },
-    { name: "Cloth Mask", price: "Rs. 50/-", category: "Accessories", img: "images/mask.jpg" },
-    { name: "Patch-work Quilt", price: "On Request", category: "Decor", img: "images/quilt.jpg" },
-    { name: "Patch-work Table Cloth", price: "On Request", category: "Decor", img: "images/t-cloth.jpg" }
+    { id: 1, name: "Reversible Tote Bag", price: 500, category: "Bags", img: "images/tote-rev.jpg" },
+    { id: 2, name: "Box Tote (Plain)", price: 350, category: "Bags", img: "images/box-plain.jpg" },
+    { id: 3, name: "Laptop Bag (50-50)", price: 800, category: "Bags", img: "images/laptop.jpg" },
+    { id: 4, name: "Regular Sling Bag", price: 250, category: "Bags", img: "images/sling-reg.jpg" },
+    { id: 5, name: "Travel Kit", price: 170, category: "Pouches", img: "images/travel.jpg" },
+    { id: 6, name: "Book (Embroidered Cover)", price: 450, category: "Stationery", img: "images/book.jpg" }
 ];
 
-// This function ensures the page is ready before trying to add products
-window.onload = function() {
-    const productList = document.getElementById('product-list');
-    if (productList) {
-        productList.innerHTML = products.map(item => `
-            <div class="card">
-                <img src="${item.img}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/200?text=No+Image'">
-                <div class="card-info">
-                    <span class="tag">${item.category}</span>
-                    <h3>${item.name}</h3>
-                    <p class="price">${item.price}</p>
-                </div>
+let cart = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+    const list = document.getElementById('product-list');
+    const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    const cartToggle = document.getElementById('cart-toggle');
+    const cartSidebar = document.getElementById('cart-sidebar');
+
+    // Render Products
+    list.innerHTML = products.map(p => `
+        <div class="card">
+            <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Bannada+Daara'">
+            <div class="card-info">
+                <span class="tag">${p.category}</span>
+                <h3>${p.name}</h3>
+                <p class="price">Rs. ${p.price}/-</p>
+                <button class="btn" onclick="addToCart(${p.id})">Add to Cart</button>
+            </div>
+        </div>
+    `).join('');
+
+    // Cart Controls
+    cartToggle.onclick = () => cartSidebar.classList.add('open');
+    document.getElementById('close-cart').onclick = () => cartSidebar.classList.remove('open');
+
+    window.addToCart = (id) => {
+        const product = products.find(p => p.id === id);
+        cart.push(product);
+        updateCart();
+    };
+
+    window.removeItem = (index) => {
+        cart.splice(index, 1);
+        updateCart();
+    };
+
+    function updateCart() {
+        cartToggle.innerText = `Cart (${cart.length})`;
+        cartItems.innerHTML = cart.map((item, index) => `
+            <div class="cart-item">
+                <span>${item.name}</span>
+                <span>Rs. ${item.price} <button class="remove-btn" onclick="removeItem(${index})">x</button></span>
             </div>
         `).join('');
-    } else {
-        console.error("Could not find the 'product-list' element in the HTML.");
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+        cartTotal.innerText = `Rs. ${total}`;
     }
-};
+
+    // Checkout: WhatsApp Message
+    document.getElementById('checkout-btn').onclick = () => {
+        const message = "Hi Lavanya, I'd like to order: " + cart.map(i => i.name).join(", ");
+        window.open(`https://wa.me/918105750221?text=${encodeURIComponent(message)}`);
+    };
+});
