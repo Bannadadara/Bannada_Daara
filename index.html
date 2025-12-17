@@ -1,24 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Bannada Daara - Handmade, eco-friendly products from upcycled textiles. Shop bags, pouches, stationery, and more." />
-    <meta name="keywords" content="handmade, eco-friendly, upcycled, sustainable, bags, pouches, Karnataka" />
-    <meta name="author" content="Bannada Daara" />
-    
-    <!-- Open Graph / Social Media -->
-    <meta property="og:title" content="Bannada Daara - Eco-friendly Handmade Products" />
-    <meta property="og:description" content="Hand-stitched products using upcycled textile excesses. Made with love in Karnataka." />
-    <meta property="og:type" content="website" />
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/logo.png" />
-    
-    <title>Bannada Daara - Eco-friendly Handmade Products</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bannada Daara | Adding color to your life</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container nav-bar">
+            <div class="logo-area">
+                <img src="images/logo.png" alt="Bannada Daara Logo" class="logo-img">
+                <span class="brand-name">Bannada Daara</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#contact">Order Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Adding color to your life</h1>
+        <p>Eco-friendly • Hand-made • Consciously-made</p>
+        <a href="#products" class="btn">View Catalogue</a>
+    </section>
+
+    <section id="about" class="container">
+        <h2>Who we are & what we do</h2>
+        <p>Bannada Daara is a home-grown business start-up initiated by Lavanya in 2020. Based out of the quaint village of Jyothigudde, Dakshina Kannada[cite: 1]. We specialize in hand-stitched products upcycled from textile excesses and Indian-made fabrics[cite: 1].</p>
+    </section>
+
+    <section id="products" class="container">
+        <h2>Our Products</h2>
+        <div class="product-grid" id="product-list">
+            </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <h2>Place Your Order</h2>
+            <p>Call/WhatsApp: <strong>81057 50221</strong></p>
+            <p>Instagram: <a href="https://instagram.com/bannada_daara_21">@bannada_daara_21</a></p>
+            <p>Email: lavanyajyothigudde@gmail.com</p>
+            <p class="disclaimer">Note: Since every batch of textile waste is different, designs may vary from the catalogue[cite: 15].</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
 </html>
