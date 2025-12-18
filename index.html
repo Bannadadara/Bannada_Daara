@@ -45,6 +45,19 @@
 
     <section id="products" class="container">
         <h2>Our Catalogue</h2>
+        
+        <div class="filter-section">
+            <input type="text" id="search-bar" placeholder="Search for products (e.g. Tote)..." class="search-input">
+            <select id="category-filter" class="category-select">
+                <option value="All">All Categories</option>
+                <option value="Bags">Bags</option>
+                <option value="Pouches">Pouches</option>
+                <option value="Stationery">Stationery</option>
+                <option value="Accessories">Accessories</option>
+                <option value="Decor">Decor</option>
+            </select>
+        </div>
+
         <div class="product-grid" id="product-list"></div>
     </section>
 
