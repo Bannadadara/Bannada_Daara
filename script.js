@@ -9,49 +9,45 @@ function init() {
     const toggle = document.getElementById('cart-toggle');
     const close = document.getElementById('close-cart');
 
-    // Smooth sidebar interaction
     toggle.onclick = () => sidebar.classList.add('open');
     close.onclick = () => sidebar.classList.remove('open');
 
-    // Real-time search interactivity
+    // Search and Filter
     document.getElementById('search-bar').oninput = (e) => {
         renderProducts(document.getElementById('category-filter').value, e.target.value);
     };
-
     document.getElementById('category-filter').onchange = (e) => {
         renderProducts(e.target.value, document.getElementById('search-bar').value);
     };
 
-    // Professional WhatsApp Checkout
+    // Checkout Logic
     document.getElementById('checkout-btn').onclick = () => {
-        if (cart.length === 0) return alert("Your shopping bag is empty!");
-        const items = cart.map(i => `- ${i.name} (Rs. ${i.price})`).join('\n');
-        const msg = `*Order from Bannada Daara*\n\n*Items:*\n${items}\n\n*Total:* ${document.getElementById('cart-total').innerText}`;
+        if (cart.length === 0) return alert("Your bag is empty!");
+        
+        const items = cart.map(i => {
+            const priceText = i.on_request ? "[Price on Request]" : `Rs. ${i.price}`;
+            return `- ${i.name} (${priceText})`;
+        }).join('\n');
+        
+        const total = document.getElementById('cart-total').innerText;
+        const msg = `*Order from Bannada Daara*\n\n*Items:*\n${items}\n\n*Current Subtotal:* ${total}\n\n_Please confirm the final price for custom items._`;
+        
         window.open(`https://wa.me/918105750221?text=${encodeURIComponent(msg)}`, '_blank');
-    };
-
-    // Interactive Feedback
-    document.getElementById('send-feedback-btn').onclick = () => {
-        window.open(`https://wa.me/918105750221?text=${encodeURIComponent("Hi! I have some feedback regarding your collection:")}`, '_blank');
     };
 }
 
 function renderProducts(cat = 'All', search = '') {
     const list = document.getElementById('product-list');
-    const filtered = products.filter(p => {
-        const matchCat = cat === 'All' || p.category === cat;
-        const matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
-        return matchCat && matchSearch;
-    });
+    const filtered = products.filter(p => (cat === 'All' || p.category === cat) && p.name.toLowerCase().includes(search.toLowerCase()));
 
     list.innerHTML = filtered.map(p => `
         <div class="card">
             <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/200'">
             <h4>${p.name}</h4>
-            <p><strong>Rs. ${p.price}</strong></p>
+            <p style="color:#B12704; font-weight:bold;">${p.on_request ? 'Price on Request' : 'Rs. ' + p.price}</p>
             <div class="card-btns">
-                <a href="${p.img}" target="_blank" class="view-link">View</a>
-                <button class="add-bag" onclick="addToCart(${p.id})">Add to Bag</button>
+                <a href="${p.img}" target="_blank" class="view-btn">View</a>
+                <button class="add-btn" onclick="addToCart(${p.id})">Add to Bag</button>
             </div>
         </div>
     `).join('');
@@ -60,22 +56,26 @@ function renderProducts(cat = 'All', search = '') {
 window.addToCart = (id) => {
     const item = products.find(p => p.id === id);
     cart.push(item);
-    updateCartUI();
+    updateUI();
     document.getElementById('cart-sidebar').classList.add('open');
 };
 
-function updateCartUI() {
+function updateUI() {
     document.getElementById('cart-count').innerText = cart.length;
+    const itemsList = document.getElementById('cart-items');
     
-    document.getElementById('cart-items').innerHTML = cart.map((item, index) => `
-        <div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #eee;">
-            <span>${item.name}</span>
-            <button onclick="cart.splice(${index}, 1); updateCartUI();" style="color:red; background:none; border:none; cursor:pointer; font-weight:bold;">&times;</button>
+    itemsList.innerHTML = cart.map((item, index) => `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #eee;">
+            <p style="margin:0; font-size:0.9rem;">${item.name} ${item.on_request ? '<span style="color:#B12704;">(*)</span>' : ''}</p>
+            <button onclick="cart.splice(${index}, 1); updateUI();" style="color:red; background:none; border:none; cursor:pointer; font-size:1.2rem;">&times;</button>
         </div>
     `).join('');
 
     const total = cart.reduce((sum, item) => sum + (item.price || 0), 0);
+    const hasRequestItem = cart.some(i => i.on_request);
+    
     document.getElementById('cart-total').innerText = `Rs. ${total}`;
+    document.getElementById('request-notice').style.display = hasRequestItem ? 'block' : 'none';
 }
 
 document.addEventListener('DOMContentLoaded', init);
