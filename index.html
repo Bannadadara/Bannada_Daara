@@ -32,7 +32,19 @@
         <div id="cart-items"></div>
         <div class="cart-footer">
             <p>Total: <span id="cart-total">Rs. 0</span></p>
-            <button id="checkout-btn" class="btn checkout-btn">Message to Order</button>
+            <button id="checkout-btn" class="btn checkout-btn">Order Now</button>
+        </div>
+    </div>
+
+    <div id="address-modal" class="modal">
+        <div class="modal-content">
+            <h3>Delivery Details</h3>
+            <p>Please enter your full address to proceed with the order.</p>
+            <textarea id="delivery-address" placeholder="Flat No, Street, Landmark, City, Pincode..." rows="4"></textarea>
+            <div class="modal-actions">
+                <button id="cancel-order" class="btn-secondary">Back to Cart</button>
+                <button id="confirm-order" class="btn">Confirm & Pay via UPI</button>
+            </div>
         </div>
     </div>
 
@@ -40,14 +52,13 @@
 
     <section id="about" class="container">
         <h2>Who we are & what we do</h2>
-        <p>Bannada Daara is a home-grown business start-up initiated by Lavanya in 2020. Based in Jyothigudde, Dakshina Kannada, we specialize in hand-stitched products upcycled from textile excesses and Indian-made fabrics.</p>
+        <p>Bannada Daara is a home-grown business start-up initiated by Lavanya in 2020.</p>
     </section>
 
     <section id="products" class="container">
         <h2>Our Catalogue</h2>
-        
         <div class="filter-section">
-            <input type="text" id="search-bar" placeholder="Search for products (e.g. Tote)..." class="search-input">
+            <input type="text" id="search-bar" placeholder="Search for products..." class="search-input">
             <select id="category-filter" class="category-select">
                 <option value="All">All Categories</option>
                 <option value="Bags">Bags</option>
@@ -57,7 +68,6 @@
                 <option value="Decor">Decor</option>
             </select>
         </div>
-
         <div class="product-grid" id="product-list"></div>
     </section>
 
@@ -66,16 +76,12 @@
             <div class="contact-info">
                 <h2>Contact Us</h2>
                 <p>WhatsApp: <strong>81057 50221</strong></p>
-                <p>Instagram: <a href="https://instagram.com/bannada_daara_21" target="_blank">@bannada_daara_21</a></p>
             </div>
-
             <div class="feedback-section">
                 <h3>Feedback</h3>
-                <p>We value your thoughts! Click below to chat with us on WhatsApp.</p>
                 <button id="send-feedback-btn" class="btn feedback-btn">Send Feedback via WhatsApp</button>
             </div>
         </div>
-        <p class="disclaimer">Note: Since every batch of textile waste is different, designs may vary from images. Every piece is unique.</p>
     </footer>
 </body>
 </html>
