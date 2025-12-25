@@ -3,233 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bannada Daara | Premium Boutique</title>
+    <title>Bannada Daara | Premium Handcrafted Boutique</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    
     <style>
-        /* RESET & BASE */
+        /* CORE STYLES */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Montserrat', sans-serif; background-color: #faf9f6; color: #333; line-height: 1.6; }
+        body { font-family: 'Montserrat', sans-serif; background-color: #faf9f6; color: #1a1a1a; line-height: 1.6; overflow-x: hidden; }
         .container { max-width: 1200px; margin: auto; width: 92%; }
 
-        /* HEADER - FORCED BLACK */
-        header.navbar { 
-            background-color: #1a1a1a !important; 
-            padding: 15px 0; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000; 
-            color: white;
-        }
+        /* NAVBAR */
+        .navbar { background-color: #1a1a1a; padding: 20px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333; }
         .nav-content { display: flex; align-items: center; justify-content: space-between; }
-        .brand-text .main-title { 
-            font-family: 'Cormorant Garamond', serif; 
-            font-size: 1.8rem; 
-            letter-spacing: 3px; 
-            color: #c5a059; /* Gold */
-        }
-        .sub-title { font-size: 0.7rem; color: #999; text-transform: uppercase; letter-spacing: 2px; }
+        .brand-text .main-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 4px; color: #c5a059; text-transform: uppercase; }
+        .sub-title { font-size: 0.65rem; color: #888; letter-spacing: 2px; text-transform: uppercase; display: block; }
 
-        /* SEARCH & BAG */
         .search-box { flex: 1; display: flex; max-width: 400px; margin: 0 30px; }
-        .search-box input { width: 100%; padding: 8px 12px; border: none; border-radius: 4px 0 0 4px; outline: none; }
-        .search-btn { background: #c5a059; border: none; padding: 0 15px; border-radius: 0 4px 4px 0; cursor: pointer; }
-        .bag-btn { background: transparent; border: 1px solid white; color: white; padding: 8px 15px; border-radius: 4px; cursor: pointer; }
+        .search-box input { width: 100%; padding: 10px; border: none; border-radius: 4px 0 0 4px; outline: none; }
+        .search-btn { background: #c5a059; border: none; color: white; padding: 0 15px; border-radius: 0 4px 4px 0; cursor: pointer; }
 
-        /* HERO SECTION - REPAIRED */
-        .hero { 
-            height: 60vh; 
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                        url('https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1350&q=80'); /* Temporary fallback image */
-            background-size: cover; 
-            background-position: center; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            text-align: center; 
-            color: white;
-        }
-        .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: 4rem; font-style: italic; }
+        .bag-btn { background: transparent; border: 1px solid #c5a059; color: #c5a059; padding: 10px 20px; cursor: pointer; font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; transition: 0.3s; }
+        .bag-btn:hover { background: #c5a059; color: white; }
 
-        /* ABOUT SECTION - REPAIRED */
-        .about { padding: 80px 0; background: #fff; display: block !important; }
-        .about-card { text-align: center; max-width: 800px; margin: auto; }
-        .about-title { font-family: 'Cormorant Garamond', serif; font-size: 3rem; margin-bottom: 20px; color: #1a1a1a; }
-        .about-description { font-style: italic; font-size: 1.1rem; color: #666; margin-bottom: 30px; }
-        .icon-line { display: flex; justify-content: center; gap: 30px; padding-top: 20px; border-top: 1px solid #eee; }
-        .icon-item { font-weight: 600; font-size: 0.8rem; letter-spacing: 1px; }
+        /* HERO & FILTERS */
+        .hero { height: 50vh; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4)), url('images/hero-bg.jpg'); background-color: #2c2c2c; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center; color: white; }
+        .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-style: italic; }
+
+        .filter-section { padding: 40px 0; text-align: center; background: white; }
+        #category-filter { padding: 12px 25px; border: 1px solid #c5a059; background: white; cursor: pointer; font-family: 'Montserrat'; }
 
         /* PRODUCT GRID */
-        .product-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-            gap: 30px; 
-            padding: 40px 0; 
-        }
-        .card { background: white; border: 1px solid #eee; padding: 15px; transition: 0.3s; }
-        .card img { width: 100%; height: 250px; object-fit: cover; }
-        .card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin: 15px 0 5px; }
-        .card p { color: #c5a059; font-weight: bold; margin-bottom: 15px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 35px; padding: 40px 0; }
+        .card { background: white; border: 1px solid #f0f0f0; padding: 15px; transition: 0.4s; position: relative; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+        .card img { width: 100%; height: 280px; object-fit: cover; margin-bottom: 15px; }
+        .card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; margin-bottom: 5px; }
+        .card p { color: #c5a059; font-weight: 600; margin-bottom: 20px; }
 
-        /* BUTTONS - VIEW BUTTON ADDED */
-        .card-btns { display: flex; gap: 10px; }
-        .view-btn { 
-            flex: 1; border: 1px solid #1a1a1a; color: #1a1a1a; 
-            text-decoration: none; text-align: center; padding: 10px; 
-            font-size: 0.7rem; font-weight: 600; letter-spacing: 1px;
-        }
-        .add-btn { 
-            flex: 1.5; background: #1a1a1a; color: white; 
-            border: none; cursor: pointer; font-size: 0.7rem; 
-            font-weight: 600; letter-spacing: 1px; 
-        }
-
-        /* FOOTER - FORCED BLACK */
-        footer.footer { 
-            background-color: #1a1a1a !important; 
-            color: white; 
-            padding: 60px 0; 
-            margin-top: 50px; 
-        }
-        .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: #c5a059; }
+        .card-btns { display: flex; gap: 8px; }
+        .view-btn { flex: 1; border: 1px solid #ddd; color: #1a1a1a; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 600; }
+        .add-btn { flex: 2; background: #1a1a1a; color: white; border: none; padding: 12px; font-size: 0.7rem; font-weight: 600; cursor: pointer; }
 
         /* SIDEBAR */
-        .sidebar { position: fixed; top: 0; right: -100%; width: 350px; height: 100%; background: white; z-index: 2000; transition: 0.4s; box-shadow: -5px 0 15px rgba(0,0,0,0.2); padding: 20px; }
+        .sidebar { position: fixed; top: 0; right: -100%; width: 400px; height: 100%; background: white; z-index: 2000; transition: 0.4s; box-shadow: -10px 0 30px rgba(0,0,0,0.1); padding: 40px; }
         .sidebar.open { right: 0; }
+        .cart-item { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #eee; }
 
-        /* ANIMATION */
-        .reveal { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        /* FOOTER */
+        .footer { background: #1a1a1a; color: white; padding: 60px 0; text-align: center; }
+        .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: #c5a059; letter-spacing: 3px; }
+
+        @media (max-width: 768px) { .sidebar { width: 100%; } .search-box { display: none; } }
     </style>
 </head>
 <body>
 
     <header class="navbar">
         <div class="container nav-content">
-            <div class="brand">
-                <div class="brand-text">
-                    <span class="main-title">BANNADA DAARA</span>
-                    <span class="sub-title">Handmade & Sustainable</span>
-                </div>
-            </div>
-            <div class="search-box">
-                <input type="text" id="search-bar" placeholder="Search collection...">
-                <button class="search-btn">🔍</button>
-            </div>
-            <button id="cart-toggle" class="bag-btn">Bag (<span id="cart-count">0</span>)</button>
+            <div class="brand"><div class="brand-text"><span class="main-title">Bannada Daara</span><span class="sub-title">Handmade & Sustainable</span></div></div>
+            <div class="search-box"><input type="text" id="search-bar" placeholder="Search collection..."><button class="search-btn">🔍</button></div>
+            <button id="cart-toggle" class="bag-btn">BAG (<span id="cart-count">0</span>)</button>
         </div>
     </header>
 
     <div id="cart-sidebar" class="sidebar">
-        <h3>Your Bag</h3>
-        <div id="cart-items" style="margin: 20px 0;"></div>
-        <div id="cart-total" style="font-weight:bold; border-top:1px solid #eee; padding-top:10px;">Total: Rs. 0</div>
-        <button onclick="checkout()" style="width:100%; background:#c5a059; color:white; border:none; padding:15px; margin-top:20px; cursor:pointer;">Checkout to WhatsApp</button>
-        <button onclick="toggleCart()" style="width:100%; background:#eee; border:none; padding:10px; margin-top:10px; cursor:pointer;">Close</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+            <h3 style="font-family:'Cormorant Garamond'; font-size:2rem;">Selection</h3>
+            <button id="close-cart" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+        </div>
+        <div id="cart-items" style="max-height: 60vh; overflow-y: auto;"></div>
+        <div style="margin-top:30px; border-top:1px solid #eee; padding-top:20px;">
+            <p id="cart-total" style="font-weight:600; font-size:1.2rem;">Total: Rs. 0</p>
+            <button id="checkout-btn" style="width:100%; background:#1a1a1a; color:white; border:none; padding:15px; margin-top:20px; cursor:pointer; font-weight:600;">WHATSAPP CHECKOUT</button>
+        </div>
     </div>
 
-    <section class="hero" style="background-image: url('images/hero-bg.jpg');">
-        <div>
-            <h1>Artistry in Every Stitch</h1>
-            <p>Premium Upcycled Handcrafts</p>
-        </div>
-    </section>
+    <section class="hero"><h1>Artistry in Every Stitch</h1></section>
 
-    <section id="about" class="about reveal">
-        <div class="container about-card">
-            <h2 class="about-title">Conscious Artistry</h2>
-            <p class="about-description">
-                Bannada Daara transforms textile excesses into premium handcrafted treasures. 
-                Meticulously upcycled fabrics meeting Indian tradition.
-            </p>
-            <div class="icon-line">
-                <div class="icon-item">🌱 ECO-FRIENDLY</div>
-                <div class="icon-item">🧵 HAND-STITCHED</div>
-                <div class="icon-item">🇮🇳 LOCAL CRAFT</div>
-            </div>
-        </div>
-    </section>
+    <div class="filter-section">
+        <select id="category-filter">
+            <option value="All">All Collections</option>
+            <option value="Bags">Bags</option>
+            <option value="Pouches">Pouches</option>
+            <option value="Stationery">Stationery</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Decor">Home Decor</option>
+        </select>
+    </div>
 
-    <main class="container">
-        <h2 class="about-title reveal" style="text-align:center; margin-top:50px;">The Collection</h2>
-        <div class="product-grid" id="product-list">
-            </div>
-    </main>
+    <main class="container"><div class="product-grid" id="product-list"></div></main>
 
     <footer class="footer">
-        <div class="container">
-            <p class="footer-brand">BANNADA DAARA</p>
-            <p style="color: #888;">Sustainable Boutique | +91 81057 50221</p>
-        </div>
+        <p class="footer-brand">BANNADA DAARA</p>
+        <p style="color:#888; font-size:0.8rem; margin-top:10px;">Dakshina Kannada | +91 81057 50221</p>
     </footer>
 
-    <script>
-        // PRODUCT DATA
-        const products = [
-            { id: 1, name: "Reversible Tote Bag", price: 500, img: "images/reversible-tote1.jpg" },
-            { id: 2, name: "Box Tote (Plain)", price: 350, img: "images/box-plain.jpg" },
-            { id: 23, name: "Patch-work Quilt", price: 0, img: "images/quilt.jpg", on_request: true }
-        ];
-
-        let cart = [];
-
-        function renderProducts() {
-            const list = document.getElementById('product-list');
-            list.innerHTML = products.map(p => `
-                <div class="card reveal">
-                    <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300'">
-                    <h4>${p.name}</h4>
-                    <p>${p.on_request ? 'Price on Request' : 'Rs. ' + p.price}</p>
-                    <div class="card-btns">
-                        <a href="${p.img}" target="_blank" class="view-btn">VIEW</a>
-                        <button class="add-btn" onclick="addToCart(${p.id})">ADD TO BAG</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function addToCart(id) {
-            const item = products.find(p => p.id === id);
-            cart.push(item);
-            updateCart();
-            toggleCart(true);
-        }
-
-        function updateCart() {
-            document.getElementById('cart-count').innerText = cart.length;
-            const itemsDiv = document.getElementById('cart-items');
-            itemsDiv.innerHTML = cart.map((i, index) => `<p>${i.name} <span style="float:right; cursor:pointer; color:red" onclick="removeFromCart(${index})">×</span></p>`).join('');
-            const total = cart.reduce((sum, i) => sum + i.price, 0);
-            document.getElementById('cart-total').innerText = "Total: Rs. " + total;
-        }
-
-        window.removeFromCart = (index) => {
-            cart.splice(index, 1);
-            updateCart();
-        }
-
-        function toggleCart(forceOpen = false) {
-            const side = document.getElementById('cart-sidebar');
-            if(forceOpen) side.classList.add('open');
-            else side.classList.toggle('open');
-        }
-
-        function checkout() {
-            const text = cart.map(i => i.name).join(', ');
-            window.open(`https://wa.me/918105750221?text=I would like to order: ${text}`);
-        }
-
-        document.getElementById('cart-toggle').onclick = () => toggleCart();
-
-        // SCROLL REVEAL LOGIC
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
-        });
-
-        window.onload = () => {
-            renderProducts();
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-        };
-    </script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
