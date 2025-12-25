@@ -2,54 +2,77 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bannada Daara | Adding color to your life</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bannada Daara | Upcycled with Love</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
     <header>
         <div class="container nav-bar">
             <div class="logo-area">
-                <img src="images/logo.png" alt="Bannada Daara Logo" class="logo-img">
+                <img src="images/logo.png" alt="Bannada Daara" class="logo-img">
                 <span class="brand-name">Bannada Daara</span>
             </div>
             <nav>
                 <ul>
                     <li><a href="#about">About</a></li>
                     <li><a href="#products">Products</a></li>
-                    <li><a href="#contact">Order Now</a></li>
+                    <li><button id="cart-toggle" class="cart-btn">Cart (0)</button></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <section class="hero">
-        <h1>Adding color to your life</h1>
-        <p>Eco-friendly • Hand-made • Consciously-made</p>
-        <a href="#products" class="btn">View Catalogue</a>
-    </section>
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Selection</h3>
+            <button id="close-cart" class="close-btn">&times;</button>
+        </div>
+        <div id="cart-items"></div>
+        <div class="cart-footer">
+            <p>Total: <span id="cart-total">Rs. 0</span></p>
+            <button id="checkout-btn" class="btn checkout-btn">Order Now</button>
+        </div>
+    </div>
 
-    <section id="about" class="container">
-        <h2>Who we are & what we do</h2>
-        <p>Bannada Daara is a home-grown business start-up initiated by Lavanya in 2020. Based out of the quaint village of Jyothigudde, Dakshina Kannada[cite: 1]. We specialize in hand-stitched products upcycled from textile excesses and Indian-made fabrics[cite: 1].</p>
-    </section>
+    <div id="address-modal" class="modal">
+        <div class="modal-content">
+            <h3>Delivery Details</h3>
+            <p>Please enter your full address to proceed.</p>
+            <textarea id="delivery-address" placeholder="Flat/House No, Street, Landmark, City, Pincode..." rows="4"></textarea>
+            <div class="modal-actions">
+                <button id="cancel-order" class="btn-secondary">Back to Cart</button>
+                <button id="confirm-order" class="btn">Confirm & Pay UPI</button>
+            </div>
+        </div>
+    </div>
+
+    <section class="hero"></section>
 
     <section id="products" class="container">
-        <h2>Our Products</h2>
-        <div class="product-grid" id="product-list">
-            </div>
+        <h2>Our Catalogue</h2>
+        <div class="filter-section">
+            <input type="text" id="search-bar" placeholder="Search products..." class="search-input">
+            <select id="category-filter" class="category-select">
+                <option value="All">All Categories</option>
+                <option value="Bags">Bags</option>
+                <option value="Pouches">Pouches</option>
+                <option value="Stationery">Stationery</option>
+                <option value="Accessories">Accessories</option>
+                <option value="Decor">Decor</option>
+            </select>
+        </div>
+        <div class="product-grid" id="product-list"></div>
     </section>
 
     <footer id="contact">
-        <div class="container">
-            <h2>Place Your Order</h2>
-            <p>Call/WhatsApp: <strong>81057 50221</strong></p>
-            <p>Instagram: <a href="https://instagram.com/bannada_daara_21">@bannada_daara_21</a></p>
-            <p>Email: lavanyajyothigudde@gmail.com</p>
-            <p class="disclaimer">Note: Since every batch of textile waste is different, designs may vary from the catalogue[cite: 15].</p>
+        <div class="container footer-content">
+            <div class="contact-info">
+                <h2>Contact Us</h2>
+                <p>WhatsApp: <strong>81057 50221</strong></p>
+            </div>
         </div>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 </html>
