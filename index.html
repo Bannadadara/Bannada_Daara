@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bannada Daara | Premium Upcycled Shop</title>
+    <title>Bannada Daara | Premium Boutique</title>
     <link rel="stylesheet" href="style.css">
     <script type="module" src="script.js" defer></script>
 </head>
@@ -17,7 +17,7 @@
                 <span>Bannada Daara</span>
             </div>
             <div class="search-box">
-                <input type="text" id="search-bar" placeholder="Search handcrafted products...">
+                <input type="text" id="search-bar" placeholder="Search handcrafted items...">
                 <button class="search-btn">🔍</button>
             </div>
             <div class="nav-links">
@@ -35,7 +35,7 @@
         <div id="cart-items" class="sidebar-body"></div>
         <div class="sidebar-footer">
             <div class="total-row">Total: <span id="cart-total">Rs. 0</span></div>
-            <p id="request-notice" class="request-notice" style="display:none;">* Price confirmation needed for some items.</p>
+            <p id="request-notice" class="request-notice" style="display:none;">* Confirmation needed for custom items.</p>
             <button id="checkout-btn" class="checkout-btn">Checkout via WhatsApp</button>
         </div>
     </div>
@@ -43,33 +43,35 @@
     <section class="hero">
         <div class="hero-overlay">
             <h1>Upcycled Elegance</h1>
-            <p>Sustainable. Handcrafted. Indian.</p>
-            <a href="#products" class="cta-prime">Shop Now</a>
+            <p>Sustainable Hand-Stitched Artistry</p>
+            <a href="#products" class="cta-prime">Shop Collection</a>
         </div>
     </section>
 
     <section id="about" class="about">
         <div class="container">
-            <div class="about-card">
-                <span class="badge">Eco-Startup 2020</span>
-                <h2>Conscious Artistry</h2>
-                <p>Founded by <strong>Lavanya</strong>, we turn textile excesses into premium goods. Every piece is unique.</p>
-                <div class="about-icons">
-                    <div class="icon-box"><span>🌱</span><p>Eco-Friendly</p></div>
-                    <div class="icon-box"><span>🧵</span><p>Hand-Stitched</p></div>
-                    <div class="icon-box"><span>🇮🇳</span><p>Local Craft</p></div>
+            <div class="about-card reveal">
+                <div class="eco-badge">ECO-STARTUP 2020</div>
+                <h2 class="about-title">Conscious Artistry</h2>
+                <p class="about-description">
+                    Founded by <strong>Lavanya</strong>, we turn textile excesses into premium goods. 
+                    Promoting zero-waste living through Indian craftsmanship.
+                </p>
+                <div class="icon-line">
+                    <div class="icon-item"><span>🌱</span> Eco-Friendly</div>
+                    <div class="icon-item"><span>🧵</span> Hand-Stitched</div>
+                    <div class="icon-item"><span>🇮🇳</span> Local Craft</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <main class="container" id="products">
+    <main class="container reveal" id="products">
         <div class="filters">
             <select id="category-filter" class="custom-select">
                 <option value="All">All Categories</option>
                 <option value="Bags">Bags</option>
                 <option value="Pouches">Pouches</option>
-                <option value="Stationery">Stationery</option>
                 <option value="Decor">Decor</option>
             </select>
         </div>
@@ -80,7 +82,7 @@
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <h3>Share Feedback</h3>
-            <textarea id="feedback-text" placeholder="Tell us what you think..."></textarea>
+            <textarea id="feedback-text" placeholder="Your message..."></textarea>
             <button id="submit-feedback-wa" class="checkout-btn">Submit via WhatsApp</button>
         </div>
     </div>
@@ -89,14 +91,14 @@
         <div class="modal-content success-card">
             <div class="success-icon">✅</div>
             <h2>Order Initiated!</h2>
-            <p>Please send the message in the WhatsApp window to complete your purchase.</p>
+            <p>Please send the message in WhatsApp to confirm.</p>
             <button id="close-success" class="cta-prime">Back to Shop</button>
         </div>
     </div>
 
     <footer class="footer">
         <div class="container footer-grid">
-            <p>Bannada Daara | WhatsApp: 81057 50221</p>
+            <p>WhatsApp: 81057 50221</p>
             <button id="feedback-btn" class="feedback-btn">Give Feedback</button>
         </div>
     </footer>
