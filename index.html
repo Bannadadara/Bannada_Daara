@@ -4,110 +4,295 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bannada Daara | Premium Handcrafted Boutique</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <script type="module" src="script.js" defer></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CORE STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background-color: #faf9f6; color: #1a1a1a; line-height: 1.6; overflow-x: hidden; }
+        .container { max-width: 1200px; margin: auto; width: 92%; }
+
+        /* --- HEADER (STRICT BLACK) --- */
+        .navbar { 
+            background-color: #1a1a1a !important; 
+            padding: 20px 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            border-bottom: 1px solid #333;
+        }
+        .nav-content { display: flex; align-items: center; justify-content: space-between; }
+        .brand-text .main-title { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: 1.8rem; 
+            letter-spacing: 4px; 
+            color: #c5a059; /* Luxury Gold */
+            text-transform: uppercase;
+        }
+        .sub-title { font-size: 0.65rem; color: #888; letter-spacing: 2px; text-transform: uppercase; display: block; }
+
+        .search-box { flex: 1; display: flex; max-width: 400px; margin: 0 30px; }
+        .search-box input { 
+            width: 100%; padding: 10px; border: none; border-radius: 4px 0 0 4px; outline: none; font-size: 0.8rem; 
+        }
+        .search-btn { background: #c5a059; border: none; color: white; padding: 0 15px; border-radius: 0 4px 4px 0; cursor: pointer; }
+
+        .bag-btn { 
+            background: transparent; border: 1px solid #c5a059; color: #c5a059; 
+            padding: 10px 20px; border-radius: 2px; cursor: pointer; font-size: 0.75rem; 
+            font-weight: 600; letter-spacing: 1px; transition: 0.3s;
+        }
+        .bag-btn:hover { background: #c5a059; color: white; }
+
+        /* --- HERO SECTION --- */
+        .hero { 
+            height: 65vh; 
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4)), 
+                        url('images/hero-bg.jpg'); /* Ensure this file exists */
+            background-color: #2c2c2c; /* Fallback */
+            background-size: cover; background-position: center; 
+            display: flex; align-items: center; justify-content: center; text-align: center; color: white; 
+        }
+        .hero h1 { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: 4.5rem; font-style: italic; font-weight: 500; 
+            letter-spacing: 2px;
+        }
+        .hero p { font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-top: 10px; opacity: 0.9; }
+
+        /* --- ABOUT SECTION --- */
+        .about { padding: 100px 0; background: white; }
+        .about-card { text-align: center; max-width: 850px; margin: auto; }
+        .about-title { font-family: 'Cormorant Garamond', serif; font-size: 3.2rem; color: #1a1a1a; margin-bottom: 20px; }
+        .about-description { 
+            font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 1.1rem; 
+            line-height: 1.8; color: #555; font-style: italic; margin-bottom: 40px; 
+        }
+        .icon-line { 
+            display: flex; justify-content: center; gap: 50px; padding-top: 30px; 
+            border-top: 1px solid #f0f0f0; 
+        }
+        .icon-item { font-size: 0.75rem; letter-spacing: 2px; font-weight: 600; color: #1a1a1a; }
+
+        /* --- PRODUCT GRID --- */
+        .product-grid { 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 35px; padding: 60px 0; 
+        }
+        .card { background: white; border: 1px solid #f0f0f0; padding: 15px; transition: 0.4s ease; position: relative; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+        .card img { width: 100%; height: 280px; object-fit: cover; margin-bottom: 15px; }
+        .card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin: 10px 0 5px; font-weight: 600; }
+        .card p { color: #c5a059; font-weight: 600; font-size: 0.9rem; margin-bottom: 20px; }
+
+        /* --- BUTTONS --- */
+        .card-btns { display: flex; gap: 8px; }
+        .view-btn { 
+            flex: 1; border: 1px solid #ddd; color: #1a1a1a; text-decoration: none; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 0.65rem; font-weight: 600; letter-spacing: 1px; transition: 0.3s;
+        }
+        .view-btn:hover { background: #f9f9f9; }
+        .add-btn { 
+            flex: 2; background: #1a1a1a; color: white; border: none; 
+            padding: 12px; font-size: 0.7rem; font-weight: 600; 
+            letter-spacing: 1px; cursor: pointer; transition: 0.3s;
+        }
+        .add-btn:hover { background: #333; }
+
+        /* --- FOOTER (STRICT BLACK) --- */
+        .footer { 
+            background-color: #1a1a1a !important; 
+            color: white; padding: 80px 0; margin-top: 100px; text-align: center;
+        }
+        .footer-brand { 
+            font-family: 'Cormorant Garamond', serif; font-size: 2rem; 
+            color: #c5a059; letter-spacing: 3px; margin-bottom: 15px; 
+        }
+        .footer p { font-size: 0.8rem; color: #888; letter-spacing: 1px; }
+
+        /* --- FADE-IN ANIMATION --- */
+        .reveal { opacity: 0; transform: translateY(40px); transition: 1.2s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- SIDEBAR --- */
+        .sidebar { 
+            position: fixed; top: 0; right: -100%; width: 400px; height: 100%; 
+            background: white; z-index: 2000; transition: 0.4s; 
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1); padding: 40px; 
+        }
+        .sidebar.open { right: 0; }
+        .sidebar h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-style: italic; margin-bottom: 30px; }
+
+        @media (max-width: 768px) { .sidebar { width: 100%; } .hero h1 { font-size: 2.8rem; } .search-box { display: none; } }
+    </style>
 </head>
 <body>
-    <div id="toast" class="toast-notification">Link copied to clipboard</div>
 
     <header class="navbar">
         <div class="container nav-content">
             <div class="brand">
-                <img src="images/logo.png" alt="Logo" class="logo">
                 <div class="brand-text">
-                    <span class="main-title">BANNADA DAARA</span>
+                    <span class="main-title">Bannada Daara</span>
                     <span class="sub-title">Handmade & Sustainable</span>
                 </div>
             </div>
             <div class="search-box">
-                <input type="text" id="search-bar" placeholder="Discover unique handcrafted treasures...">
+                <input type="text" id="search-bar" placeholder="Explore handcrafted treasures...">
                 <button class="search-btn">🔍</button>
             </div>
-            <div class="nav-links">
-                <button id="cart-toggle" class="bag-btn">🛒 Bag (<span id="cart-count">0</span>)</button>
-            </div>
+            <button id="cart-toggle" class="bag-btn">BAG (<span id="cart-count">0</span>)</button>
         </div>
     </header>
 
     <div id="cart-sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <h3>Your Selection</h3>
-            <button id="close-cart" class="close-btn">&times;</button>
-        </div>
-        <div id="cart-items" class="sidebar-body"></div>
-        <div class="sidebar-footer">
-            <div class="total-row">Subtotal: <span id="cart-total">Rs. 0</span></div>
-            <p id="request-notice" class="request-notice" style="display:none;">* Custom items require price confirmation via WhatsApp.</p>
-            <button id="checkout-btn" class="checkout-btn">Proceed to WhatsApp</button>
+        <h3>Your Selection</h3>
+        <div id="cart-items" style="margin-bottom: 30px;"></div>
+        <div style="border-top: 1px solid #eee; padding-top: 20px;">
+            <p id="total-price" style="font-weight: 600; font-size: 1.2rem;">Total: Rs. 0</p>
+            <button onclick="checkout()" style="width:100%; background:#c5a059; color:white; border:none; padding:15px; margin-top:20px; font-weight:600; letter-spacing:1px; cursor:pointer;">CHECKOUT VIA WHATSAPP</button>
+            <button onclick="toggleCart()" style="width:100%; background:none; border:none; color:#888; margin-top:15px; cursor:pointer; font-size:0.8rem;">Continue Shopping</button>
         </div>
     </div>
 
-    <section id="about" class="about">
-        <div class="container">
-            <div class="about-card reveal">
-                <div class="eco-badge">ESTABLISHED 2020</div>
-                <h2 class="about-title">Conscious Artistry</h2>
-                <p class="about-description">
-                    Founded by <strong>Lavanya</strong>, Bannada Daara is a celebration of circular fashion. 
-                    We breathe new life into textile excesses, meticulously upcycling fabric remnants 
-                    into premium handcrafted goods. Every stitch is a commitment to reducing landfill waste 
-                    and honoring the timeless tradition of Indian craftsmanship.
-                </p>
-                <div class="icon-line">
-                    <div class="icon-item"><span>🌱</span> ECO-FRIENDLY</div>
-                    <div class="icon-item"><span>🧵</span> HAND-STITCHED</div>
-                    <div class="icon-item"><span>🇮🇳</span> LOCAL CRAFT</div>
-                </div>
+    <section class="hero">
+        <div class="reveal">
+            <h1>Artistry in Every Stitch</h1>
+            <p>Elegantly Upcycled Handcrafts</p>
+        </div>
+    </section>
+
+    <section class="about reveal" id="about">
+        <div class="container about-card">
+            <p style="color: #c5a059; letter-spacing: 3px; font-size: 0.7rem; margin-bottom: 10px;">EST. 2020</p>
+            <h2 class="about-title">Conscious Artistry</h2>
+            <p class="about-description">
+                Founded by Lavanya, Bannada Daara is a celebration of circular fashion. 
+                We breathe new life into textile excesses, meticulously upcycling fabric remnants 
+                into premium handcrafted goods. Every stitch is a commitment to reducing waste 
+                and honoring Indian craftsmanship.
+            </p>
+            <div class="icon-line">
+                <div class="icon-item">🌱 ECO-FRIENDLY</div>
+                <div class="icon-item">🧵 HAND-STITCHED</div>
+                <div class="icon-item">🇮🇳 LOCAL CRAFT</div>
             </div>
         </div>
     </section>
 
-    <main class="container" id="products">
-        <div class="section-header reveal">
-            <h2 class="boutique-heading">The Collection</h2>
-            <div class="filters">
-                <select id="category-filter" class="custom-select">
-                    <option value="All">All Items</option>
-                    <option value="Bags">Bags</option>
-                    <option value="Pouches">Pouches</option>
-                    <option value="Decor">Decor</option>
-                </select>
+    <main class="container">
+        <h2 class="about-title reveal" style="text-align: center;">The Collection</h2>
+        <div class="product-grid" id="product-list">
             </div>
-        </div>
-        <div class="product-grid" id="product-list"></div>
     </main>
 
-    <section class="instagram-section reveal">
-        <div class="container">
-            <h2 class="boutique-heading" style="text-align: center;">Follow Our Journey</h2>
-            <p style="text-align: center; font-family: 'Montserrat'; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 30px; color: #c5a059;">@bannada_daara_</p>
-            <div class="insta-grid">
-                <div class="insta-item"><img src="images/insta1.jpg" alt="Crafting Process"></div>
-                <div class="insta-item"><img src="images/insta2.jpg" alt="Fabric Textures"></div>
-                <div class="insta-item"><img src="images/insta3.jpg" alt="Finished Product"></div>
-                <div class="insta-item"><img src="images/insta4.jpg" alt="Eco Packaging"></div>
-            </div>
-        </div>
-    </section>
-
-    <div id="thank-you-overlay" class="modal">
-        <div class="modal-content">
-            <h2 class="boutique-heading">Order Initiated</h2>
-            <p>Your shopping list is ready. Please send the message on WhatsApp to finalize your purchase.</p>
-            <button id="close-success" class="checkout-btn">Back to Boutique</button>
-        </div>
-    </div>
-
     <footer class="footer">
-        <div class="container footer-grid">
-            <div class="footer-info">
-                <p class="footer-brand">BANNADA DAARA</p>
-                <p>Curated Upcycled Handcrafts | Dakshina Kannada</p>
-                <p>Contact: +91 81057 50221</p>
-            </div>
-            <button id="feedback-btn" class="feedback-btn">Give Feedback</button>
+        <div class="container">
+            <p class="footer-brand">BANNADA DAARA</p>
+            <p>Curated Upcycled Boutique | Dakshina Kannada</p>
+            <p style="margin-top: 10px;">WhatsApp: +91 81057 50221</p>
         </div>
     </footer>
+
+    <script>
+        // --- DATA ---
+        const products = [
+            { id: 1, name: "Reversible Tote Bag", price: 500, img: "images/tote.jpg" },
+            { id: 2, name: "Box Tote (Plain)", price: 350, img: "images/box.jpg" },
+            { id: 3, name: "Patch-work Quilt", price: 0, img: "images/quilt.jpg", on_request: true },
+            { id: 4, name: "String Sling Bag", price: 150, img: "images/sling.jpg" },
+            { id: 5, name: "Potli Bag", price: 250, img: "images/potli.jpg" },
+            { id: 6, name: "Patch-work Table Cloth", price: 0, img: "images/table.jpg", on_request: true }
+        ];
+
+        let cart = [];
+
+        // --- RENDER PRODUCTS ---
+        function render() {
+            const list = document.getElementById('product-list');
+            list.innerHTML = products.map(p => `
+                <div class="card reveal">
+                    <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x350?text=Handcrafted+Item'">
+                    <h4>${p.name}</h4>
+                    <p>${p.on_request ? 'Price on Request' : 'Rs. ' + p.price}</p>
+                    <div class="card-btns">
+                        <a href="${p.img}" target="_blank" class="view-btn">VIEW</a>
+                        <button class="add-btn" onclick="addToCart(${p.id})">ADD TO BAG</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Re-trigger reveal after render
+            observeElements();
+        }
+
+        // --- CART LOGIC ---
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            cart.push(product);
+            updateCartUI();
+            toggleCart(true);
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const itemsDiv = document.getElementById('cart-items');
+            itemsDiv.innerHTML = cart.map((item, index) => `
+                <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-size:0.9rem;">
+                    <span>${item.name}</span>
+                    <button onclick="removeItem(${index})" style="background:none; border:none; color:red; cursor:pointer;">×</button>
+                </div>
+            `).join('');
+            
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('total-price').innerText = "Total: Rs. " + total;
+        }
+
+        window.removeItem = (index) => {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function toggleCart(open) {
+            const sidebar = document.getElementById('cart-sidebar');
+            if (open === true) sidebar.classList.add('open');
+            else if (open === false) sidebar.classList.remove('open');
+            else sidebar.classList.toggle('open');
+        }
+
+        function checkout() {
+            if (cart.length === 0) return alert("Your bag is empty!");
+            const message = cart.map(i => i.name).join(', ');
+            window.open(`https://wa.me/918105750221?text=Hello! I am interested in purchasing: ${message}`);
+        }
+
+        // --- ANIMATIONS ---
+        function observeElements() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('active');
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        // --- INITIALIZE ---
+        window.onload = () => {
+            render();
+            document.getElementById('cart-toggle').onclick = () => toggleCart();
+        };
+
+        // Search Filter
+        document.getElementById('search-bar').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                const name = products[index].name.toLowerCase();
+                card.style.display = name.includes(query) ? 'block' : 'none';
+            });
+        });
+    </script>
 </body>
 </html>
