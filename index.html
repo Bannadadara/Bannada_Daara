@@ -2,82 +2,93 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bannada Daara | Upcycled Elegance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bannada Daara | Online Shopping for Handcrafted Goods</title>
     <link rel="stylesheet" href="style.css">
     <script type="module" src="script.js" defer></script>
 </head>
 <body>
-    <header>
-        <div class="container nav-bar">
-            <div class="logo-area">
-                <img src="images/logo.png" alt="Bannada Daara" class="logo-img">
-                <span class="brand-name">Bannada Daara</span>
+    <header class="main-header">
+        <div class="container header-content">
+            <div class="logo-section">
+                <img src="images/logo.png" alt="Bannada Daara" class="logo">
+                <span class="brand">Bannada Daara</span>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#products">Products</a></li>
-                    <li><button id="cart-toggle" class="cart-btn">My Shopping Bag (0)</button></li>
-                </ul>
-            </nav>
+            
+            <div class="search-container">
+                <input type="text" id="search-bar" placeholder="Search for products, categories and more">
+                <button class="search-btn">🔍</button>
+            </div>
+
+            <div class="nav-links">
+                <a href="#about" class="nav-item">About Us</a>
+                <button id="cart-toggle" class="nav-item cart-trigger">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-text">My Bag</span>
+                    <span id="cart-count" class="badge">0</span>
+                </button>
+            </div>
+        </div>
+        <div class="sub-nav">
+            <div class="container">
+                <select id="category-filter">
+                    <option value="All">All Categories</option>
+                    <option value="Bags">Bags</option>
+                    <option value="Pouches">Pouches</option>
+                    <option value="Stationery">Stationery</option>
+                    <option value="Accessories">Accessories</option>
+                </select>
+                <span>Upcycled Fashion</span>
+                <span>Home Decor</span>
+                <span>Best Sellers</span>
+            </div>
         </div>
     </header>
 
-    <div id="cart-sidebar" class="cart-sidebar">
+    <div id="cart-sidebar" class="cart-window">
         <div class="cart-header">
             <h3>My Shopping Bag</h3>
-            <button id="close-cart" class="close-btn">&times;</button>
+            <button id="close-cart">&times;</button>
         </div>
         <div id="cart-items" class="cart-body"></div>
-        <div class="cart-footer">
-            <div class="total-row">
-                <strong>Total Amount:</strong>
-                <span id="cart-total">Rs. 0</span>
-            </div>
-            <button id="checkout-btn" class="btn checkout-btn">Order via WhatsApp</button>
+        <div class="cart-summary">
+            <div class="summary-line"><span>Price Total:</span> <span id="cart-total">Rs. 0</span></div>
+            <div class="summary-line"><span>Delivery:</span> <span class="free">FREE</span></div>
+            <button id="checkout-btn" class="buy-now-btn">Order on WhatsApp</button>
         </div>
     </div>
 
-    <section class="hero">
-        <div class="hero-overlay">
-            <h1>Handcrafted & Sustainable</h1>
-            <p>Upcycled textile accessories for a colorful life.</p>
-        </div>
-    </section>
+    <main class="container">
+        <section class="banner">
+            <img src="images/hero-bg.jpg" alt="Sale Banner">
+        </section>
 
-    <section id="products" class="container">
-        <h2>Our Collection</h2>
-        <div class="filter-section">
-            <input type="text" id="search-bar" placeholder="Search products..." class="search-input">
-            <select id="category-filter" class="category-select">
-                <option value="All">All Categories</option>
-                <option value="Bags">Bags</option>
-                <option value="Pouches">Pouches</option>
-                <option value="Stationery">Stationery</option>
-                <option value="Accessories">Accessories</option>
-                <option value="Decor">Decor</option>
-            </select>
-        </div>
-        <div class="product-grid" id="product-list"></div>
-    </section>
+        <section id="products" class="product-section">
+            <h2 class="section-title">Deals of the Day</h2>
+            <div class="product-grid" id="product-list"></div>
+        </section>
 
-    <footer id="contact">
+        <section id="about" class="info-section">
+            <h3>About Bannada Daara</h3>
+            <p>Initiated by Lavanya in 2020. Based in Jyothigudde, Dakshina Kannada. We specialize in hand-stitched products upcycled from textile excesses.</p>
+        </section>
+    </main>
+
+    <footer class="shop-footer">
         <div class="container footer-grid">
-            <div class="footer-contact">
-                <h3>Contact Us</h3>
-                <p>WhatsApp: <strong>81057 50221</strong></p>
-                <p class="insta-link">Instagram: <a href="https://instagram.com/bannada_daara_21" target="_blank">@bannada_daara_21</a></p>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <p>WhatsApp: 81057 50221</p>
+                <p class="highlight">Instagram: <a href="https://instagram.com/bannada_daara_21" target="_blank">@bannada_daara_21</a></p>
             </div>
-            <div class="footer-feedback">
-                <h3>Your Feedback</h3>
+            <div class="footer-col">
+                <h4>Help & Feedback</h4>
                 <p>We value your thoughts!</p>
-                <button id="send-feedback-btn" class="btn feedback-btn">Send WhatsApp Feedback</button>
+                <button id="send-feedback-btn" class="feedback-btn">Share Feedback</button>
             </div>
         </div>
         <div class="footer-bottom">
-            <p class="disclaimer">Every piece is unique. Designs vary based on upcycled textile batches.</p>
-            <p>&copy; 2024 Bannada Daara. Handcrafted in India.</p>
+            <p>&copy; 2024 Bannada Daara. Every piece is unique.</p>
         </div>
     </footer>
 </body>
