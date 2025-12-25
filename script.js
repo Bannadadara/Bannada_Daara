@@ -27,78 +27,54 @@ const products = [
 
 let cart = [];
 
-function renderProducts(filterCategory = 'All', searchTerm = '') {
-    const list = document.getElementById('product-list');
-    if (!list) return;
-    const filtered = products.filter(p => {
-        const matchesCategory = filterCategory === 'All' || p.category === filterCategory;
-        const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
-        return matchesCategory && matchesSearch;
-    });
-    list.innerHTML = filtered.map(p => `
-        <div class="card">
-            <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-            <div class="card-info">
-                <span class="tag">${p.category}</span>
-                <h3>${p.name}</h3>
-                <p class="price">${p.on_request ? "Price on Request" : "Rs. " + p.price + "/-"}</p>
-                <button class="btn" onclick="addToCart(${p.id})">Add to Cart</button>
-            </div>
-        </div>
-    `).join('');
-}
-
 function init() {
     renderProducts();
     
-    // Cart logic
-    const sidebar = document.getElementById('cart-sidebar');
-    if (sidebar) {
-        document.getElementById('cart-toggle').onclick = () => sidebar.classList.add('open');
-        document.getElementById('close-cart').onclick = () => sidebar.classList.remove('open');
-    }
+    // Sidebar Controls
+    document.getElementById('cart-toggle').onclick = () => document.getElementById('cart-sidebar').classList.add('open');
+    document.getElementById('close-cart').onclick = () => document.getElementById('cart-sidebar').classList.remove('open');
 
-    // Modal logic
+    // Order Logic
     const addressModal = document.getElementById('address-modal');
     const checkoutBtn = document.getElementById('checkout-btn');
-    const confirmOrderBtn = document.getElementById('confirm-order');
-    const cancelOrderBtn = document.getElementById('cancel-order');
+    const confirmBtn = document.getElementById('confirm-order');
 
-    if (checkoutBtn) {
-        checkoutBtn.onclick = () => {
-            if (cart.length === 0) return alert("Your cart is empty!");
-            addressModal.classList.add('open');
-        };
-    }
+    checkoutBtn.onclick = () => {
+        if (cart.length === 0) return alert("Your cart is empty!");
+        addressModal.classList.add('open');
+    };
 
-    if (cancelOrderBtn) {
-        cancelOrderBtn.onclick = () => addressModal.classList.remove('open');
-    }
+    document.getElementById('cancel-order').onclick = () => addressModal.classList.remove('open');
 
-    if (confirmOrderBtn) {
-        confirmOrderBtn.onclick = () => {
-            const address = document.getElementById('delivery-address').value;
-            if (!address.trim()) return alert("Please enter your address.");
+    confirmBtn.onclick = () => {
+        const address = document.getElementById('delivery-address').value;
+        if (!address.trim()) return alert("Please enter delivery address.");
 
-            const itemNames = cart.map(i => i.name).join(", ");
-            const total = cart.reduce((acc, curr) => acc + (curr.price || 0), 0);
+        const total = cart.reduce((acc, curr) => acc + (curr.price || 0), 0);
+        const itemNames = cart.map(i => i.name).join(", ");
+        const orderText = `*New Order - Bannada Daara*\n\n*Items:* ${itemNames}\n*Total:* Rs. ${total}\n*Address:* ${address}`;
 
-            // 1. Send Order to WhatsApp
-            const message = `*Bannada Daara - New Order*\n\n*Items:* ${itemNames}\n*Total:* Rs. ${total}\n*Delivery Address:* ${address}`;
-            window.open(`https://wa.me/918105750221?text=${encodeURIComponent(message)}`, '_blank');
+        // 1. WhatsApp Redirect
+        window.open(`https://wa.me/918105750221?text=${encodeURIComponent(orderText)}`, '_blank');
 
-            // 2. Open UPI App (GPay/PhonePe/Paytm)
-            // pa = your UPI ID, pn = Business Name
-            const upiUrl = `upi://pay?pa=8105750221@okbizaxis&pn=Bannada%20Daara&am=${total}&cu=INR`;
-            
-            setTimeout(() => {
+        // 2. UPI Intent (For Mobile Apps)
+        const upiId = "8105750221@okbizaxis";
+        const upiUrl = `upi://pay?pa=${upiId}&pn=Bannada%20Daara&am=${total}&cu=INR`;
+
+        // Check if user is on Mobile for UPI
+        const isMobile = /iPhone|Android/i.test(navigator.userAgent);
+
+        setTimeout(() => {
+            if (isMobile) {
                 window.location.href = upiUrl;
-                addressModal.classList.remove('open');
-                cart = [];
-                renderCart();
-            }, 1000);
-        };
-    }
+            } else {
+                alert(`Please pay Rs. ${total} to UPI ID: ${upiId} using your phone.`);
+            }
+            addressModal.classList.remove('open');
+            cart = [];
+            renderCart();
+        }, 1500);
+    };
 }
 
 window.addToCart = (id) => {
@@ -108,26 +84,36 @@ window.addToCart = (id) => {
     document.getElementById('cart-sidebar').classList.add('open');
 };
 
+function renderCart() {
+    document.getElementById('cart-toggle').innerText = `Cart (${cart.length})`;
+    const cartItems = document.getElementById('cart-items');
+    cartItems.innerHTML = cart.map((item, idx) => `
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+            <span>${item.name}</span>
+            <button onclick="removeFromCart(${idx})" style="color:red; background:none; border:none; cursor:pointer;">&times;</button>
+        </div>
+    `).join('');
+    const total = cart.reduce((acc, curr) => acc + (curr.price || 0), 0);
+    document.getElementById('cart-total').innerText = `Rs. ${total}`;
+}
+
 window.removeFromCart = (index) => {
     cart.splice(index, 1);
     renderCart();
 };
 
-function renderCart() {
-    const cartItems = document.getElementById('cart-items');
-    const cartToggle = document.getElementById('cart-toggle');
-    if (cartToggle) cartToggle.innerText = `Cart (${cart.length})`;
-    if (cartItems) {
-        cartItems.innerHTML = cart.map((item, index) => `
-            <div class="cart-item">
-                <span>${item.name}</span>
-                <button class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
+function renderProducts() {
+    const list = document.getElementById('product-list');
+    list.innerHTML = products.map(p => `
+        <div class="card">
+            <img src="${p.img}" alt="${p.name}">
+            <div class="card-info">
+                <h3>${p.name}</h3>
+                <p>${p.on_request ? "Price on Request" : "Rs. " + p.price}</p>
+                <button class="btn" onclick="addToCart(${p.id})">Add to Cart</button>
             </div>
-        `).join('');
-    }
-    const total = cart.reduce((acc, curr) => acc + (curr.price || 0), 0);
-    const totalEl = document.getElementById('cart-total');
-    if (totalEl) totalEl.innerText = `Rs. ${total}`;
+        </div>
+    `).join('');
 }
 
 document.addEventListener('DOMContentLoaded', init);
