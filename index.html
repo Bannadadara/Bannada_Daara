@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bannada Daara | Handcrafted with Heart</title>
+    <title>Bannada Daara | Premium Handcrafted Boutique</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script type="module" src="script.js" defer></script>
 </head>
 <body>
-    <div id="toast" class="toast-notification">Link copied to clipboard!</div>
+    <div id="toast" class="toast-notification">Link copied to clipboard</div>
 
     <header class="navbar">
         <div class="container nav-content">
@@ -20,12 +21,12 @@
                 </div>
             </div>
             <div class="search-box">
-                <input type="text" id="search-bar" placeholder="What are you looking for today?">
+                <input type="text" id="search-bar" placeholder="Discover unique handcrafted treasures...">
                 <button class="search-btn">🔍</button>
             </div>
             <div class="nav-links">
                 <button id="cart-toggle" class="bag-btn">
-                    <span class="icon">🛒</span> <span class="text">Bag</span> (<span id="cart-count">0</span>)
+                    <span class="icon">🛒</span> Bag (<span id="cart-count">0</span>)
                 </button>
             </div>
         </div>
@@ -33,7 +34,7 @@
 
     <div id="cart-sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h3>Your Shopping Bag</h3>
+            <h3>Your Selection</h3>
             <button id="close-cart" class="close-btn">&times;</button>
         </div>
         <div id="cart-items" class="sidebar-body"></div>
@@ -46,26 +47,27 @@
 
     <section class="hero">
         <div class="hero-overlay">
-            <span class="badge">Eco-Friendly Fashion</span>
+            <span class="badge-tag">Sustainable Fashion</span>
             <h1>Artistry in Every Stitch</h1>
-            <p>Sustainable, upcycled treasures handcrafted for you.</p>
-            <a href="#products" class="cta-prime">Shop Now</a>
+            <p>Elegantly Upcycled Treasures Handcrafted for You</p>
+            <a href="#products" class="cta-prime">Explore Collection</a>
         </div>
     </section>
 
     <section id="about" class="about">
         <div class="container">
             <div class="about-card reveal">
-                <div class="eco-badge">SINCE 2020</div>
+                <div class="eco-badge">ESTABLISHED 2020</div>
                 <h2 class="about-title">Conscious Artistry</h2>
                 <p class="about-description">
                     Founded by <strong>Lavanya</strong>, we breathe new life into textile excesses. 
-                    Every piece is unique, hand-stitched with love in Dakshina Kannada.
+                    Every piece is unique, hand-stitched with love in Dakshina Kannada, 
+                    ensuring that sustainability meets luxury.
                 </p>
                 <div class="icon-line">
-                    <div class="icon-item"><span>🌱</span> Eco-Friendly</div>
-                    <div class="icon-item"><span>🧵</span> Hand-Stitched</div>
-                    <div class="icon-item"><span>🇮🇳</span> Local Craft</div>
+                    <div class="icon-item"><span>🌱</span> ECO-FRIENDLY</div>
+                    <div class="icon-item"><span>🧵</span> HAND-STITCHED</div>
+                    <div class="icon-item"><span>🇮🇳</span> LOCAL CRAFT</div>
                 </div>
             </div>
         </div>
@@ -73,13 +75,12 @@
 
     <main class="container" id="products">
         <div class="section-header reveal">
-            <h2>Our Collection</h2>
+            <h2 class="boutique-heading">The Collection</h2>
             <div class="filters">
                 <select id="category-filter" class="custom-select">
-                    <option value="All">All Categories</option>
+                    <option value="All">All Items</option>
                     <option value="Bags">Bags</option>
                     <option value="Pouches">Pouches</option>
-                    <option value="Stationery">Stationery</option>
                     <option value="Decor">Decor</option>
                 </select>
             </div>
@@ -94,28 +95,28 @@
     <div id="feedback-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
-            <h3>We'd Love Your Feedback</h3>
-            <textarea id="feedback-text" placeholder="Share your thoughts with us..."></textarea>
-            <button id="submit-feedback-wa" class="checkout-btn">Send Feedback</button>
+            <h3 class="heading-serif">We Value Your Thoughts</h3>
+            <textarea id="feedback-text" placeholder="Share your experience..."></textarea>
+            <button id="submit-feedback-wa" class="checkout-btn">Send Message</button>
         </div>
     </div>
 
     <div id="thank-you-overlay" class="modal">
         <div class="modal-content success-card">
             <div class="success-icon">✨</div>
-            <h2>Order Initiated</h2>
-            <p>Your shopping list is ready! Please hit "Send" in WhatsApp to confirm your order with us.</p>
-            <button id="close-success" class="cta-prime">Continue Shopping</button>
+            <h2 class="heading-serif">Thank You</h2>
+            <p>Your shopping list is prepared. Please send the message on WhatsApp to finalize your purchase.</p>
+            <button id="close-success" class="cta-prime">Back to Boutique</button>
         </div>
     </div>
 
     <footer class="footer">
         <div class="container footer-grid">
             <div class="footer-info">
-                <p>&copy; 2025 Bannada Daara</p>
-                <p>Support: +91 81057 50221</p>
+                <p class="footer-brand">BANNADA DAARA</p>
+                <p>Curated Handcrafts | +91 81057 50221</p>
             </div>
-            <button id="feedback-btn" class="feedback-btn">Share Feedback</button>
+            <button id="feedback-btn" class="feedback-btn">Give Feedback</button>
         </div>
     </footer>
 </body>
