@@ -24,16 +24,6 @@
         </div>
     </header>
 
-    <section class="hero">
-        <div class="hero-overlay">
-            <div class="hero-content">
-                <h1>Adding Color to Your Life</h1>
-                <p>Sustainable, Upcycled & Handcrafted with Love</p>
-                <a href="#products" class="btn hero-btn">Explore Collection</a>
-            </div>
-        </div>
-    </section>
-
     <div id="cart-sidebar" class="cart-sidebar">
         <div class="cart-header">
             <h3>Your Selection</h3>
@@ -49,37 +39,67 @@
     <div id="address-modal" class="modal">
         <div class="modal-content">
             <h3>Delivery Details</h3>
-            <p>Please enter your full address to proceed with the order.</p>
-            <textarea id="delivery-address" placeholder="Flat No, Street, Landmark, City, Pincode..." rows="4"></textarea>
+            <p>Please enter your full address to proceed with your order.</p>
+            <textarea id="delivery-address" placeholder="Flat/House No, Street, Landmark, City, Pincode..." rows="4"></textarea>
             <div class="modal-actions">
-                <button id="cancel-order" class="btn-secondary">Back to Cart</button>
-                <button id="confirm-order" class="btn">Confirm & Pay UPI</button>
+                <button id="cancel-order" class="btn-secondary">Cancel</button>
+                <button id="confirm-order" class="btn">Confirm & Pay</button>
             </div>
         </div>
     </div>
 
+    <section class="hero">
+        <div class="hero-overlay">
+            <div class="hero-text">
+                <h1>Adding Color to Your Life</h1>
+                <p>Sustainable, Upcycled & Handcrafted with Love</p>
+                <a href="#products" class="btn hero-cta">Explore Collection</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="container">
+        <div class="about-card">
+            <h2>Our Story</h2>
+            <p>Bannada Daara is a home-grown business start-up initiated by Lavanya in 2020. Based in Jyothigudde, Dakshina Kannada, we specialize in hand-stitched products upcycled from textile excesses and Indian-made fabrics.</p>
+            <p>Every piece we create is unique, contributing to a more sustainable and colorful future.</p>
+        </div>
+    </section>
+
     <section id="products" class="container">
-        <h2>Our Catalogue</h2>
-        <div class="filter-section">
-            <input type="text" id="search-bar" placeholder="Search products..." class="search-input">
-            <select id="category-filter" class="category-select">
-                <option value="All">All Categories</option>
-                <option value="Bags">Bags</option>
-                <option value="Pouches">Pouches</option>
-                <option value="Stationery">Stationery</option>
-                <option value="Accessories">Accessories</option>
-                <option value="Decor">Decor</option>
-            </select>
+        <div class="section-header">
+            <h2>Our Catalogue</h2>
+            <div class="filter-section">
+                <input type="text" id="search-bar" placeholder="Search products..." class="search-input">
+                <select id="category-filter" class="category-select">
+                    <option value="All">All Categories</option>
+                    <option value="Bags">Bags</option>
+                    <option value="Pouches">Pouches</option>
+                    <option value="Stationery">Stationery</option>
+                    <option value="Accessories">Accessories</option>
+                    <option value="Decor">Decor</option>
+                </select>
+            </div>
         </div>
         <div class="product-grid" id="product-list"></div>
     </section>
 
-    <footer>
-        <div class="container footer-content">
-            <div class="contact-info">
-                <h2>Contact Us</h2>
+    <footer id="contact">
+        <div class="container footer-grid">
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
                 <p>WhatsApp: <strong>81057 50221</strong></p>
+                <p>Instagram: <a href="https://instagram.com/bannada_daara_21" target="_blank" class="instagram-link">@bannada_daara_21</a></p>
             </div>
+            <div class="footer-feedback">
+                <h3>Feedback</h3>
+                <p>We value your thoughts! Click below to chat with us.</p>
+                <button id="send-feedback-btn" class="btn feedback-btn">Send WhatsApp Feedback</button>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="disclaimer">Note: Every piece is unique as designs vary based on textile waste batches.</p>
+            <p>&copy; 2024 Bannada Daara. Handcrafted in India.</p>
         </div>
     </footer>
 </body>
