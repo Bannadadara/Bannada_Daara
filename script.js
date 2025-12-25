@@ -5,36 +5,26 @@ let cart = [];
 function init() {
     renderProducts();
 
-    // Sidebar Window Logic
+    // Sidebar Window Controls
     const sidebar = document.getElementById('cart-sidebar');
-    const toggle = document.getElementById('cart-toggle');
-    const close = document.getElementById('close-cart');
+    document.getElementById('cart-toggle').onclick = () => sidebar.classList.add('open');
+    document.getElementById('close-cart').onclick = () => sidebar.classList.remove('open');
 
-    toggle.onclick = () => sidebar.classList.add('open');
-    close.onclick = () => sidebar.classList.remove('open');
-
-    // Filtering logic
-    const searchBar = document.getElementById('search-bar');
-    const categoryFilter = document.getElementById('category-filter');
-
-    const filterProducts = () => {
-        renderProducts(categoryFilter.value, searchBar.value);
+    // Search and Filter logic
+    document.getElementById('search-bar').oninput = (e) => {
+        renderProducts(document.getElementById('category-filter').value, e.target.value);
+    };
+    
+    document.getElementById('category-filter').onchange = (e) => {
+        renderProducts(e.target.value, document.getElementById('search-bar').value);
     };
 
-    searchBar.oninput = filterProducts;
-    categoryFilter.onchange = filterProducts;
-
-    // Feedback Button
-    document.getElementById('send-feedback-btn').onclick = () => {
-        window.open(`https://wa.me/918105750221?text=${encodeURIComponent("Hi! I have some feedback about Bannada Daara:")}`, '_blank');
-    };
-
-    // Checkout
+    // WhatsApp Integration
     document.getElementById('checkout-btn').onclick = () => {
-        if (cart.length === 0) return alert("Your bag is empty!");
-        const items = cart.map(i => `- ${i.name}`).join("\n");
+        if (cart.length === 0) return alert("Your shopping bag is empty!");
+        const itemsList = cart.map(i => `- ${i.name} (Rs. ${i.price})`).join('\n');
         const total = document.getElementById('cart-total').innerText;
-        const msg = `*New Order - Bannada Daara*\n\n*Items:*\n${items}\n\n*Total:* ${total}`;
+        const msg = `*Order from Bannada Daara*\n\n*Products:*\n${itemsList}\n\n*Total:* ${total}`;
         window.open(`https://wa.me/918105750221?text=${encodeURIComponent(msg)}`, '_blank');
     };
 }
@@ -42,19 +32,20 @@ function init() {
 function renderProducts(cat = 'All', search = '') {
     const list = document.getElementById('product-list');
     const filtered = products.filter(p => {
-        const matchesCat = cat === 'All' || p.category === cat;
-        const matchesSearch = p.name.toLowerCase().includes(search.toLowerCase());
-        return matchesCat && matchesSearch;
+        const matchCat = cat === 'All' || p.category === cat;
+        const matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
+        return matchCat && matchSearch;
     });
 
     list.innerHTML = filtered.map(p => `
         <div class="card">
-            <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300'">
-            <div class="card-info">
-                <h3>${p.name}</h3>
-                <p style="color:var(--primary); font-weight:bold">${p.on_request ? "Price on Request" : "Rs. " + p.price + "/-"}</p>
-                <button class="cart-btn" onclick="addToCart(${p.id})">Add to Bag</button>
+            <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/200'">
+            <h3>${p.name}</h3>
+            <div class="pricing">
+                <span class="curr-price">Rs. ${p.price}</span>
+                ${p.oldPrice ? `<span class="old-price">Rs. ${p.oldPrice}</span>` : ''}
             </div>
+            <button class="add-btn" onclick="addToCart(${p.id})">Add to Cart</button>
         </div>
     `).join('');
 }
@@ -62,28 +53,26 @@ function renderProducts(cat = 'All', search = '') {
 window.addToCart = (id) => {
     const item = products.find(p => p.id === id);
     cart.push(item);
-    updateBagUI();
+    updateUI();
     document.getElementById('cart-sidebar').classList.add('open');
 };
 
 window.removeFromBag = (index) => {
     cart.splice(index, 1);
-    updateBagUI();
+    updateUI();
 };
 
-function updateBagUI() {
-    // Update Button Label
-    document.getElementById('cart-toggle').innerText = `My Shopping Bag (${cart.length})`;
+function updateUI() {
+    document.getElementById('cart-count').innerText = cart.length;
     
-    // Update Sidebar List
-    document.getElementById('cart-items').innerHTML = cart.map((item, index) => `
-        <div class="cart-item">
+    const cartItems = document.getElementById('cart-items');
+    cartItems.innerHTML = cart.map((item, index) => `
+        <div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #eee;">
             <span>${item.name}</span>
-            <button onclick="removeFromBag(${index})" style="background:none; border:none; color:red; cursor:pointer; font-weight:bold">&times;</button>
+            <button onclick="removeFromBag(${index})" style="background:none; border:none; color:red; cursor:pointer;">&times;</button>
         </div>
     `).join('');
 
-    // Update Total
     const total = cart.reduce((sum, item) => sum + (item.price || 0), 0);
     document.getElementById('cart-total').innerText = `Rs. ${total}`;
 }
