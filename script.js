@@ -3,22 +3,18 @@ import { products } from './data.js';
 let cart = [];
 
 function init() {
-    renderProducts(); // This now renders all 24 items on load
+    renderProducts();
     setupCart();
-    
-    // Search Listener
-    const searchBar = document.getElementById('search-bar');
-    const filterSelect = document.getElementById('category-filter');
+    setupAnimations();
 
-    searchBar.addEventListener('input', () => {
-        renderProducts(filterSelect.value, searchBar.value);
+    document.getElementById('search-bar').addEventListener('input', (e) => {
+        renderProducts(document.getElementById('category-filter').value, e.target.value);
     });
 
-    filterSelect.addEventListener('change', () => {
-        renderProducts(filterSelect.value, searchBar.value);
+    document.getElementById('category-filter').addEventListener('change', (e) => {
+        renderProducts(e.target.value, document.getElementById('search-bar').value);
     });
 
-    // Checkout Logic
     document.getElementById('checkout-btn').onclick = () => {
         if (cart.length === 0) return alert("Your bag is empty.");
         const items = cart.map(i => `- ${i.name} (${i.on_request ? "Price on Request" : "Rs. " + i.price})`).join('\n');
@@ -27,8 +23,7 @@ function init() {
         
         window.open(`https://wa.me/918105750221?text=${encodeURIComponent(msg)}`, '_blank');
         document.getElementById('thank-you-overlay').style.display = "block";
-        cart = []; 
-        updateUI();
+        cart = []; updateUI();
         document.getElementById('cart-sidebar').classList.remove('open');
     };
 
@@ -39,16 +34,14 @@ function init() {
 
 function renderProducts(cat = 'All', search = '') {
     const list = document.getElementById('product-list');
-    
-    // Filters the full 24-item list from data.js
     const filtered = products.filter(p => 
         (cat === 'All' || p.category === cat) && 
         p.name.toLowerCase().includes(search.toLowerCase())
     );
 
     list.innerHTML = filtered.map(p => `
-        <div class="card reveal">
-            <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300?text=Image+Not+Found'">
+        <div class="card reveal active">
+            <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300'">
             <h4>${p.name}</h4>
             <p>${p.on_request ? 'Price on Request' : 'Rs. ' + p.price}</p>
             <div class="card-btns">
@@ -57,19 +50,12 @@ function renderProducts(cat = 'All', search = '') {
             </div>
         </div>
     `).join('');
-
-    // Re-trigger animations for the newly rendered items
-    setupAnimations();
 }
 
 window.addToCart = (id) => {
-    // Correctly finds the product by ID from your updated list
-    const productToAdd = products.find(p => p.id === id);
-    if (productToAdd) {
-        cart.push(productToAdd);
-        updateUI();
-        document.getElementById('cart-sidebar').classList.add('open');
-    }
+    cart.push(products.find(p => p.id === id));
+    updateUI();
+    document.getElementById('cart-sidebar').classList.add('open');
 };
 
 function updateUI() {
@@ -80,30 +66,17 @@ function updateUI() {
             <button onclick="window.removeItem(${idx})" style="color:#ccc; border:none; background:none; cursor:pointer; font-size:1.5rem;">&times;</button>
         </div>
     `).join('');
-    
     const total = cart.reduce((sum, item) => sum + (item.price || 0), 0);
     document.getElementById('cart-total').innerText = `Rs. ${total}`;
-    
-    const requestNotice = document.getElementById('request-notice');
-    if (requestNotice) {
-        requestNotice.style.display = cart.some(i => i.on_request) ? 'block' : 'none';
-    }
+    document.getElementById('request-notice').style.display = cart.some(i => i.on_request) ? 'block' : 'none';
 }
 
-window.removeItem = (idx) => { 
-    cart.splice(idx, 1); 
-    updateUI(); 
-};
+window.removeItem = (idx) => { cart.splice(idx, 1); updateUI(); };
 
 function setupAnimations() {
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => { 
-            if (e.isIntersecting) {
-                e.target.classList.add('active');
-            }
-        });
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
     }, { threshold: 0.1 });
-    
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
 
