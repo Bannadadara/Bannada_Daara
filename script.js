@@ -4,85 +4,123 @@ let cart = [];
 
 function init() {
     renderProducts();
-    setupCart();
-    setupAnimations();
-
-    document.getElementById('search-bar').addEventListener('input', (e) => {
-        renderProducts(document.getElementById('category-filter').value, e.target.value);
-    });
-
-    document.getElementById('category-filter').addEventListener('change', (e) => {
-        renderProducts(e.target.value, document.getElementById('search-bar').value);
-    });
-
-    document.getElementById('checkout-btn').onclick = () => {
-        if (cart.length === 0) return alert("Your bag is empty.");
-        const items = cart.map(i => `- ${i.name} (${i.on_request ? "Price on Request" : "Rs. " + i.price})`).join('\n');
-        const total = document.getElementById('cart-total').innerText;
-        const msg = `*Order from Bannada Daara*\n\n*Selection:*\n${items}\n\n*Subtotal:* ${total}`;
-        
-        window.open(`https://wa.me/918105750221?text=${encodeURIComponent(msg)}`, '_blank');
-        document.getElementById('thank-you-overlay').style.display = "block";
-        cart = []; updateUI();
-        document.getElementById('cart-sidebar').classList.remove('open');
-    };
-
-    document.getElementById('close-success').onclick = () => {
-        document.getElementById('thank-you-overlay').style.display = "none";
-    };
+    setupCartControls();
+    setupFilters();
+    setupAboutInteraction();
+    setupFeedbackModal();
+    setupScrollAnimations();
 }
 
-function renderProducts(cat = 'All', search = '') {
+function renderProducts(category = 'All', search = '') {
     const list = document.getElementById('product-list');
     const filtered = products.filter(p => 
-        (cat === 'All' || p.category === cat) && 
+        (category === 'All' || p.category === category) &&
         p.name.toLowerCase().includes(search.toLowerCase())
     );
 
     list.innerHTML = filtered.map(p => `
-        <div class="card reveal active">
-            <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300'">
-            <h4>${p.name}</h4>
-            <p>${p.on_request ? 'Price on Request' : 'Rs. ' + p.price}</p>
-            <div class="card-btns">
-                <a href="${p.img}" target="_blank" class="view-btn">VIEW</a>
-                <button class="add-btn" onclick="addToCart(${p.id})">ADD TO BAG</button>
+        <div class="product-card reveal active">
+            <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x300?text=Handmade'">
+            <h4 class="product-name">${p.name}</h4>
+            <p class="product-price">${p.on_request ? 'Price on Request' : 'Rs. ' + p.price}</p>
+            <div class="card-actions">
+                <button class="add-btn" onclick="window.addToCart(${p.id})">ADD TO BAG</button>
+                <button class="share-btn" onclick="window.shareProduct('${p.name}')">📤</button>
             </div>
         </div>
     `).join('');
 }
 
+// Global Shop Functions
 window.addToCart = (id) => {
-    cart.push(products.find(p => p.id === id));
-    updateUI();
+    const product = products.find(p => p.id === id);
+    cart.push(product);
+    updateCartUI();
     document.getElementById('cart-sidebar').classList.add('open');
 };
 
-function updateUI() {
+window.removeCartItem = (idx) => {
+    cart.splice(idx, 1);
+    updateCartUI();
+};
+
+window.shareProduct = async (name) => {
+    const shareText = `Check out this beautiful ${name} from Bannada Daara!`;
+    if (navigator.share) {
+        try { await navigator.share({ title: 'Bannada Daara', text: shareText, url: window.location.href }); } catch (err) {}
+    } else {
+        window.open(`https://wa.me/?text=${encodeURIComponent(shareText + ' ' + window.location.href)}`);
+    }
+};
+
+function updateCartUI() {
     document.getElementById('cart-count').innerText = cart.length;
-    document.getElementById('cart-items').innerHTML = cart.map((item, idx) => `
-        <div style="display:flex; justify-content:space-between; padding:15px 0; border-bottom:1px solid #f9f9f9;">
-            <span style="font-family:var(--heading-font); font-size:1.1rem;">${item.name}</span>
-            <button onclick="window.removeItem(${idx})" style="color:#ccc; border:none; background:none; cursor:pointer; font-size:1.5rem;">&times;</button>
+    const itemsContainer = document.getElementById('cart-items');
+    
+    itemsContainer.innerHTML = cart.map((item, idx) => `
+        <div style="display:flex; justify-content:space-between; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+            <div>
+                <strong>${item.name}</strong><br>
+                <span style="color:var(--gold)">${item.on_request ? 'Req Price' : 'Rs.' + item.price}</span>
+            </div>
+            <button onclick="window.removeCartItem(${idx})" style="border:none; background:none; color:#ccc; cursor:pointer; font-size:1.2rem;">&times;</button>
         </div>
     `).join('');
+
     const total = cart.reduce((sum, item) => sum + (item.price || 0), 0);
     document.getElementById('cart-total').innerText = `Rs. ${total}`;
-    document.getElementById('request-notice').style.display = cart.some(i => i.on_request) ? 'block' : 'none';
 }
 
-window.removeItem = (idx) => { cart.splice(idx, 1); updateUI(); };
+function setupAboutInteraction() {
+    const btn = document.getElementById('read-more-btn');
+    const content = document.getElementById('about-more-content');
+    btn.onclick = () => {
+        content.classList.toggle('show');
+        btn.innerText = content.classList.contains('show') ? "SHOW LESS" : "READ OUR FULL STORY";
+    };
+}
 
-function setupAnimations() {
+function setupFilters() {
+    const searchBar = document.getElementById('search-bar');
+    searchBar.oninput = () => renderProducts(document.querySelector('.cat-item.active').dataset.cat, searchBar.value);
+
+    document.querySelectorAll('.cat-item').forEach(btn => {
+        btn.onclick = () => {
+            document.querySelector('.cat-item.active').classList.remove('active');
+            btn.classList.add('active');
+            renderProducts(btn.dataset.cat, searchBar.value);
+        };
+    });
+}
+
+function setupCartControls() {
+    document.getElementById('cart-toggle').onclick = () => document.getElementById('cart-sidebar').classList.add('open');
+    document.getElementById('close-cart').onclick = () => document.getElementById('cart-sidebar').classList.remove('open');
+    
+    document.getElementById('checkout-btn').onclick = () => {
+        if (cart.length === 0) return alert("Select items first!");
+        const orderList = cart.map(i => `- ${i.name}`).join('%0A');
+        window.open(`https://wa.me/918105750221?text=Order Request:%0A${orderList}`, '_blank');
+    };
+}
+
+function setupFeedbackModal() {
+    const overlay = document.getElementById('feedback-overlay');
+    document.getElementById('footer-feedback-btn').onclick = () => overlay.style.display = 'flex';
+    document.getElementById('close-feedback').onclick = () => overlay.style.display = 'none';
+    
+    document.getElementById('send-feedback-wa').onclick = () => {
+        const val = document.getElementById('feedback-text').value;
+        if (val) window.open(`https://wa.me/918105750221?text=Feedback: ${encodeURIComponent(val)}`);
+        overlay.style.display = 'none';
+    };
+}
+
+function setupScrollAnimations() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
 
-function setupCart() {
-    document.getElementById('cart-toggle').onclick = () => document.getElementById('cart-sidebar').classList.add('open');
-    document.getElementById('close-cart').onclick = () => document.getElementById('cart-sidebar').classList.remove('open');
-}
-
-document.addEventListener('DOMContentLoaded', init);
+init();
