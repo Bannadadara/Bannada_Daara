@@ -1,34 +1,131 @@
-// This file acts as your product database
-export const products = [
-    // BAGS
-    { id: 1, name: "Reversible Tote Bag", price: 500, category: "Bags", img: "images/reversible-tote1.jpg" },
-    { id: 2, name: "Box Tote (Plain)", price: 350, category: "Bags", img: "images/box-plain.jpg" },
-    { id: 3, name: "Box Tote (Patch-work)", price: 500, category: "Bags", img: "images/box-patch.jpg" },
-    { id: 4, name: "String Sling Bag", price: 150, category: "Bags", img: "images/sling-reg.jpg" },
-    { id: 5, name: "Regular Sling Bag", price: 250, category: "Bags", img: "images/sling-reg-m.jpg" },
-    { id: 6, name: "Medium Sling Bag", price: 450, category: "Bags", img: "images/sling-reg.jpg" },
-    { id: 7, name: "Sling Bag (Patch-work S)", price: 250, category: "Bags", img: "images/sling-patch-s.jpg" },
-    { id: 8, name: "Sling Bag (Patch-work L)", price: 550, category: "Bags", img: "images/sling-patch-l.jpg" },
-    { id: 9, name: "Laptop Bag (50-50)", price: 800, category: "Bags", img: "images/pouch.jpg" }, 
-    { id: 10, name: "Potli", price: 250, category: "Bags", img: "images/potli.jpg" },
-    { id: 11, name: "Foldable Grocery Bag", price: 250, category: "Bags", img: "images/grocery.jpg" },
+import { products } from './data.js';
 
-    // POUCHES
-    { id: 12, name: "U-Shape Pouch (S)", price: 100, category: "Pouches", img: "images/u-pouch.jpg" },
-    { id: 13, name: "Travel Kit", price: 170, category: "Pouches", img: "images/travel-kit.jpg" },
-    { id: 14, name: "Pad-Holder", price: 100, category: "Pouches", img: "images/pad-holder-folded.jpg" },
-    { id: 15, name: "Flat Pouch", price: 80, category: "Pouches", img: "images/flat-pouch.jpg" },
-    { id: 16, name: "Box Pouch", price: 170, category: "Pouches", img: "images/box-pouch.jpg" },
-    { id: 17, name: "Trinket", price: 40, category: "Pouches", img: "images/TRINKET.jpg" },
+let cart = [];
 
-    // STATIONERY
-    { id: 18, name: "A4 Files", price: 200, category: "Stationery", img: "images/files.jpg" },
-    { id: 19, name: "Pen Pouch", price: 100, category: "Stationery", img: "images/pouch.jpg" },
-    { id: 20, name: "Book (Embroidered Cover)", price: 450, category: "Stationery", img: "images/book.jpg" },
+function init() {
+    renderProducts();
+    setupCartControls();
+    setupFilters();
+    setupImageViewer();
+    setupFeedback();
+}
 
-    // ACCESSORIES & DECOR
-    { id: 21, name: "Cutlery Kit", price: 260, category: "Accessories", img: "images/cutlery.jpg" },
-    { id: 22, name: "Mask", price: 50, category: "Accessories", img: "images/mask.jpg" },
-    { id: 23, name: "Patch-work Quilt", price: 0, category: "Decor", img: "images/quilt.jpg", on_request: true },
-    { id: 24, name: "Patch-work Table Cloth", price: 0, category: "Decor", img: "images/tcloth.jpg", on_request: true }
-];
+function renderProducts(category = 'All', search = '') {
+    const list = document.getElementById('product-list');
+    const filtered = products.filter(p => 
+        (category === 'All' || p.category === category) &&
+        p.name.toLowerCase().includes(search.toLowerCase())
+    );
+
+    list.innerHTML = filtered.map(p => `
+        <div class="product-card">
+            <div class="card-image-wrapper" onclick="window.openViewer('${p.img}', '${p.name}')">
+                <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x300?text=Handmade'">
+                <button class="view-overlay-btn">VIEW IMAGE</button>
+            </div>
+            <h4 class="product-name" style="margin-top:15px; font-family: 'Cormorant Garamond', serif; font-size:1.4rem;">${p.name}</h4>
+            <p style="color:#c5a059; font-weight:600; margin-bottom:15px;">${p.on_request ? 'Price on Request' : 'Rs. ' + p.price}</p>
+            <div style="display:flex; gap:10px;">
+                <button class="add-btn" onclick="window.addToCart(${p.id})">ADD TO BAG</button>
+                <button class="share-btn" onclick="window.shareProduct('${p.name}')">📤</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// SHARE PRODUCT
+window.shareProduct = (name) => {
+    const text = `Check out this handcrafted ${name} from Bannada Daara!`;
+    if (navigator.share) {
+        navigator.share({ title: 'Bannada Daara', text: text, url: window.location.href });
+    } else {
+        alert("Copied to clipboard: " + text);
+    }
+};
+
+// IMAGE VIEWER
+window.openViewer = (imgSrc, title) => {
+    const modal = document.getElementById('image-modal');
+    document.getElementById('full-res-image').src = imgSrc;
+    document.getElementById('viewer-caption').innerText = title;
+    modal.style.display = "block";
+};
+
+function setupImageViewer() {
+    const modal = document.getElementById('image-modal');
+    document.querySelector('.close-viewer').onclick = () => modal.style.display = "none";
+    window.addEventListener('click', (e) => { if (e.target == modal) modal.style.display = "none"; });
+}
+
+// FEEDBACK FORM
+function setupFeedback() {
+    const modal = document.getElementById('feedback-modal');
+    const status = document.getElementById('form-status');
+    document.getElementById('footer-feedback-btn').onclick = () => modal.style.display = "block";
+    document.querySelector('.close-feedback').onclick = () => modal.style.display = "none";
+
+    document.getElementById('feedback-form').onsubmit = async (e) => {
+        e.preventDefault();
+        status.innerHTML = "Sending...";
+        const response = await fetch(e.target.action, {
+            method: 'POST',
+            body: new FormData(e.target),
+            headers: { 'Accept': 'application/json' }
+        });
+        if (response.ok) {
+            status.style.color = "green";
+            status.innerHTML = "Thank you for your feedback!";
+            e.target.reset();
+            setTimeout(() => { modal.style.display = "none"; status.innerHTML = ""; }, 3000);
+        }
+    };
+}
+
+// CART LOGIC
+window.addToCart = (id) => {
+    const p = products.find(i => i.id === id);
+    cart.push(p);
+    updateUI();
+    document.getElementById('cart-sidebar').classList.add('open');
+};
+
+function updateUI() {
+    document.getElementById('cart-count').innerText = cart.length;
+    const itemsDiv = document.getElementById('cart-items');
+    itemsDiv.innerHTML = cart.map((item, idx) => `
+        <div style="display:flex; justify-content:space-between; padding:15px; border-bottom:1px solid #eee;">
+            <span>${item.name}</span>
+            <button onclick="window.removeCartItem(${idx})" style="border:none; background:none; cursor:pointer;">&times;</button>
+        </div>
+    `).join('');
+    const total = cart.reduce((sum, item) => sum + (item.price || 0), 0);
+    document.getElementById('cart-total').innerText = `Rs. ${total}`;
+}
+
+window.removeCartItem = (idx) => {
+    cart.splice(idx, 1);
+    updateUI();
+};
+
+function setupCartControls() {
+    document.getElementById('cart-toggle').onclick = () => document.getElementById('cart-sidebar').classList.add('open');
+    document.getElementById('close-cart').onclick = () => document.getElementById('cart-sidebar').classList.remove('open');
+    document.getElementById('checkout-btn').onclick = () => {
+        const list = cart.map(i => `- ${i.name}`).join('%0A');
+        window.open(`https://wa.me/918105750221?text=Order Request:%0A${list}`, '_blank');
+    };
+}
+
+function setupFilters() {
+    const searchBar = document.getElementById('search-bar');
+    searchBar.oninput = () => renderProducts(document.querySelector('.cat-item.active').dataset.cat, searchBar.value);
+    document.querySelectorAll('.cat-item').forEach(btn => {
+        btn.onclick = () => {
+            document.querySelector('.cat-item.active').classList.remove('active');
+            btn.classList.add('active');
+            renderProducts(btn.dataset.cat, searchBar.value);
+        };
+    });
+}
+
+init();
