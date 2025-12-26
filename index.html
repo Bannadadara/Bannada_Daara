@@ -3,106 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bannada Daara | Premium Handcrafted Shop</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Bannada Daara | Handcrafted Luxury</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="container nav-content">
-            <div class="brand">
-                <img src="logo.png" alt="Logo" class="nav-logo" onerror="this.style.display='none'">
-                <div class="brand-text">
-                    <span class="main-title">Bannada Daara</span>
-                    <span class="sub-title">Handmade & Sustainable</span>
+    <header class="amazon-nav">
+        <div class="container nav-wrapper">
+            <a href="#" class="brand-identity">
+                <img src="images/logo.png" alt="Bannada Daara" class="site-logo">
+                <div class="brand-names">
+                    <h1 class="premium-title">BANNADA DAARA</h1>
+                    <p class="premium-tag">Dakshina Kannada Heritage</p>
                 </div>
-            </div>
-            
-            <div class="search-container">
-                <input type="text" id="search-bar" placeholder="Search for products...">
-                <button class="search-btn">🔍</button>
+            </a>
+
+            <div class="search-bar-premium">
+                <input type="text" id="main-search" placeholder="Try 'Blue Tote' or 'Scrunchies'...">
+                <button class="search-icon-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
 
-            <div class="nav-actions">
-                <button id="cart-toggle" class="bag-btn">BAG (<span id="cart-count">0</span>)</button>
+            <div class="nav-utils">
+                <div class="util-item cart-btn" id="cart-trigger">
+                    <div class="cart-stack">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span class="cart-badge" id="cart-count">0</span>
+                    </div>
+                    <strong class="hide-mobile">Bag</strong>
+                </div>
             </div>
         </div>
     </header>
 
-    <section class="hero-section">
-        <div class="hero-overlay">
-            <div class="container">
-                <h1 class="hero-title">Artistry in Every Stitch</h1>
-                <p class="hero-subtitle">Premium Handcrafted Treasures from Dakshina Kannada</p>
-                <a href="#product-list" class="hero-btn">SHOP COLLECTION</a>
+    <section class="hero-premium">
+        <div class="hero-glass-card">
+            <span class="hero-sub">ESTABLISHED IN KARNATAKA</span>
+            <h2>Artistry In Every <i>Stitch</i></h2>
+            <p>Eco-friendly, handmade textile art from the heart of Dakshina Kannada.</p>
+            <div class="hero-btns">
+                <a href="#shop" class="btn-gold">Explore Shop</a>
+                <button class="btn-outline" id="story-trigger">Our Story</button>
             </div>
         </div>
     </section>
 
-    <nav class="category-bar">
-        <div class="container cat-flex">
-            <button class="cat-item active" data-cat="All">All Items</button>
-            <button class="cat-item" data-cat="Bags">Bags</button>
-            <button class="cat-item" data-cat="Pouches">Pouches</button>
-            <button class="cat-item" data-cat="Stationery">Stationery</button>
-            <button class="cat-item" data-cat="Accessories">Accessories</button>
-            <button class="cat-item" data-cat="Decor">Decor</button>
-        </div>
-    </nav>
-
-    <section id="about" class="about-section">
-        <div class="container about-grid">
-            <div class="about-image">
-                <img src="images/about.jpg" alt="Our Craft" onerror="this.src='https://via.placeholder.com/600x500?text=Handcrafted+Art'">
+    <div class="filter-strip">
+        <div class="container filter-wrapper">
+            <div class="filter-controls">
+                <span class="filter-label"><i class="fa-solid fa-sliders"></i> Filter By:</span>
+                <button class="filter-link active" data-cat="All">All Items</button>
+                <button class="filter-link" data-cat="Bags">Bags</button>
+                <button class="filter-link" data-cat="Pouches">Pouches</button>
+                <button class="filter-link" data-cat="Stationery">Stationery</button>
+                <button class="filter-link" data-cat="Hair Accessories">Accessories</button>
             </div>
-            <div class="about-text">
-                <span class="section-tag">Our Story</span>
-                <h2 class="section-title">Sustainable by Choice.</h2>
-                <p class="about-intro">Bannada Daara transforms upcycled fabrics into premium treasures.</p>
-                <div id="about-more-content" class="hidden-content">
-                    <p>Every piece in our collection is unique. We believe in slow fashion and the beauty of handcrafted details, ensuring that every bag and pouch supports local artisans and a greener planet.</p>
-                </div>
-                <button id="read-more-btn" class="read-more-link">READ OUR FULL STORY</button>
+            <div class="sort-controls">
+                <select id="price-sort">
+                    <option value="default">Sort: Featured</option>
+                    <option value="low">Price: Low to High</option>
+                    <option value="high">Price: High to Low</option>
+                </select>
             </div>
-        </div>
-    </section>
-
-    <main class="container">
-        <div class="product-grid" id="product-list"></div>
-    </main>
-
-    <div id="feedback-modal" class="image-viewer-modal">
-        <div class="feedback-content">
-            <span class="close-feedback">&times;</span>
-            <h2 style="font-family: var(--heading-font); color: var(--gold); margin-bottom: 15px;">Customer Feedback</h2>
-            <form id="feedback-form" action="https://formspree.io/f/mqakpnvp" method="POST">
-                <input type="text" name="name" required placeholder="Your Name" style="width:100%; padding:10px; margin-bottom:10px;">
-                <input type="email" name="email" required placeholder="Your Email" style="width:100%; padding:10px; margin-bottom:10px;">
-                <textarea name="message" rows="4" required placeholder="How was your experience?" style="width:100%; padding:10px; margin-bottom:10px;"></textarea>
-                <button type="submit" class="add-btn">SEND FEEDBACK</button>
-            </form>
-            <div id="form-status" style="margin-top: 15px; font-weight: 600;"></div>
         </div>
     </div>
 
-    <footer class="footer">
-        <div class="container footer-grid">
-            <div class="footer-brand-area">
-                <img src="logo.png" alt="Logo" class="footer-logo" onerror="this.style.display='none'">
-                <h2 class="footer-brand">BANNADA DAARA</h2>
-            </div>
-            <div class="footer-contact">
-                <p>Dakshina Kannada, Karnataka</p>
-                <p>WhatsApp: +91 81057 50221</p>
-                <a href="https://instagram.com/bannada_daara" target="_blank" style="color:white; text-decoration:none; display:block; margin: 10px 0;">
-                    <i class="fa-brands fa-instagram"></i> @bannada_daara
-                </a>
-                <button id="footer-feedback-btn" class="feedback-trigger">SHARE FEEDBACK</button>
+    <main class="container" id="shop">
+        <div id="active-filter-tags"></div>
+        <div class="product-grid" id="product-list"></div>
+    </main>
+
+    <div id="story-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-modal" id="close-story">&times;</button>
+            <div class="story-layout">
+                <div class="story-img">
+                    <img src="images/hero-bg.jpg" alt="Our Craft">
+                </div>
+                <div class="story-text">
+                    <h2>Our Journey</h2>
+                    <p><strong>Bannada Daara</strong> (The Colored Thread) began with a simple vision: to bridge the gap between traditional craftsmanship and modern sustainable fashion.</p>
+                    <p>Rooted in the rich cultural landscape of Dakshina Kannada, Karnataka, we focus on minimal waste. Every bag, pouch, and accessory is hand-stitched by local artisans, ensuring that no two pieces are exactly alike.</p>
+                    <div class="stats-row">
+                        <div class="stat"><strong>100%</strong><span>Handmade</span></div>
+                        <div class="stat"><strong>24+</strong><span>Designs</span></div>
+                        <div class="stat"><strong>Eco</strong><span>Friendly</span></div>
+                    </div>
+                </div>
             </div>
         </div>
-    </footer>
+    </div>
+
+    <div id="cart-sidebar" class="premium-sidebar">
+        <div class="side-head">
+            <h3>Shopping Bag</h3>
+            <button id="close-cart"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="cart-items" class="side-body"></div>
+        <div class="side-foot">
+            <div class="total-display"><span>Total Amount</span><span id="cart-total">₹0</span></div>
+            <button class="btn-checkout" id="checkout-btn"><i class="fa-brands fa-whatsapp"></i> PROCEED TO WHATSAPP</button>
+        </div>
+    </div>
+
+    <div id="toast-notify">Item Added</div>
 
     <script type="module" src="script.js"></script>
 </body>
