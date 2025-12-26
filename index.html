@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bannada Daara | Sustainable Craftsmanship</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Bannada Daara | Premium Handcrafted Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -16,14 +16,30 @@
                 <img src="logo.png" alt="Logo" class="nav-logo" onerror="this.style.display='none'">
                 <div class="brand-text">
                     <span class="main-title">Bannada Daara</span>
+                    <span class="sub-title">Handmade & Sustainable</span>
                 </div>
             </div>
+            
             <div class="search-container">
-                <input type="text" id="search-bar" placeholder="Search handcrafted items...">
+                <input type="text" id="search-bar" placeholder="Search for products...">
+                <button class="search-btn">🔍</button>
             </div>
-            <button id="cart-toggle" class="bag-btn">BAG (<span id="cart-count">0</span>)</button>
+
+            <div class="nav-actions">
+                <button id="cart-toggle" class="bag-btn">BAG (<span id="cart-count">0</span>)</button>
+            </div>
         </div>
     </header>
+
+    <section class="hero-section">
+        <div class="hero-overlay">
+            <div class="container">
+                <h1 class="hero-title">Artistry in Every Stitch</h1>
+                <p class="hero-subtitle">Premium Handcrafted Treasures from Dakshina Kannada</p>
+                <a href="#product-list" class="hero-btn">SHOP COLLECTION</a>
+            </div>
+        </div>
+    </section>
 
     <nav class="category-bar">
         <div class="container cat-flex">
@@ -40,6 +56,29 @@
         <div class="product-grid" id="product-list"></div>
     </main>
 
+    <div id="feedback-modal" class="image-viewer-modal">
+        <div class="feedback-content">
+            <span class="close-feedback">&times;</span>
+            <h2 style="font-family: var(--heading-font); color: var(--gold); margin-bottom: 15px;">Customer Feedback</h2>
+            <form id="feedback-form" action="https://formspree.io/f/mqakpnvp" method="POST">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" required placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required placeholder="Your Email">
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea name="message" rows="4" required placeholder="How was your experience?"></textarea>
+                </div>
+                <button type="submit" class="add-btn">SEND FEEDBACK</button>
+            </form>
+            <div id="form-status" style="margin-top: 15px; font-weight: 600;"></div>
+        </div>
+    </div>
+
     <div id="image-modal" class="image-viewer-modal">
         <span class="close-viewer">&times;</span>
         <img class="viewer-content" id="full-res-image">
@@ -48,44 +87,31 @@
 
     <div id="cart-sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h3>Shopping Bag</h3>
+            <h3>Your Selection</h3>
             <button id="close-cart">&times;</button>
         </div>
         <div id="cart-items"></div>
         <div class="sidebar-footer">
-            <div class="total-row"><span>Subtotal</span><span id="cart-total">Rs. 0</span></div>
-            <button id="checkout-btn" class="checkout-btn">PLACE ORDER VIA WHATSAPP</button>
-        </div>
-    </div>
-
-    <div id="feedback-modal" class="feedback-modal-container">
-        <div class="feedback-content">
-            <span class="close-feedback">&times;</span>
-            <h2 class="modal-title">Share Your Experience</h2>
-            <form id="feedback-form" action="https://formspree.io/f/mqakpnvp" method="POST">
-                <input type="text" name="name" required placeholder="Full Name">
-                <input type="email" name="email" required placeholder="Email Address">
-                <textarea name="message" rows="4" required placeholder="Your message..."></textarea>
-                <button type="submit" class="submit-feedback">SUBMIT FEEDBACK</button>
-            </form>
-            <div id="form-status"></div>
+            <div class="total-row"><span>Total</span><span id="cart-total">Rs. 0</span></div>
+            <button id="checkout-btn" class="checkout-btn">ORDER VIA WHATSAPP</button>
         </div>
     </div>
 
     <footer class="footer">
         <div class="container footer-grid">
             <div class="footer-brand-area">
+                <img src="logo.png" alt="Logo" class="footer-logo" onerror="this.style.display='none'">
                 <h2 class="footer-brand">BANNADA DAARA</h2>
-                <p>Dakshina Kannada, Karnataka</p>
             </div>
-            <div class="footer-social">
+            <div class="footer-links">
+                <p>Dakshina Kannada, Karnataka</p>
+                <p>WhatsApp: +91 81057 50221</p>
                 <a href="https://instagram.com/bannada_daara" target="_blank" class="instagram-link">
                     <i class="fa-brands fa-instagram"></i> @bannada_daara
                 </a>
-                <p>WhatsApp: +91 81057 50221</p>
             </div>
             <div class="footer-actions">
-                <button id="footer-feedback-btn" class="feedback-trigger">TELL US WHAT YOU THINK</button>
+                <button id="footer-feedback-btn" class="feedback-trigger">SHARE FEEDBACK</button>
             </div>
         </div>
     </footer>
