@@ -19,8 +19,8 @@ function renderProducts(category = 'All', search = '') {
         <div class="product-card">
             <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x300?text=Handmade'">
             <h4 style="margin-top:15px; font-family: 'Cormorant Garamond', serif; font-size:1.4rem;">${p.name}</h4>
-            <p style="color:#c5a059; font-weight:600; margin-bottom:15px;">Rs. ${p.price}</p>
-            <button class="add-btn" style="width:100%; background:black; color:white; padding:12px; border:none; cursor:pointer;" onclick="window.addToCart(${p.id})">ADD TO BAG</button>
+            <p style="color:#d4af37; font-weight:600; margin-bottom:15px;">Rs. ${p.price}</p>
+            <button style="width:100%; background:black; color:white; padding:12px; border:none; cursor:pointer;" onclick="window.addToCart(${p.id})">ADD TO BAG</button>
         </div>
     `).join('');
 }
@@ -53,6 +53,10 @@ function updateUI() {
 function setupCartControls() {
     document.getElementById('cart-toggle').onclick = () => document.getElementById('cart-sidebar').classList.add('open');
     document.getElementById('close-cart').onclick = () => document.getElementById('cart-sidebar').classList.remove('open');
+    document.getElementById('checkout-btn').onclick = () => {
+        const list = cart.map(i => `- ${i.name}`).join('%0A');
+        window.open(`https://wa.me/918105750221?text=New Order:%0A${list}`, '_blank');
+    };
 }
 
 function setupFilters() {
