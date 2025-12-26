@@ -6,8 +6,7 @@
     <title>Bannada Daara | Premium Handcrafted Shop</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;600&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,40 +14,40 @@
     <header class="navbar">
         <div class="container nav-content">
             <div class="brand">
-                <img src="logo.png" alt="Logo" class="nav-logo" onerror="this.src='https://via.placeholder.com/45x45?text=BD'">
+                <img src="images/logo.png" alt="Logo" class="nav-logo" onerror="this.src='https://via.placeholder.com/50x50?text=BD'">
                 <div class="brand-text">
-                    <span class="main-title">Bannada Daara</span>
-                    <span class="sub-title">Handmade & Sustainable</span>
+                    <span class="main-title">BANNADA DAARA</span>
+                    <span class="sub-title">Handmade & Sustainable Luxuries</span>
                 </div>
             </div>
             
             <div class="search-container">
-                <input type="text" id="search-bar" placeholder="Search products...">
+                <input type="text" id="search-bar" placeholder="Search the collection...">
             </div>
 
             <div class="nav-actions">
-                <button id="cart-toggle" class="bag-btn">BAG (<span id="cart-count">0</span>)</button>
+                <button id="cart-toggle" class="bag-btn">MY BAG (<span id="cart-count">0</span>)</button>
             </div>
         </div>
     </header>
 
-    <section class="hero-section" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('hero-bg.jpg') center/cover no-repeat;">
+    <section class="hero-section" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/hero-bg.jpg') center/cover no-repeat;">
         <div class="hero-overlay">
             <div class="container">
                 <h1 class="hero-title">Artistry in Every Stitch</h1>
                 <p class="hero-subtitle">Premium Handcrafted Treasures from Dakshina Kannada</p>
-                <a href="#product-list" class="hero-btn">SHOP COLLECTION</a>
+                <a href="#product-list" class="hero-btn">DISCOVER THE COLLECTION</a>
             </div>
         </div>
     </section>
 
     <nav class="category-bar">
         <div class="container cat-flex">
-            <button class="cat-item active" data-cat="All">All Items</button>
-            <button class="cat-item" data-cat="Bags">Bags</button>
-            <button class="cat-item" data-cat="Pouches">Pouches</button>
-            <button class="cat-item" data-cat="Stationery">Stationery</button>
-            <button class="cat-item" data-cat="Accessories">Accessories</button>
+            <button class="cat-item active" data-cat="All">NEW ARRIVALS</button>
+            <button class="cat-item" data-cat="Bags">BAGS</button>
+            <button class="cat-item" data-cat="Pouches">POUCHES</button>
+            <button class="cat-item" data-cat="Stationery">STATIONERY</button>
+            <button class="cat-item" data-cat="Accessories">ACCESSORIES</button>
         </div>
     </nav>
 
@@ -58,15 +57,25 @@
 
     <div id="cart-sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h3>Your Selection</h3>
+            <h3>YOUR SELECTION</h3>
             <button id="close-cart">&times;</button>
         </div>
         <div id="cart-items"></div>
         <div class="sidebar-footer">
-            <div class="total-row"><span>Total</span><span id="cart-total">Rs. 0</span></div>
-            <button id="checkout-btn" class="checkout-btn">ORDER VIA WHATSAPP</button>
+            <div class="total-row"><span>SUBTOTAL</span><span id="cart-total">Rs. 0</span></div>
+            <button id="checkout-btn" class="checkout-btn">ENQUIRE VIA WHATSAPP</button>
         </div>
     </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-brand-area">
+                <img src="images/logo.png" alt="Logo" class="footer-logo" onerror="this.style.display='none'">
+                <h2 class="footer-brand">BANNADA DAARA</h2>
+            </div>
+            <p>Dakshina Kannada, Karnataka | WhatsApp: +91 81057 50221</p>
+        </div>
+    </footer>
 
     <script type="module" src="script.js"></script>
 </body>
