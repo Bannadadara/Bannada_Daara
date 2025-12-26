@@ -2,7 +2,6 @@ import { products } from './data.js';
 
 let cart = JSON.parse(localStorage.getItem('bd_cart')) || [];
 let activeCat = 'All';
-let activeSort = 'default';
 
 function init() {
     render();
@@ -13,32 +12,23 @@ function init() {
 function render() {
     let list = [...products];
 
-    // 1. Filter Category
-    if (activeCat !== 'All') {
-        list = list.filter(p => p.category === activeCat);
-    }
+    // Filter by Category
+    if (activeCat !== 'All') list = list.filter(p => p.category === activeCat);
 
-    // 2. Search query
-    const query = document.getElementById('main-search').value.toLowerCase();
-    if (query) {
-        list = list.filter(p => p.name.toLowerCase().includes(query));
-    }
-
-    // 3. Sorting
-    if (activeSort === 'low') {
-        list.sort((a, b) => (a.on_request ? 9999 : a.price) - (b.on_request ? 9999 : b.price));
-    } else if (activeSort === 'high') {
-        list.sort((a, b) => (b.on_request ? 0 : b.price) - (a.on_request ? 0 : a.price));
-    }
+    // Search Filter
+    const query = document.getElementById('search-bar').value.toLowerCase();
+    if (query) list = list.filter(p => p.name.toLowerCase().includes(query));
 
     const grid = document.getElementById('product-list');
     grid.innerHTML = list.map(p => `
         <div class="product-card">
-            <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x300?text=Handmade'">
-            <div class="p-category" style="font-size:0.7rem; color:var(--amazon-gold-hover); font-weight:700; text-transform:uppercase; margin-top:10px;">${p.category}</div>
-            <h3>${p.name}</h3>
-            <div class="card-price">${p.on_request ? 'Price on Request' : '₹' + p.price}</div>
-            <button class="add-btn" onclick="addToBag(${p.id})">ADD TO BAG</button>
+            <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x300?text=Handmade'">
+            <div style="margin-top:10px;">
+                <p style="font-size:0.7rem; color:var(--gold); font-weight:700;">${p.category}</p>
+                <h3 style="font-family:var(--heading-font); font-size:1.4rem;">${p.name}</h3>
+                <p>Rs. ${p.on_request ? 'On Request' : p.price}</p>
+                <button class="add-btn" onclick="addToBag(${p.id})">ADD TO BAG</button>
+            </div>
         </div>
     `).join('');
 }
@@ -48,26 +38,19 @@ window.addToBag = (id) => {
     cart.push(prod);
     localStorage.setItem('bd_cart', JSON.stringify(cart));
     updateUI();
-    showToast(`${prod.name} added!`);
 };
 
 function updateUI() {
     document.getElementById('cart-count').innerText = cart.length;
     const body = document.getElementById('cart-items');
-    
     body.innerHTML = cart.map((item, index) => `
-        <div style="display:flex; gap:15px; padding-bottom:15px; border-bottom:1px solid #eee; margin-bottom:15px;">
-            <img src="${item.img}" style="width:60px; height:60px; object-fit:cover; border-radius:4px;">
-            <div style="flex:1;">
-                <p style="font-weight:600; font-size:0.9rem;">${item.name}</p>
-                <p>${item.on_request ? 'On Request' : '₹' + item.price}</p>
-            </div>
-            <button onclick="removeItem(${index})" style="background:none; border:none; color:red; cursor:pointer; font-size:1.2rem;">&times;</button>
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;">
+            <span>${item.name}</span>
+            <button onclick="removeItem(${index})" style="color:red; background:none; border:none; cursor:pointer;">&times;</button>
         </div>
     `).join('');
-
-    const total = cart.reduce((sum, item) => sum + (item.on_request ? 0 : item.price), 0);
-    document.getElementById('cart-total').innerText = `₹${total}`;
+    const total = cart.reduce((sum, item) => sum + (item.price || 0), 0);
+    document.getElementById('cart-total').innerText = `Rs. ${total}`;
 }
 
 window.removeItem = (idx) => {
@@ -76,44 +59,30 @@ window.removeItem = (idx) => {
     updateUI();
 };
 
-function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.innerText = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3000);
-}
-
 function attachEvents() {
-    // Search
-    document.getElementById('main-search').oninput = () => render();
-
-    // Sort
-    document.getElementById('sort-select').onchange = (e) => {
-        activeSort = e.target.value;
-        render();
-    };
-
-    // Category Filter
-    document.querySelectorAll('.cat-btn').forEach(btn => {
+    document.getElementById('search-bar').oninput = render;
+    
+    document.querySelectorAll('.cat-item').forEach(btn => {
         btn.onclick = () => {
-            document.querySelector('.cat-btn.active').classList.remove('active');
+            document.querySelector('.cat-item.active').classList.remove('active');
             btn.classList.add('active');
             activeCat = btn.dataset.cat;
             render();
         };
     });
 
-    // Modal & Sidebar Toggles
+    // Modal Events
     document.getElementById('story-trigger').onclick = () => document.getElementById('story-modal').classList.add('open');
     document.getElementById('close-story').onclick = () => document.getElementById('story-modal').classList.remove('open');
+    
+    // Sidebar Events
     document.getElementById('cart-toggle').onclick = () => document.getElementById('cart-sidebar').classList.add('open');
     document.getElementById('close-cart').onclick = () => document.getElementById('cart-sidebar').classList.remove('open');
-}
 
-window.checkout = () => {
-    if (cart.length === 0) return alert("Bag is empty!");
-    const text = cart.map(i => `- ${i.name} (${i.on_request ? 'Requesting Quote' : '₹' + i.price})`).join('%0A');
-    window.open(`https://wa.me/918105750221?text=New Order Request from Bannada Daara:%0A${text}`, '_blank');
-};
+    document.getElementById('checkout-btn').onclick = () => {
+        const text = cart.map(i => `- ${i.name}`).join('%0A');
+        window.open(`https://wa.me/918105750221?text=New Order:%0A${text}`, '_blank');
+    };
+}
 
 init();
