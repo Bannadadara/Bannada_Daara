@@ -1,55 +1,46 @@
 :root {
     --gold: #c5a059;
     --black: #0a0a0a;
-    --bg-light: #f9f9f9;
+    --bg-light: #f7f7f7;
     --heading-font: 'Cormorant Garamond', serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Montserrat', sans-serif; background: var(--bg-light); color: #1a1a1a; scroll-behavior: smooth; overflow-x: hidden; }
-.container { max-width: 1200px; margin: auto; width: 90%; }
+body { font-family: 'Montserrat', sans-serif; background: var(--bg-light); color: #1a1a1a; scroll-behavior: smooth; }
+.container { max-width: 1200px; margin: auto; width: 92%; }
 
-/* Navbar */
-.navbar { background: var(--black); color: white; padding: 15px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-.nav-content { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+/* NAVBAR */
+.navbar { background: var(--black); color: white; padding: 15px 0; position: sticky; top: 0; z-index: 1000; }
+.nav-content { display: flex; align-items: center; justify-content: space-between; }
 .main-title { font-family: var(--heading-font); font-size: 1.8rem; color: var(--gold); letter-spacing: 2px; }
-.search-container { flex: 1; max-width: 400px; }
-.search-container input { width: 100%; padding: 10px; border-radius: 4px; border: none; outline: none; }
-.bag-btn { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; cursor: pointer; font-weight: 700; white-space: nowrap; }
 
-/* Product Grid */
-.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; padding: 50px 0; }
-.product-card { background: white; padding: 15px; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; }
-.product-card:hover { transform: translateY(-5px); }
-.image-box { position: relative; overflow: hidden; cursor: zoom-in; }
-.product-card img { width: 100%; height: 320px; object-fit: cover; transition: 0.5s; }
-.product-card:hover img { transform: scale(1.05); }
+/* FEEDBACK MODAL */
+.feedback-content {
+    background: white; margin: 10% auto; padding: 30px;
+    width: 90%; max-width: 500px; border-radius: 8px; position: relative;
+}
+.close-feedback { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #888; }
+.form-group { margin-bottom: 15px; text-align: left; }
+.form-group label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 5px; }
+.form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
 
-/* Overlay Buttons */
-.view-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.9); border: none; padding: 8px 12px; font-size: 0.7rem; font-weight: 700; cursor: pointer; border-radius: 3px; }
-.share-btn { position: absolute; bottom: 10px; right: 10px; background: var(--gold); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+/* FOOTER GRID */
+.footer { background: var(--black); color: white; padding: 60px 0; }
+.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; align-items: center; text-align: center; }
+.instagram-link { color: white; text-decoration: none; margin-top: 10px; display: inline-block; }
 
-/* Sidebar & Modal UI */
-.sidebar { position: fixed; right: -400px; top: 0; width: 400px; height: 100%; background: white; z-index: 2000; transition: 0.4s; display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,0.2); }
-.sidebar.open { right: 0; }
-.sidebar-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
-.checkout-btn { width: 100%; background: #25D366; color: white; border: none; padding: 18px; font-weight: 700; cursor: pointer; font-size: 1rem; }
-
-/* Image Viewer Lightbox */
+/* SHARED COMPONENTS */
 .image-viewer-modal { display: none; position: fixed; z-index: 5000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); }
-.viewer-content { margin: auto; display: block; width: 85%; max-width: 800px; max-height: 80vh; object-fit: contain; margin-top: 50px; }
-.close-viewer { position: absolute; top: 20px; right: 30px; color: white; font-size: 50px; cursor: pointer; }
+.viewer-content { margin: auto; display: block; width: 80%; max-width: 800px; max-height: 80vh; object-fit: contain; padding-top: 60px; }
+.close-viewer { position: absolute; top: 30px; right: 35px; color: white; font-size: 40px; cursor: pointer; }
+#viewer-caption { text-align: center; color: var(--gold); font-family: var(--heading-font); font-size: 1.5rem; margin-top: 15px; }
 
-/* Footer */
-.footer { background: var(--black); color: white; padding: 80px 0 30px; margin-top: 100px; }
-.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: center; }
-.footer-brand { font-family: var(--heading-font); color: var(--gold); font-size: 2.2rem; }
-.instagram-link { color: white; text-decoration: none; font-size: 1.2rem; display: block; margin-bottom: 10px; }
-.feedback-trigger { background: transparent; border: 2px solid var(--gold); color: var(--gold); padding: 12px 25px; cursor: pointer; font-weight: 700; transition: 0.3s; }
-.feedback-trigger:hover { background: var(--gold); color: black; }
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; padding: 50px 0; }
+.product-card { background: white; padding: 15px; border: 1px solid #eee; border-radius: 4px; transition: 0.3s; }
+.product-card img { width: 100%; height: 280px; object-fit: cover; }
+.add-btn { flex: 4; background: var(--black); color: white; border: none; padding: 12px; cursor: pointer; font-weight: 600; width: 100%; }
+.share-btn { background: #f0f0f0; border: none; padding: 10px; cursor: pointer; border-radius: 4px; }
 
-/* Feedback Form UI */
-.feedback-modal-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 6000; }
-.feedback-content { background: white; padding: 40px; max-width: 500px; margin: 100px auto; border-radius: 8px; position: relative; }
-.feedback-content input, .feedback-content textarea { width: 100%; margin-bottom: 15px; padding: 12px; border: 1px solid #ddd; border-radius: 4px; }
-.submit-feedback { width: 100%; background: var(--black); color: white; padding: 15px; border: none; font-weight: 700; cursor: pointer; }
+.sidebar { position: fixed; right: -400px; top: 0; width: 400px; height: 100%; background: white; z-index: 2000; transition: 0.4s; display: flex; flex-direction: column; }
+.sidebar.open { right: 0; }
+.checkout-btn { width: 100%; background: #25D366; color: white; border: none; padding: 15px; font-weight: 700; cursor: pointer; }
