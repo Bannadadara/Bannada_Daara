@@ -13,17 +13,20 @@
     <header class="navbar">
         <div class="container nav-content">
             <div class="brand">
-                <img src="logo.png" alt="Logo" class="nav-logo" onerror="this.style.display='none'">
+                <img src="logo.png" alt="Logo" class="nav-logo" onerror="this.src='https://via.placeholder.com/45x45?text=BD'">
                 <div class="brand-text">
                     <span class="main-title">Bannada Daara</span>
                     <span class="sub-title">Handmade & Sustainable</span>
                 </div>
             </div>
+            
             <div class="search-container">
                 <input type="text" id="search-bar" placeholder="Search for products...">
-                <button class="search-btn">🔍</button>
             </div>
-            <button id="cart-toggle" class="bag-btn">BAG (<span id="cart-count">0</span>)</button>
+
+            <div class="nav-actions">
+                <button id="cart-toggle" class="bag-btn">BAG (<span id="cart-count">0</span>)</button>
+            </div>
         </div>
     </header>
 
@@ -31,7 +34,7 @@
         <div class="hero-overlay">
             <div class="container">
                 <h1 class="hero-title">Artistry in Every Stitch</h1>
-                <p class="hero-subtitle">Handcrafted Treasures from Dakshina Kannada</p>
+                <p class="hero-subtitle">Premium Handcrafted Treasures from Dakshina Kannada</p>
                 <a href="#product-list" class="hero-btn">SHOP COLLECTION</a>
             </div>
         </div>
@@ -56,11 +59,11 @@
             <div class="about-text">
                 <span class="section-tag">Our Story</span>
                 <h2 class="section-title">Sustainable by Choice.</h2>
-                <p>Bannada Daara transforms upcycled fabrics into premium treasures.</p>
+                <p class="about-intro">Bannada Daara transforms upcycled fabrics into premium treasures.</p>
                 <div id="about-more-content" class="hidden-content">
-                    <p>Every piece is unique. We believe in slow fashion and handcrafted beauty.</p>
+                    <p>Every piece is unique. We believe in slow fashion and supporting local artisans through ethical production.</p>
                 </div>
-                <button id="read-more-btn" class="read-more-link">READ OUR STORY</button>
+                <button id="read-more-btn" class="read-more-link">READ OUR FULL STORY</button>
             </div>
         </div>
     </section>
@@ -72,14 +75,14 @@
     <div id="feedback-modal" class="image-viewer-modal">
         <div class="feedback-content">
             <span class="close-feedback">&times;</span>
-            <h2 style="font-family: var(--heading-font); color: var(--gold); margin-bottom: 15px;">Feedback</h2>
+            <h2 style="font-family: var(--heading-font); color: var(--gold); margin-bottom: 15px;">Customer Feedback</h2>
             <form id="feedback-form" action="https://formspree.io/f/mqakpnvp" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required style="width:100%; margin-bottom:10px; padding:10px;">
-                <input type="email" name="email" placeholder="Email" required style="width:100%; margin-bottom:10px; padding:10px;">
-                <textarea name="message" rows="4" placeholder="Your Message" required style="width:100%; margin-bottom:10px; padding:10px;"></textarea>
-                <button type="submit" class="add-btn">SEND</button>
+                <input type="text" name="name" placeholder="Your Name" required style="width:100%; padding:10px; margin-bottom:10px;">
+                <input type="email" name="email" placeholder="Email Address" required style="width:100%; padding:10px; margin-bottom:10px;">
+                <textarea name="message" placeholder="How can we improve?" rows="4" required style="width:100%; padding:10px; margin-bottom:10px;"></textarea>
+                <button type="submit" class="add-btn" style="width:100%;">SEND FEEDBACK</button>
             </form>
-            <div id="form-status" style="margin-top: 15px;"></div>
+            <div id="form-status" style="margin-top: 15px; font-weight: 600; text-align: center;"></div>
         </div>
     </div>
 
@@ -90,27 +93,28 @@
     </div>
 
     <div id="cart-sidebar" class="sidebar">
-        <div class="sidebar-header"><h3>Bag</h3><button id="close-cart">&times;</button></div>
+        <div class="sidebar-header">
+            <h3>Your Selection</h3>
+            <button id="close-cart">&times;</button>
+        </div>
         <div id="cart-items"></div>
         <div class="sidebar-footer">
             <div class="total-row"><span>Total</span><span id="cart-total">Rs. 0</span></div>
-            <button id="checkout-btn" class="checkout-btn">WHATSAPP ORDER</button>
+            <button id="checkout-btn" class="checkout-btn">ORDER VIA WHATSAPP</button>
         </div>
     </div>
 
     <footer class="footer">
-        <div class="container footer-grid">
-            <div>
+        <div class="container">
+            <div class="footer-brand-area">
+                <img src="logo.png" alt="Logo" class="footer-logo" onerror="this.src='https://via.placeholder.com/60x60?text=BD'">
                 <h2 class="footer-brand">BANNADA DAARA</h2>
+            </div>
+            <div class="footer-contact">
                 <p>Dakshina Kannada, Karnataka</p>
-            </div>
-            <div>
-                <a href="https://instagram.com/bannada_daara" target="_blank" style="color:white; text-decoration:none;">
-                    <i class="fa-brands fa-instagram"></i> @bannada_daara
-                </a>
                 <p>WhatsApp: +91 81057 50221</p>
+                <button id="footer-feedback-btn" class="feedback-trigger">SHARE FEEDBACK</button>
             </div>
-            <button id="footer-feedback-btn" class="feedback-trigger">FEEDBACK</button>
         </div>
     </footer>
 
