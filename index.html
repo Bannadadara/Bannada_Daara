@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bannada Daara | Premium Handcrafted Shop</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,8 +20,7 @@
             </div>
             
             <div class="search-container">
-                <input type="text" id="search-bar" placeholder="Search for products...">
-                <button class="search-btn">🔍</button>
+                <input type="text" id="search-bar" placeholder="Search handcrafted items...">
             </div>
 
             <div class="nav-actions">
@@ -32,76 +31,45 @@
 
     <section class="hero-section">
         <div class="hero-overlay">
-            <div class="container">
-                <h1 class="hero-title">Artistry in Every Stitch</h1>
-                <p class="hero-subtitle">Premium Handcrafted Treasures from Dakshina Kannada</p>
-                <a href="#product-list" class="hero-btn">SHOP COLLECTION</a>
-            </div>
+            <h1>Artistry in Every Thread</h1>
+            <p>Sustainable, Handcrafted, and Made with Love</p>
+            <a href="#product-list" class="shop-now-btn">Explore Collection</a>
         </div>
     </section>
 
-    <nav class="category-bar">
+    <div class="category-strip">
         <div class="container cat-flex">
-            <button class="cat-item active" data-cat="All">All Items</button>
+            <button class="cat-item active" data-cat="All">All</button>
             <button class="cat-item" data-cat="Bags">Bags</button>
             <button class="cat-item" data-cat="Pouches">Pouches</button>
             <button class="cat-item" data-cat="Stationery">Stationery</button>
-            <button class="cat-item" data-cat="Accessories">Accessories</button>
-            <button class="cat-item" data-cat="Decor">Decor</button>
+            <button class="cat-item" data-cat="Hair Accessories">Accessories</button>
         </div>
-    </nav>
-
-    <section id="about" class="about-section">
-        <div class="container about-grid">
-            <div class="about-image reveal">
-                <img src="images/about.jpg" alt="Our Craft" onerror="this.src='https://via.placeholder.com/600x500?text=Handcrafted+Art'">
-                <div class="image-accent"></div>
-            </div>
-            <div class="about-text reveal">
-                <span class="section-tag">Our Story</span>
-                <h2 class="section-title">Sustainable by Choice.</h2>
-                <p class="about-intro">Bannada Daara transforms upcycled fabrics into premium treasures.</p>
-                <div id="about-more-content" class="hidden-content">
-                    <p>Every piece in our collection is unique. We believe in slow fashion and the beauty of handcrafted details, ensuring that every bag and pouch supports local artisans and a greener planet.</p>
-                </div>
-                <button id="read-more-btn" class="read-more-link">READ OUR FULL STORY</button>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <main class="container">
         <div class="product-grid" id="product-list"></div>
     </main>
 
-    <div id="image-modal" class="image-viewer-modal">
-        <span class="close-viewer">&times;</span>
-        <img class="viewer-content" id="full-res-image">
-        <div id="viewer-caption"></div>
-    </div>
-
     <div id="cart-sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h3>Your Selection</h3>
+            <h3>Shopping Bag</h3>
             <button id="close-cart">&times;</button>
         </div>
         <div id="cart-items"></div>
         <div class="sidebar-footer">
-            <div class="total-row"><span>Total</span><span id="cart-total">Rs. 0</span></div>
+            <div class="total-row"><span>Total</span><span id="cart-total">₹0</span></div>
             <button id="checkout-btn" class="checkout-btn">ORDER VIA WHATSAPP</button>
         </div>
     </div>
 
+    <div id="toast">Item added to bag!</div>
+
     <footer class="footer">
         <div class="container">
-            <div class="footer-brand-area">
-                <img src="logo.png" alt="Logo" class="footer-logo" onerror="this.style.display='none'">
-                <h2 class="footer-brand">BANNADA DAARA</h2>
-            </div>
-            <div class="footer-contact">
-                <p>Dakshina Kannada, Karnataka</p>
-                <p>WhatsApp: +91 81057 50221</p>
-                <button id="footer-feedback-btn" class="feedback-trigger">SHARE FEEDBACK</button>
-            </div>
+            <h2 class="footer-brand">BANNADA DAARA</h2>
+            <p>Handcrafted in Dakshina Kannada, Karnataka</p>
+            <p>Contact: +91 81057 50221</p>
         </div>
     </footer>
 
