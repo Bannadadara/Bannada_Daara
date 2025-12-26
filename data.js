@@ -29,6 +29,6 @@ export const products = [
     // ACCESSORIES & DECOR
     { id: 21, name: "Cutlery Kit", price: 260, category: "Accessories", img: "images/cutlery.jpg" },
     { id: 22, name: "Mask", price: 50, category: "Accessories", img: "images/mask.jpg" },
-    { id: 23, name: "Patch-work Quilt", price: 0, category: "Decor", img: "images/quilt.jpg", on_request: true },
-    { id: 24, name: "Patch-work Table Cloth", price: 0, category: "Decor", img: "images/tcloth.jpg", on_request: true }
+    { id: 23, name: "Patch-work Quilt", price: "As per order request", category: "Decor", img: "images/quilt.jpg", on_request: true },
+    { id: 24, name: "Patch-work Table Cloth", price: "As per order request", category: "Decor", img: "images/tcloth.jpg", on_request: true }
 ];
