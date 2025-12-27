@@ -54,8 +54,7 @@
             </div>
         </nav>
 
-        <div class="product-grid" id="product-list">
-            </div>
+        <div class="product-grid" id="product-list"></div>
     </main>
 
     <section class="about-premium">
@@ -64,10 +63,10 @@
             <span class="section-tag">OUR STORY</span>
             <h2 class="section-title">Sustainable by Choice.</h2>
             <p>Bannada Daara transforms upcycled fabrics into premium treasures. Every piece in our collection is unique, supporting local artisans and a greener planet through slow fashion.</p>
-            <div id="about-more-content" class="hidden-content">
+            <div id="about-more-content" class="hidden-content" style="display: none;">
                 <p>Rooted in the heart of Dakshina Kannada, we bridge the gap between traditional craftsmanship and modern utility.</p>
             </div>
-            <button id="read-more-btn" class="gold-outline-btn">READ FULL STORY</button>
+            <button id="read-more-btn" class="gold-outline-btn">READ OUR FULL STORY</button>
         </div>
     </section>
 
@@ -79,13 +78,13 @@
 
     <div id="cart-sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h3>Your Bag</h3>
+            <h3>Your Selection</h3>
             <button id="close-cart">&times;</button>
         </div>
         <div id="cart-items" class="cart-items-container"></div>
         <div class="sidebar-footer">
-            <div class="total-row">
-                <span>Subtotal</span>
+            <div class="total-row" style="display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: 600;">
+                <span>Total</span>
                 <span id="cart-total">Rs. 0</span>
             </div>
             <button id="checkout-btn" class="checkout-btn">ORDER VIA WHATSAPP</button>
@@ -96,11 +95,11 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand-side">
-                    <div class="brand" style="justify-content: center;">
-                        <img src="images/logo.png" alt="Logo" class="footer-logo">
-                        <span class="main-title">Bannada Daara</span>
+                    <div class="brand" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <img src="images/logo.png" alt="Logo" class="footer-logo" style="height: 30px; width: auto;">
+                        <span class="main-title" style="font-size: 1.4rem;">Bannada Daara</span>
                     </div>
-                    <p>Dakshina Kannada, Karnataka</p>
+                    <p style="margin-top: 10px; color: #888;">Dakshina Kannada, Karnataka</p>
                 </div>
                 <div class="footer-social">
                     <p>Follow our journey:</p>
