@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bannada Daara | Premium Handcrafted Shop</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,7 +13,7 @@
     <header class="navbar">
         <div class="container nav-content">
             <div class="brand">
-                <img src="images/logo.png" alt="Logo" class="nav-logo">
+                <img src="images/logo.png" alt="Logo" class="nav-logo" onerror="this.style.display='none'">
                 <div class="brand-text">
                     <span class="main-title">Bannada Daara</span>
                     <span class="sub-title">Handmade & Sustainable</span>
@@ -21,17 +21,15 @@
             </div>
             
             <div class="search-container">
-                <input type="text" id="search-bar" placeholder="Search premium items...">
-                <select id="sort-select" class="sort-dropdown">
-                    <option value="default">Sort By</option>
-                    <option value="low">Price: Low to High</option>
-                    <option value="high">Price: High to Low</option>
-                </select>
+                <input type="text" id="search-bar" placeholder="Search premium handcrafts...">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
             </div>
 
             <div class="nav-actions">
                 <button id="cart-toggle" class="bag-btn">
-                    <i class="fas fa-shopping-bag"></i> <span>BAG</span> (<span id="cart-count">0</span>)
+                    <i class="fas fa-shopping-bag"></i> 
+                    <span class="cart-label">BAG</span>
+                    <span id="cart-count">0</span>
                 </button>
             </div>
         </div>
@@ -39,13 +37,10 @@
 
     <section class="hero-section">
         <div class="hero-overlay">
-            <div class="container animate-up">
-                <h1 class="hero-title">Artistry in Every Stitch</h1>
-                <p class="hero-subtitle">Premium Handcrafted Treasures from Dakshina Kannada</p>
-                <div class="hero-btns">
-                    <a href="#product-list" class="gold-btn">EXPLORE COLLECTION</a>
-                    <button onclick="toggleLegacy()" class="outline-btn">OUR LEGACY</button>
-                </div>
+            <div class="container hero-content">
+                <h1 class="hero-title animate-up">Artistry in Every Stitch</h1>
+                <p class="hero-subtitle animate-up-delay">Premium Handcrafted Treasures from Dakshina Kannada</p>
+                <a href="#product-list" class="hero-btn animate-up-delay-2">EXPLORE COLLECTION <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </section>
@@ -61,27 +56,34 @@
         </div>
     </nav>
 
-    <div id="legacy-page" class="legacy-overlay">
-        <button class="close-legacy" onclick="toggleLegacy()">&times;</button>
-        <div class="legacy-content">
-            <h2 class="section-title gold-text">OUR LEGACY</h2>
-            <p>From the heart of Dakshina Kannada, we bring generations of craftsmanship into the modern home.</p>
-        </div>
-    </div>
-
     <section id="about" class="about-section">
         <div class="container about-grid">
-            <div class="about-text animate-reveal">
-                <span class="section-tag gold-text">Our Story</span>
-                <h2 class="section-title">Sustainable by Choice.</h2>
+            <div class="about-text">
+                <span class="section-tag">Since 2024</span>
+                <h2 class="section-title">Sustainable by Choice</h2>
                 <p>Bannada Daara transforms upcycled fabrics into premium treasures. We believe in slow fashion and the beauty of handcrafted details.</p>
+                <div class="about-actions">
+                    <button id="legacy-btn" class="gold-outline-btn">OUR LEGACY <i class="fas fa-history"></i></button>
+                </div>
             </div>
         </div>
     </section>
 
     <main class="container">
+        <div class="filter-status">
+            <span id="items-found">24 Products Found</span>
+        </div>
         <div class="product-grid" id="product-list"></div>
     </main>
+
+    <div id="legacy-modal" class="custom-modal">
+        <div class="modal-content legacy-box animate-pop">
+            <span class="close-modal" id="close-legacy">&times;</span>
+            <h3>Our Legacy</h3>
+            <p>Rooted in the heart of Dakshina Kannada, our journey began with a single needle and a vision to revive traditional stitching while protecting our environment.</p>
+            <p>Today, every stitch tells a story of empowerment and sustainability.</p>
+        </div>
+    </div>
 
     <div id="image-modal" class="image-viewer-modal">
         <span class="close-viewer">&times;</span>
@@ -94,17 +96,15 @@
             <h3><i class="fas fa-shopping-cart"></i> Your Selection</h3>
             <button id="close-cart">&times;</button>
         </div>
-        <div id="cart-items" class="cart-scroll"></div>
+        <div id="cart-items" class="cart-items-container"></div>
         <div class="sidebar-footer">
             <div class="total-row">
-                <span>Total Amount</span>
-                <span id="cart-total" class="gold-text">Rs. 0</span>
+                <span>Subtotal</span>
+                <span id="cart-total">Rs. 0</span>
             </div>
-            <div class="cart-action-btns">
-                <button onclick="clearCart()" class="remove-all-btn"><i class="fas fa-trash"></i> REMOVE ALL</button>
-                <button id="checkout-btn" class="gold-btn checkout-btn">
-                    <i class="fab fa-whatsapp"></i> ORDER VIA WHATSAPP
-                </button>
+            <div class="cart-actions">
+                <button id="clear-cart" class="clear-btn"><i class="fas fa-trash-alt"></i> REMOVE ALL</button>
+                <button id="checkout-btn" class="checkout-btn">ORDER VIA WHATSAPP <i class="fab fa-whatsapp"></i></button>
             </div>
         </div>
     </div>
@@ -112,19 +112,21 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-brand-side">
-                    <div class="brand">
-                        <img src="images/logo.png" alt="Logo" class="nav-logo">
+                <div class="footer-brand-area">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px;">
+                        <img src="images/logo.png" alt="Logo" class="footer-logo">
                         <h2 class="footer-brand">BANNADA DAARA</h2>
                     </div>
-                    <p>Handcrafted Excellence.</p>
+                    <p>Authentic Handcrafted Artistry</p>
                 </div>
-                <div class="footer-contact">
-                    <p class="gold-text"><i class="fab fa-instagram"></i> @Bannada_Daara</p>
-                    <p>Dakshina Kannada, Karnataka</p>
-                    <button onclick="window.open('https://wa.me/918105750221?text=Hi, I have feedback about my purchase...') " class="feedback-trigger gold-btn">SHARE FEEDBACK</button>
+                <div class="footer-social">
+                    <a href="https://instagram.com/bannadadaara" target="_blank" class="insta-link">
+                        <i class="fab fa-instagram"></i> @bannadadaara
+                    </a>
+                    <button id="feedback-btn" class="feedback-trigger">SHARE FEEDBACK <i class="fab fa-whatsapp"></i></button>
                 </div>
             </div>
+            <p class="copyright">© 2025 Bannada Daara. Sustainable & Handcrafted.</p>
         </div>
     </footer>
 
