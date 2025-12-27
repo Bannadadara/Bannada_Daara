@@ -1,17 +1,15 @@
 import { products } from './data.js';
 
-let cart = JSON.parse(localStorage.getItem('bd-cart')) || [];
+let cart = JSON.parse(localStorage.getItem('bannada_cart')) || [];
 
 function init() {
     renderProducts();
     setupCartControls();
-    setupFilters();
-    setupImageViewer();
-    setupLegacyPopup();
-    updateUI();
+    setupUIInteractions();
+    updateCartDisplay();
 }
 
-// RENDER PRODUCTS
+// 1. RESOLVE NaN & DISPLAY PRICE LOGIC
 function renderProducts(category = 'All', search = '') {
     const list = document.getElementById('product-list');
     const filtered = products.filter(p => 
@@ -19,143 +17,115 @@ function renderProducts(category = 'All', search = '') {
         p.name.toLowerCase().includes(search.toLowerCase())
     );
 
-    document.getElementById('items-found').innerText = `${filtered.length} Products Found`;
-
     list.innerHTML = filtered.map(p => {
-        // Fix NaN and Zero Price Logic
-        const isRequest = p.on_request || p.price <= 0;
-        const displayPrice = isRequest ? "As per order request" : `Rs. ${p.price}`;
-        
+        // Fix: If value is 0 or NaN, label as "As per order request"
+        const isRequest = !p.price || p.price <= 0 || isNaN(p.price);
+        const priceTag = isRequest ? "As per order request" : `Rs. ${p.price}`;
+
         return `
         <div class="product-card">
-            <div class="card-image-wrapper">
-                <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x300?text=Handmade'">
-                <button class="view-overlay-btn" onclick="window.openViewer('${p.img}', '${p.name}')">
-                    <i class="fas fa-expand"></i>
-                </button>
+            <div style="position:relative;">
+                <img src="${p.img}" alt="${p.name}" loading="lazy">
+                <button class="view-btn" onclick="window.viewImage('${p.img}')">VIEW PRODUCT</button>
             </div>
-            <div class="product-info">
-                <h4 class="product-name">${p.name}</h4>
-                <p class="product-price">${displayPrice}</p>
-                <div class="card-actions">
-                    <button class="add-btn" onclick="window.addToCart(${p.id})">
-                        <i class="fas fa-cart-plus"></i> ADD TO BAG
-                    </button>
-                    <button class="share-btn" onclick="window.shareProduct('${p.name}')">
-                        <i class="fas fa-share-alt"></i>
-                    </button>
-                </div>
+            <h4 style="font-family:'Cormorant Garamond'; font-size:1.3rem; margin:15px 0 5px;">${p.name}</h4>
+            <p style="color:#D4AF37; font-weight:700; margin-bottom:15px;">${priceTag}</p>
+            <div style="display:flex; gap:8px; margin-top:auto;">
+                <button class="add-btn" onclick="window.addToCart(${p.id})"><i class="fas fa-plus"></i> BAG</button>
+                <button class="share-btn" onclick="window.shareProduct('${p.name}')"><i class="fas fa-share-alt"></i></button>
             </div>
         </div>
     `}).join('');
 }
 
-// CART LOGIC
-window.addToCart = (id) => {
-    const product = products.find(p => p.id === id);
-    cart.push({...product});
-    saveAndSync();
-    document.getElementById('cart-sidebar').classList.add('open');
-};
-
-window.removeCartItem = (index) => {
-    cart.splice(index, 1);
-    saveAndSync();
-};
-
-function saveAndSync() {
-    localStorage.setItem('bd-cart', JSON.stringify(cart));
-    updateUI();
-}
-
-function updateUI() {
+// 2. ADVANCED CART CALCULATOR
+function updateCartDisplay() {
     const count = document.getElementById('cart-count');
     const itemsDiv = document.getElementById('cart-items');
     const totalDiv = document.getElementById('cart-total');
     
     count.innerText = cart.length;
-    
     itemsDiv.innerHTML = cart.map((item, idx) => `
-        <div class="cart-item">
+        <div style="display:flex; justify-content:space-between; border-bottom:1px solid #333; padding:15px 0;">
             <div>
                 <p style="font-weight:600; font-size:0.9rem;">${item.name}</p>
-                <p style="color:var(--gold); font-size:0.8rem;">${item.price > 0 ? 'Rs. '+item.price : 'On Request'}</p>
+                <p style="color:#D4AF37; font-size:0.8rem;">${item.price > 0 ? 'Rs.' + item.price : 'On Request'}</p>
             </div>
-            <button onclick="window.removeCartItem(${idx})" style="color:#ff4d4d; background:none; border:none; cursor:pointer;">
-                <i class="fas fa-times"></i>
-            </button>
+            <button onclick="window.removeFromCart(${idx})" style="background:none; border:none; color:red; cursor:pointer;">&times;</button>
         </div>
     `).join('');
 
+    // Automatic total (NaN-Safe)
     const total = cart.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
     totalDiv.innerText = `Rs. ${total}`;
 }
 
-// SETUP CONTROLS
+window.addToCart = (id) => {
+    const p = products.find(i => i.id === id);
+    cart.push({...p});
+    syncCart();
+    document.getElementById('cart-sidebar').classList.add('open');
+};
+
+window.removeFromCart = (idx) => {
+    cart.splice(idx, 1);
+    syncCart();
+};
+
+function syncCart() {
+    localStorage.setItem('bannada_cart', JSON.stringify(cart));
+    updateCartDisplay();
+}
+
+// 3. UI ACTIONS (LEGACY POPUP & SHARE)
+function setupUIInteractions() {
+    // Legacy Popup
+    const modal = document.getElementById('legacy-modal');
+    document.getElementById('legacy-open-btn').onclick = () => modal.style.display = 'flex';
+    document.getElementById('legacy-close').onclick = () => modal.style.display = 'none';
+
+    // Share Product
+    window.shareProduct = (name) => {
+        const text = `Check out this handcrafted ${name} from Bannada Daara!`;
+        if (navigator.share) {
+            navigator.share({ title: name, text: text, url: window.location.href });
+        } else {
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
+        }
+    };
+
+    // Feedback
+    document.getElementById('feedback-whatsapp').onclick = () => {
+        window.open(`https://wa.me/918105750221?text=Feedback regarding Bannada Daara:`, '_blank');
+    };
+}
+
 function setupCartControls() {
     document.getElementById('cart-toggle').onclick = () => document.getElementById('cart-sidebar').classList.add('open');
     document.getElementById('close-cart').onclick = () => document.getElementById('cart-sidebar').classList.remove('open');
     
-    document.getElementById('clear-cart').onclick = () => {
-        if(confirm("Are you sure you want to clear your bag?")) {
+    // Remove All Button
+    document.getElementById('remove-all-cart').onclick = () => {
+        if(confirm("Empty your bag?")) {
             cart = [];
-            saveAndSync();
+            syncCart();
         }
     };
 
-    document.getElementById('checkout-btn').onclick = () => {
-        if(cart.length === 0) return alert("Your bag is empty!");
-        const list = cart.map(i => `- ${i.name}`).join('%0A');
-        window.open(`https://wa.me/918105750221?text=New Order Request:%0A${list}`, '_blank');
+    // WhatsApp Order
+    document.getElementById('whatsapp-order').onclick = () => {
+        if(cart.length === 0) return alert("Bag is empty!");
+        const items = cart.map(i => `- ${i.name}`).join('%0A');
+        window.open(`https://wa.me/918105750221?text=Order Request:%0A${items}`, '_blank');
     };
 }
 
-function setupLegacyPopup() {
-    const modal = document.getElementById('legacy-modal');
-    document.getElementById('legacy-btn').onclick = () => modal.style.display = 'flex';
-    document.getElementById('close-legacy').onclick = () => modal.style.display = 'none';
-    window.onclick = (e) => { if(e.target == modal) modal.style.display = 'none'; };
-}
-
-window.shareProduct = (name) => {
-    const text = `Check out this handcrafted ${name} from Bannada Daara!`;
-    const url = window.location.href;
-    if (navigator.share) {
-        navigator.share({ title: name, text: text, url: url });
-    } else {
-        window.open(`https://wa.me/?text=${encodeURIComponent(text + " " + url)}`);
-    }
+window.viewImage = (src) => {
+    const viewer = document.getElementById('image-viewer');
+    document.getElementById('full-img').src = src;
+    viewer.style.display = 'flex';
 };
 
-function setupFilters() {
-    const searchBar = document.getElementById('search-bar');
-    searchBar.oninput = () => renderProducts(document.querySelector('.cat-item.active').dataset.cat, searchBar.value);
-    
-    document.querySelectorAll('.cat-item').forEach(btn => {
-        btn.onclick = () => {
-            document.querySelector('.cat-item.active').classList.remove('active');
-            btn.classList.add('active');
-            renderProducts(btn.dataset.cat, searchBar.value);
-        };
-    });
-}
-
-// Feedback via WhatsApp
-document.getElementById('feedback-btn').onclick = () => {
-    window.open(`https://wa.me/918105750221?text=Feedback for Bannada Daara:`, '_blank');
-};
-
-// Viewer Logic
-window.openViewer = (src, title) => {
-    const modal = document.getElementById('image-modal');
-    document.getElementById('full-res-image').src = src;
-    document.getElementById('viewer-caption').innerText = title;
-    modal.style.display = 'block';
-};
-
-function setupImageViewer() {
-    const modal = document.getElementById('image-modal');
-    document.querySelector('.close-viewer').onclick = () => modal.style.display = 'none';
-}
+document.querySelector('.close-viewer').onclick = () => document.getElementById('image-viewer').style.display = 'none';
 
 init();
