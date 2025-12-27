@@ -1,68 +1,85 @@
 :root {
     --gold: #c5a059;
-    --black: #0f1111;
-    --white: #ffffff;
-    --amazon-bg: #eaeded;
+    --black: #0a0a0a;
+    --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Montserrat', sans-serif; background: #fff; overflow-x: hidden; scroll-behavior: smooth; }
 .container { max-width: 1300px; margin: auto; width: 92%; }
 
-/* --- BRANDING --- */
-.navbar { background: #fff; border-bottom: 1px solid #ddd; padding: 10px 0; position: sticky; top: 0; z-index: 1000; }
-.nav-content { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-.nav-logo { 
-    height: 30px; 
-    width: auto; 
-} /* Small size, original colors retained */
-.main-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: #000; }
+/* --- HEADER & FOOTER BLACK BG --- */
+.navbar, .footer { background: var(--black); color: white; }
+.navbar { padding: 12px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
 
-/* --- HERO & ABOUT (BG IMAGE SECTIONS) --- */
-.hero-section, .about-section { 
-    background-size: cover; background-position: center; background-attachment: fixed; position: relative;
+/* --- LOGO SIZING (SMALL) --- */
+.nav-logo { height: 25px; width: auto; margin-right: 10px; }
+.footer-logo { height: 22px; width: auto; margin-right: 10px; }
+.main-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: #fff; }
+
+/* --- GOLD THEME & ICONS --- */
+.search-btn i, .bag-btn i, .insta-link i, .feedback-btn i, .hero-btn i, .view-btn i, .share-btn i {
+    color: var(--gold);
+    transition: transform 0.3s ease;
 }
-.hero-section { height: 60vh; color: white; }
-.about-section { padding: 80px 0; color: white; margin-top: 50px; text-align: center; }
-.hero-overlay, .about-overlay { background: rgba(0,0,0,0.6); width: 100%; height: 100%; display: flex; align-items: center; }
 
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-.hero-animate { animation: fadeInUp 1s ease-out; }
-
-/* --- AMAZON STYLE PRODUCT GRID --- */
-.product-grid { 
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
-    gap: 20px; padding: 40px 0; 
+.hero-btn, .feedback-btn, .cat-item.active, .add-btn, .checkout-btn {
+    background: var(--gold);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    border-radius: 4px;
+    font-weight: 600;
 }
+
+.hero-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4); }
+
+/* --- DYNAMIC BACKGROUND SECTIONS --- */
+.hero-section, .about-section {
+    background-image: url('images/hero-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+}
+.hero-overlay, .about-overlay { background: rgba(0,0,0,0.65); padding: 100px 0; text-align: center; color: white; }
+
+/* --- AMAZON STYLE GRID --- */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 40px 0;
+}
+
 .product-card {
-    border: 1px solid #eee; padding: 10px; display: flex; flex-direction: column;
-    transition: 0.3s; background: #fff;
+    border: 1px solid #eee; padding: 12px; display: flex; flex-direction: column;
+    background: #fff; transition: 0.3s; height: 100%;
 }
-.product-card:hover { border: 1px solid var(--gold); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+.product-card:hover { border: 1px solid var(--gold); transform: translateY(-5px); }
 
-.img-container { width: 100%; aspect-ratio: 1/1; position: relative; overflow: hidden; background: #f9f9f9; }
+.img-container { width: 100%; aspect-ratio: 1/1; position: relative; overflow: hidden; background: #f9f9f9; cursor: pointer; }
 .img-container img { width: 100%; height: 100%; object-fit: cover; }
 
-.product-info { flex-grow: 1; padding: 10px 0; display: flex; flex-direction: column; }
-.product-name { font-size: 0.95rem; font-weight: 400; height: 2.8em; overflow: hidden; margin-bottom: 5px; }
-.product-price { font-size: 1.1rem; font-weight: 600; color: #B12704; }
+.product-info { flex-grow: 1; padding: 12px 0; display: flex; flex-direction: column; }
+.product-name { font-size: 0.95rem; height: 2.8em; overflow: hidden; margin-bottom: 5px; color: #333; }
+.product-price { font-size: 1.1rem; font-weight: 600; color: #B12704; margin-bottom: 12px; }
 
-/* --- BETTER BUTTONS & ICONS --- */
-.btn-group { display: flex; gap: 5px; margin-top: 10px; }
-.action-btn { 
-    background: #f0f0f0; border: none; padding: 8px; border-radius: 4px; 
-    cursor: pointer; transition: 0.2s; flex: 1;
+/* --- CARD ACTIONS --- */
+.card-actions { display: flex; gap: 8px; margin-top: auto; }
+.add-btn { flex: 2; padding: 10px; font-size: 0.85rem; }
+.icon-btn { background: #f4f4f4; border: none; padding: 10px; border-radius: 4px; cursor: pointer; flex: 1; }
+.icon-btn:hover { background: #e8e8e8; }
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 768px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .hide-mobile { display: none; }
+    .sidebar { width: 100%; }
 }
-.action-btn:hover { background: #e0e0e0; transform: translateY(-2px); }
-.add-btn { background: #ffd814; border: 1px solid #fcd200; font-weight: 600; flex: 2; border-radius: 20px; }
-
-/* --- SIDEBAR --- */
-.sidebar { position: fixed; right: -100%; top: 0; width: 380px; height: 100%; background: #000; color: white; z-index: 2001; transition: 0.4s; }
-.sidebar.open { right: 0; }
 
 /* --- MODAL --- */
-.modal { display: none; position: fixed; z-index: 3000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); padding: 40px; }
-.modal-content { max-width: 100%; max-height: 80vh; margin: auto; display: block; }
-.close-modal { position: absolute; top: 20px; right: 35px; color: #fff; font-size: 40px; cursor: pointer; }
-
-@media (max-width: 768px) { .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } .sidebar { width: 100%; } }
+.modal { display: none; position: fixed; z-index: 3000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); }
+.modal-content { max-width: 90%; max-height: 80%; margin: auto; display: block; padding-top: 60px; }
+.close-modal { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; cursor: pointer; }
