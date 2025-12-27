@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bannada Daara | Premium Handcrafted Shop</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Bannada Daara | Handcrafted & Sustainable</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,16 +17,16 @@
         </div>
         <ul class="nav-links">
             <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="#shop-section"><i class="fas fa-shopping-bag"></i> Products</a></li>
+            <li><a href="#shop-section"><i class="fas fa-th-large"></i> Products</a></li>
             <li><a href="#about-section"><i class="fas fa-leaf"></i> Our Story</a></li>
-            <li><a href="https://instagram.com/bannadadaara" target="_blank"><i class="fab fa-instagram"></i> Follow Us</a></li>
+            <li><a href="https://instagram.com/bannadadaara" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
         </ul>
     </div>
 
     <header class="navbar">
         <div class="container nav-content">
             <div class="nav-left">
-                <button id="menu-toggle" class="icon-btn">
+                <button id="menu-toggle" class="menu-icon-btn">
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="brand">
@@ -38,108 +38,100 @@
             </div>
             
             <div class="search-container">
-                <input type="text" id="search-bar" placeholder="Search handcrafted treasures...">
+                <input type="text" id="search-bar" placeholder="Search handcrafted...">
                 <button class="search-btn"><i class="fas fa-search"></i></button>
             </div>
 
             <div class="nav-actions">
                 <button id="cart-toggle" class="bag-btn">
-                    <i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span>
+                    <i class="fas fa-shopping-bag"></i> <span id="cart-count">0</span>
                 </button>
             </div>
         </div>
     </header>
 
-    ```
+    <section class="hero-section">
+        <div class="hero-overlay">
+            <div class="container">
+                <h1 class="hero-title">Artistry in Every Stitch</h1>
+                <p class="hero-subtitle">Premium Handcrafted Treasures from Dakshina Kannada</p>
+                <a href="#shop-section" class="hero-btn">EXPLORE COLLECTION</a>
+            </div>
+        </div>
+    </section>
 
----
+    <main class="container" id="shop-section">
+        <nav class="category-bar">
+            <div class="cat-flex">
+                <button class="cat-item active" data-cat="All">All Items</button>
+                <button class="cat-item" data-cat="Bags">Bags</button>
+                <button class="cat-item" data-cat="Pouches">Pouches</button>
+                <button class="cat-item" data-cat="Stationery">Stationery</button>
+                <button class="cat-item" data-cat="Accessories">Accessories</button>
+                <button class="cat-item" data-cat="Decor">Decor</button>
+            </div>
+        </nav>
+        <div class="product-grid" id="product-list"></div>
+    </main>
 
-### 3. Updated File: `style.css`
-I added **hover animations**, improved the button styles, and added the sidebar logic.
+    <section id="about-section" class="about-premium">
+        <div class="about-bg-overlay"></div>
+        <div class="container about-content">
+            <span class="section-tag">OUR STORY</span>
+            <h2 class="section-title">Sustainable by Choice.</h2>
+            <p>Bannada Daara transforms upcycled fabrics into premium treasures. Every piece in our collection is unique, supporting local artisans and a greener planet through slow fashion.</p>
+            <div id="about-more-content" class="hidden-content" style="display: none;">
+                <p>Rooted in the heart of Dakshina Kannada, we bridge the gap between traditional craftsmanship and modern utility.</p>
+            </div>
+            <button id="read-more-btn" class="gold-outline-btn">READ OUR FULL STORY</button>
+        </div>
+    </section>
 
-```css
-:root {
-    --gold: #B8860B;
-    --gold-light: #d4af37;
-    --dark: #1A1A1A;
-    --bg-soft: #FCFAF8;
-    --white: #ffffff;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+    <div id="image-modal" class="image-viewer-modal">
+        <span class="close-viewer">&times;</span>
+        <img class="viewer-content" id="full-res-image">
+        <div id="viewer-caption"></div>
+    </div>
 
-body { background: var(--bg-soft); }
+    <div id="cart-sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h3>Your Selection</h3>
+            <button id="close-cart" class="close-btn">&times;</button>
+        </div>
+        <div id="cart-items" class="cart-items-container"></div>
+        <div class="sidebar-footer">
+            <div class="total-row">
+                <span>Total</span>
+                <span id="cart-total">Rs. 0</span>
+            </div>
+            <button id="checkout-btn" class="checkout-btn">
+                <i class="fab fa-whatsapp"></i> ORDER VIA WHATSAPP
+            </button>
+        </div>
+    </div>
 
-/* ANIMATIONS */
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand-side">
+                    <div class="brand">
+                        <img src="images/logo.png" alt="Logo" class="footer-logo">
+                        <span class="main-title">Bannada Daara</span>
+                    </div>
+                    <p>Dakshina Kannada, Karnataka</p>
+                </div>
+                <div class="footer-social">
+                    <p>Follow our journey:</p>
+                    <a href="https://instagram.com/bannadadaara" target="_blank" class="insta-link"><i class="fab fa-instagram"></i> @bannadadaara</a>
+                    <button id="footer-feedback-btn" class="feedback-btn">SHARE FEEDBACK</button>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2024 Bannada Daara. Crafted with Heart.
+            </div>
+        </div>
+    </footer>
 
-.product-card {
-    animation: fadeInUp 0.5s ease forwards;
-    transition: var(--transition);
-    border: none;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-}
-
-.product-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-}
-
-/* BUTTONS UPGRADE */
-.add-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: var(--dark);
-    transition: var(--transition);
-}
-
-.add-btn:hover {
-    background: var(--gold);
-    letter-spacing: 1px;
-}
-
-/* NAVIGATION SIDEBAR */
-.nav-sidebar {
-    position: fixed;
-    left: -300px;
-    top: 0;
-    width: 300px;
-    height: 100%;
-    background: var(--dark);
-    color: white;
-    z-index: 3000;
-    transition: var(--transition);
-    padding: 20px;
-}
-
-.nav-sidebar.open { left: 0; }
-
-.nav-links { list-style: none; margin-top: 50px; }
-.nav-links li { margin: 25px 0; }
-.nav-links a { 
-    color: white; 
-    text-decoration: none; 
-    font-size: 1.2rem; 
-    display: flex; 
-    align-items: center; 
-    gap: 15px; 
-    transition: var(--gold);
-}
-
-.nav-links a:hover { color: var(--gold); }
-
-/* ICON BUTTONS */
-.icon-btn {
-    background: none;
-    border: none;
-    color: var(--gold);
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.icon-btn:hover { transform: scale(1.1); }
+    <script type="module" src="script.js"></script>
+</body>
+</html>
