@@ -3,10 +3,13 @@
    ========================================= */
 :root {
     --gold: #c5a059;
+    --gold-dark: #a68544;
     --black: #0a0a0a;
     --white: #ffffff;
-    --gray: #f4f4f4;
+    --gray-bg: #f4f4f4;
+    --gray-border: #eee;
     --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
 * { 
@@ -21,6 +24,7 @@ body {
     overflow-x: hidden; 
     scroll-behavior: smooth;
     line-height: 1.6;
+    color: #333;
 }
 
 .container { 
@@ -69,10 +73,10 @@ body {
 .nav-right { 
     display: flex; 
     align-items: center; 
-    gap: 20px; 
+    gap: 15px; 
 }
 
-/* --- ENHANCED SEARCH BAR --- */
+/* --- SEARCH BAR --- */
 .search-container {
     display: flex;
     background: rgba(255, 255, 255, 0.1);
@@ -99,9 +103,25 @@ body {
     width: 150px;
 }
 
-/* --- THE MAIN BAG BUTTON --- */
+.search-btn {
+    background: var(--gold);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-btn:hover { transform: scale(1.1); background: var(--gold-dark); }
+
+/* --- BAG BUTTON --- */
 .bag-btn {
-    background: linear-gradient(135deg, #c5a059 0%, #a68544 100%);
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
     color: white;
     border: none;
     padding: 8px 18px;
@@ -115,27 +135,67 @@ body {
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-.bag-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(197, 160, 89, 0.4);
-}
+.bag-btn i { animation: bagSway 3s infinite ease-in-out; }
 
 #cart-count {
     background: white;
     color: var(--black);
-    padding: 2px 6px;
+    padding: 2px 7px;
     border-radius: 10px;
     font-size: 0.75rem;
     font-weight: bold;
 }
 
 /* =========================================
-   3. PREMIUM FILTER BAR
+   3. HERO & ABOUT SECTIONS
+   ========================================= */
+.hero-section, .about-section {
+    background-image: url('images/hero-bg.jpg'); /* Ensure this file exists */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+    width: 100%;
+}
+
+.hero-section { min-height: 65vh; display: flex; align-items: center; }
+
+.hero-overlay, .about-overlay { 
+    background: rgba(0, 0, 0, 0.65); 
+    padding: 100px 0; 
+    text-align: center; 
+    color: var(--white); 
+    width: 100%;
+}
+
+.hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 10px;
+}
+
+.hero-btn {
+    background: var(--gold);
+    color: white;
+    padding: 15px 35px;
+    border-radius: 50px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+}
+
+.hero-btn:hover { background: var(--gold-dark); transform: translateY(-3px); }
+
+/* =========================================
+   4. FILTER BAR
    ========================================= */
 .category-bar {
     padding: 30px 0 10px 0;
     position: sticky;
-    top: 74px; /* Adjusted based on navbar height */
+    top: 74px; 
     background: white;
     z-index: 900;
 }
@@ -149,16 +209,12 @@ body {
 
 .cat-wrapper::-webkit-scrollbar { display: none; }
 
-.cat-flex {
-    display: flex;
-    gap: 12px;
-    padding: 10px 5px;
-}
+.cat-flex { display: flex; gap: 12px; padding: 10px 5px; }
 
 .cat-item {
     white-space: nowrap;
     padding: 10px 24px;
-    border: 1.5px solid #eee;
+    border: 1.5px solid var(--gray-border);
     background: #fdfdfd;
     border-radius: 50px;
     cursor: pointer;
@@ -175,7 +231,7 @@ body {
 }
 
 /* =========================================
-   4. PRODUCT GRID & CARDS
+   5. PRODUCT GRID & CARDS
    ========================================= */
 .product-grid {
     display: grid;
@@ -185,7 +241,7 @@ body {
 }
 
 .product-card {
-    border: 1px solid #eee;
+    border: 1px solid var(--gray-border);
     padding: 15px;
     display: flex;
     flex-direction: column;
@@ -199,7 +255,7 @@ body {
 .product-card:hover {
     border-color: var(--gold);
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    box-shadow: var(--shadow);
 }
 
 .img-container {
@@ -207,8 +263,7 @@ body {
     aspect-ratio: 1/1;
     position: relative;
     overflow: hidden;
-    background: var(--gray);
-    cursor: pointer;
+    background: var(--gray-bg);
 }
 
 .img-container img {
@@ -249,7 +304,6 @@ body {
     font-weight: 600;
     min-height: 50px;
     margin: 15px 0 5px 0;
-    color: #333;
 }
 
 .product-price {
@@ -259,13 +313,12 @@ body {
     margin-bottom: 15px;
 }
 
-/* --- BUTTONS & ACTIONS --- */
+/* --- ACTION BUTTONS --- */
 .card-actions { display: flex; gap: 8px; margin-top: auto; }
 
 .add-btn {
     flex: 2;
     padding: 12px;
-    font-size: 0.85rem;
     background: var(--gold);
     color: white;
     border: none;
@@ -273,12 +326,24 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
+    position: relative;
+    overflow: hidden;
 }
 
-.add-btn:hover { background: #a68544; }
+.add-btn:hover { background: var(--gold-dark); }
+
+.add-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -60%; width: 20%; height: 200%;
+    background: rgba(255,255,255,0.2);
+    transform: rotate(30deg);
+    transition: 0.5s;
+}
+.add-btn:hover::after { left: 120%; }
 
 .icon-btn {
-    background: #f4f4f4;
+    background: var(--gray-bg);
     border: none;
     padding: 10px;
     border-radius: 4px;
@@ -290,19 +355,21 @@ body {
     transition: var(--transition);
 }
 
+.icon-btn:hover { background: #e8e8e8; color: var(--gold); }
+
 /* =========================================
-   5. SIDEBAR (BAG)
+   6. SIDEBAR (BAG)
    ========================================= */
 .sidebar {
     position: fixed;
     right: -100%;
     top: 0;
-    width: 350px;
+    width: 380px;
     height: 100%;
     background: var(--black);
     color: var(--white);
     z-index: 2001;
-    transition: 0.4s;
+    transition: 0.4s ease;
     padding: 25px;
     display: flex;
     flex-direction: column;
@@ -315,7 +382,11 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
 }
+
+.back-btn { background: none; border: none; color: white; cursor: pointer; font-weight: 600; }
 
 .clear-btn {
     background: transparent;
@@ -325,19 +396,25 @@ body {
     border-radius: 4px;
     font-size: 0.75rem;
     cursor: pointer;
-    transition: var(--transition);
 }
 
 .clear-btn:hover { background: var(--gold); color: white; }
 
+.cart-items-container { flex: 1; overflow-y: auto; margin: 20px 0; }
+
+.qty-btn {
+    background: #333; color: white; border: none;
+    width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
+}
+
 /* =========================================
-   6. MODALS & WHATSAPP BUTTON
+   7. MODALS & FORMS
    ========================================= */
 .modal {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.85);
+    background: rgba(0,0,0,0.9);
     z-index: 3000;
     align-items: center;
     justify-content: center;
@@ -349,14 +426,14 @@ body {
     border-radius: 12px;
     border: 1px solid var(--gold);
     width: 90%;
-    max-width: 400px;
+    max-width: 420px;
     color: var(--white);
 }
 
 .form-group { margin-bottom: 15px; }
-.form-group label { display: block; color: var(--gold); margin-bottom: 5px; font-size: 0.9rem; }
+.form-group label { display: block; color: var(--gold); margin-bottom: 8px; font-size: 0.9rem; }
 .form-group input, .form-group textarea {
-    width: 100%; padding: 12px; background: #222; border: 1px solid #444; color: white; border-radius: 8px;
+    width: 100%; padding: 12px; background: #222; border: 1px solid #444; color: white; border-radius: 8px; outline: none;
 }
 
 .stylish-wa-btn {
@@ -364,51 +441,62 @@ body {
     color: white;
     border: none;
     width: 100%;
-    padding: 15px;
+    padding: 16px;
     border-radius: 8px;
     font-weight: 700;
     cursor: pointer;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 10px;
     align-items: center;
     transition: var(--transition);
 }
 
-.stylish-wa-btn:hover { background: #128C7E; transform: scale(1.02); }
+.stylish-wa-btn:hover { background: #128C7E; transform: translateY(-2px); }
+
+/* --- IMAGE MODAL --- */
+.modal-content { max-width: 90%; max-height: 80%; object-fit: contain; }
+.close-modal { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
 
 /* =========================================
-   7. FOOTER
+   8. FOOTER
    ========================================= */
 .footer { 
     background: var(--black); 
     color: var(--white); 
-    text-align: center; 
-    padding: 40px 0; 
+    padding: 50px 0; 
     margin-top: 50px; 
+    border-top: 1px solid #222;
 }
 
 .footer-logo { 
-    height: 40px; 
-    width: auto; 
-    filter: grayscale(1) invert(1); 
-    opacity: 0.6; 
-    margin-bottom: 10px; 
+    height: 45px; 
+    filter: brightness(0) invert(1); 
+    opacity: 0.8; 
+    margin-bottom: 15px; 
 }
 
 /* =========================================
-   8. ANIMATIONS & RESPONSIVE
+   9. ANIMATIONS & RESPONSIVE
    ========================================= */
 @keyframes productFadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes bagSway {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-8deg); }
+    75% { transform: rotate(8deg); }
+}
+
 @media (max-width: 768px) {
     .main-title { display: none; }
-    .dynamic-logo { height: 40px; }
     .sidebar { width: 100%; }
     .product-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
     #search-bar { width: 100px; }
+    .hero-section { min-height: 50vh; background-attachment: scroll; }
+    .hero-title { font-size: 2.2rem; }
 }
 
 @media (max-width: 480px) {
