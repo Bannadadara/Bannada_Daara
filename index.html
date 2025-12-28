@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bannada Daara | Handcrafted Treasures</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,7 +26,9 @@
 
             <div class="nav-actions">
                 <button id="cart-toggle" class="bag-btn">
-                    <i class="fas fa-shopping-bag"></i> <span class="hide-mobile">BAG</span> (<span id="cart-count">0</span>)
+                    <i class="fas fa-shopping-bag"></i> 
+                    <span class="hide-mobile">BAG</span> 
+                    (<span id="cart-count">0</span>)
                 </button>
             </div>
         </div>
@@ -41,14 +45,15 @@
     </section>
 
     <main class="container" id="shop-section">
-        <nav class="category-bar">
-            <div class="cat-flex">
+        <nav class="category-bar" style="padding-top: 40px; text-align: center;">
+            <div class="cat-flex" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;">
                 <button class="cat-item active" data-cat="All">All Items</button>
                 <button class="cat-item" data-cat="Bags">Bags</button>
                 <button class="cat-item" data-cat="Pouches">Pouches</button>
                 <button class="cat-item" data-cat="Stationery">Stationery</button>
             </div>
         </nav>
+
         <div class="product-grid" id="product-list">
             </div>
     </main>
@@ -64,16 +69,24 @@
 
     <div id="cart-sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h3>Your Selection</h3>
+            <h3><i class="fas fa-shopping-bag" style="color:var(--gold)"></i> Your Selection</h3>
             <div class="header-tools">
                 <button id="clear-cart" class="clear-btn"><i class="fas fa-trash-alt"></i> Empty</button>
                 <button id="close-cart" class="close-sidebar">&times;</button>
             </div>
         </div>
-        <div id="cart-items" class="cart-items-container"></div>
+
+        <div id="cart-items" class="cart-items-container">
+            </div>
+
         <div class="sidebar-footer">
-            <div class="total-row"><span>Total</span><span id="cart-total">Rs. 0</span></div>
-            <button id="checkout-btn" class="checkout-btn"><i class="fab fa-whatsapp"></i> ORDER VIA WHATSAPP</button>
+            <div class="total-row">
+                <span>Subtotal</span>
+                <span id="cart-total">Rs. 0</span>
+            </div>
+            <button id="checkout-btn" class="checkout-btn">
+                PROCEED TO WHATSAPP <i class="fab fa-whatsapp"></i>
+            </button>
         </div>
     </div>
 
@@ -83,21 +96,21 @@
         <div id="modal-caption"></div>
     </div>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-brand">
+    <footer class="footer" style="padding: 40px 0;">
+        <div class="container" style="text-align: center;">
+            <div class="footer-brand" style="margin-bottom: 20px;">
                 <img src="images/logo.png" alt="Logo" class="footer-logo">
                 <span class="footer-title">Bannada Daara</span>
             </div>
-            <div class="footer-actions">
-                <a href="https://instagram.com/bannadadaara" target="_blank" class="insta-link">
+            <div class="footer-actions" style="display: flex; justify-content: center; gap: 20px; align-items: center; margin-bottom: 20px;">
+                <a href="https://instagram.com/bannadadaara" target="_blank" class="insta-link" style="color: white; text-decoration: none;">
                     <i class="fab fa-instagram"></i> @bannadadaara
                 </a>
-                <button id="footer-feedback-btn" class="feedback-btn">
+                <button id="footer-feedback-btn" class="feedback-btn" style="padding: 8px 15px;">
                     <i class="fas fa-comment"></i> FEEDBACK
                 </button>
             </div>
-            <p class="copyright">&copy; 2025 Crafted with Heart.</p>
+            <p class="copyright" style="opacity: 0.6; font-size: 0.8rem;">&copy; 2025 Crafted with Heart in Dakshina Kannada.</p>
         </div>
     </footer>
 
