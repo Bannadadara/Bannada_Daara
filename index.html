@@ -76,12 +76,16 @@
 
     <div id="cart-sidebar" class="sidebar">
         <div class="sidebar-header">
+            <button id="close-cart-back" class="back-btn">
+                <i class="fas fa-arrow-left"></i> BACK
+            </button>
+            
             <h3><i class="fas fa-shopping-bag" style="color:var(--gold)"></i> Your Selection</h3>
+            
             <div class="header-tools">
                 <button id="clear-cart" class="clear-btn">
-                    <i class="fas fa-trash-alt"></i> EMPTY
+                    <i class="fas fa-trash-alt"></i>
                 </button>
-                <button id="close-cart" class="close-sidebar">&times;</button>
             </div>
         </div>
 
@@ -93,9 +97,41 @@
                 <span>Subtotal</span>
                 <span id="cart-total">Rs. 0</span>
             </div>
-            <button id="checkout-btn" class="checkout-btn">
-                PROCEED TO ORDER ON WHATSAPP <i class="fab fa-whatsapp"></i>
+            <button id="checkout-btn" class="checkout-btn stylish-wa-btn">
+                <span class="btn-text">PROCEED TO ORDER ON WHATSAPP</span>
+                <div class="icon-circle">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="shimmer-wrapper">
+                    <div class="shimmer"></div>
+                </div>
             </button>
+        </div>
+    </div>
+
+    <div id="order-modal" class="modal">
+        <div class="modal-form-content">
+            <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h3 style="color:var(--gold); font-family:'Cormorant Garamond', serif; font-size:1.6rem;">Delivery Details</h3>
+                <span class="close-order-modal" style="cursor:pointer; font-size:1.5rem; color:#888;">&times;</span>
+            </div>
+            
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="cust-name" placeholder="Enter your name" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Full Delivery Address</label>
+                <textarea id="cust-address" rows="4" placeholder="House No, Street, Landmark, Pincode" required></textarea>
+            </div>
+
+            <button id="confirm-order-btn" class="checkout-btn" style="width:100%; margin-top:10px;">
+                CONFIRM & SEND TO WHATSAPP <i class="fab fa-whatsapp"></i>
+            </button>
+            <p style="font-size: 0.7rem; color: #666; margin-top: 15px; text-align: center;">
+                * Clicking will open WhatsApp to share your order details.
+            </p>
         </div>
     </div>
 
