@@ -26,7 +26,7 @@
             </div>
 
             <div class="nav-actions">
-                <button id="cart-toggle" class="bag-btn" aria-label="Open Shopping Bag">
+                <button id="cart-toggle" class="bag-btn">
                     <i class="fas fa-shopping-bag"></i> 
                     <span class="hide-mobile">BAG</span> 
                     <span id="cart-count">0</span>
@@ -61,7 +61,8 @@
             </div>
         </nav>
 
-        <div class="product-grid" id="product-list"></div>
+        <div class="product-grid" id="product-list">
+            </div>
     </main>
 
     <section class="about-section">
@@ -102,25 +103,23 @@
         <div class="address-popup-content">
             <h3>Delivery Details</h3>
             <p>Please provide your info to finalize the order.</p>
-            <form id="delivery-form">
-                <div class="input-group">
-                    <label for="cust-name">Full Name</label>
-                    <input type="text" id="cust-name" placeholder="Enter your name" required>
-                </div>
-                <div class="input-group">
-                    <label for="cust-address">Delivery Address</label>
-                    <textarea id="cust-address" placeholder="House no, Street, Landmark, Pincode" required></textarea>
-                </div>
-                <div class="popup-actions">
-                    <button type="button" id="cancel-popup" class="cancel-btn">Back</button>
-                    <button type="submit" id="confirm-whatsapp" class="confirm-btn">Send to WhatsApp <i class="fab fa-whatsapp"></i></button>
-                </div>
-            </form>
+            <div class="input-group">
+                <label for="cust-name">Full Name</label>
+                <input type="text" id="cust-name" placeholder="Enter your name" required>
+            </div>
+            <div class="input-group">
+                <label for="cust-address">Delivery Address</label>
+                <textarea id="cust-address" placeholder="House no, Street, Landmark, Pincode" required></textarea>
+            </div>
+            <div class="popup-actions">
+                <button id="cancel-popup" class="cancel-btn">Back</button>
+                <button id="confirm-whatsapp" class="confirm-btn">Send to WhatsApp <i class="fab fa-whatsapp"></i></button>
+            </div>
         </div>
     </div>
 
     <div id="image-modal" class="modal">
-        <span class="close-modal" id="close-img-modal">&times;</span>
+        <span class="close-modal">&times;</span>
         <img class="modal-content" id="modal-img" alt="Enlarged product view">
         <div id="modal-caption"></div>
     </div>
