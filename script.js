@@ -13,21 +13,17 @@ function init() {
 }
 
 /**
- * Render Product Grid with Staggered Animations & Custom Badges
- * @param {string} category - Category filter
- * @param {string} searchTerm - Search query filter
+ * Render Product Grid
  */
 function renderProducts(category = 'All', searchTerm = '') {
     const list = document.getElementById('product-list');
     
-    // Multi-level filtering: Category + Search Term
     const filtered = products.filter(p => {
         const matchesCategory = category === 'All' || p.category === category;
         const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
         return matchesCategory && matchesSearch;
     });
 
-    // Handle Empty State
     if (filtered.length === 0) {
         list.innerHTML = `
             <div style="grid-column: 1/-1; text-align: center; padding: 80px 20px; color: #888;">
@@ -38,15 +34,11 @@ function renderProducts(category = 'All', searchTerm = '') {
         return;
     }
 
-    // Map through filtered products with animations
     list.innerHTML = filtered.map((p, index) => {
-        // Logic for "On Request" items
         const isRequestOnly = p.on_request === true || p.price === 0;
         const priceDisplay = isRequestOnly ? "Price on Request" : `Rs. ${p.price}`;
         const btnText = isRequestOnly ? "INQUIRE" : "ADD TO BAG";
         const btnIcon = isRequestOnly ? "fa-envelope" : "fa-plus";
-        
-        // Ribbon Badge HTML for Custom/Request items
         const badgeHTML = isRequestOnly ? `<div class="request-badge">Custom Order</div>` : '';
 
         return `
@@ -70,20 +62,17 @@ function renderProducts(category = 'All', searchTerm = '') {
                     </button>
                 </div>
             </div>
-        </div>
-    `;}).join('');
+        </div>`;
+    }).join('');
 }
 
 /**
- * Global Window Functions
+ * Global UI Helpers (Available in HTML)
  */
-
 window.viewImage = (src, title) => {
     const modal = document.getElementById('image-modal');
-    const modalImg = document.getElementById('modal-img');
-    const modalCaption = document.getElementById('modal-caption');
-    modalImg.src = src;
-    modalCaption.innerText = title;
+    document.getElementById('modal-img').src = src;
+    document.getElementById('modal-caption').innerText = title;
     modal.style.display = "flex";
 };
 
@@ -121,7 +110,7 @@ window.changeQty = (id, delta) => {
 };
 
 /**
- * Persistence & UI Update Logic
+ * Persistence Logic
  */
 function saveAndUpdate() {
     localStorage.setItem('bd-cart', JSON.stringify(cart));
@@ -156,7 +145,7 @@ function updateUI() {
                     <div style="color:#c5a059; font-size: 0.85rem; margin-bottom: 8px;">
                         ${isRequest ? 'Price on Request' : 'Rs. ' + item.price}
                     </div>
-                    <div class="qty-controls" style="display:flex; align-items:center; gap:10px;">
+                    <div class="qty-controls">
                         <button class="qty-btn" onclick="window.changeQty(${item.id}, -1)">-</button>
                         <span class="item-qty" style="color:#c5a059; font-weight:bold;">${item.qty}</span>
                         <button class="qty-btn" onclick="window.changeQty(${item.id}, 1)">+</button>
@@ -165,8 +154,8 @@ function updateUI() {
                 <div style="font-weight:600; font-size:0.9rem;">
                     ${isRequest ? '--' : 'Rs. ' + (item.price * item.qty)}
                 </div>
-            </div>
-        `}).join('');
+            </div>`;
+        }).join('');
     }
 }
 
@@ -174,13 +163,22 @@ function updateUI() {
  * Core Event Listeners
  */
 function setupEventListeners() {
-    document.getElementById('cart-toggle').onclick = () => document.getElementById('cart-sidebar').classList.add('open');
-    document.getElementById('close-cart').onclick = () => document.getElementById('cart-sidebar').classList.remove('open');
+    const cartSidebar = document.getElementById('cart-sidebar');
+    const orderModal = document.getElementById('order-modal');
+
+    // Sidebar Toggles
+    document.getElementById('cart-toggle').onclick = () => cartSidebar.classList.add('open');
+    document.getElementById('close-cart').onclick = () => cartSidebar.classList.remove('open');
     
-    const modal = document.getElementById('image-modal');
-    document.querySelector('.close-modal').onclick = () => modal.style.display = "none";
-    window.onclick = (event) => { if (event.target == modal) modal.style.display = "none"; };
-    
+    // Back Button (New Button)
+    const backBtn = document.getElementById('close-cart-back');
+    if (backBtn) backBtn.onclick = () => cartSidebar.classList.remove('open');
+
+    // Image Modal Toggle
+    const imgModal = document.getElementById('image-modal');
+    document.querySelector('.close-modal').onclick = () => imgModal.style.display = "none";
+
+    // Clear Cart
     document.getElementById('clear-cart').onclick = () => {
         if (cart.length > 0 && confirm("Remove all items from your bag?")) {
             cart = [];
@@ -188,6 +186,7 @@ function setupEventListeners() {
         }
     };
 
+    // Filters
     document.querySelectorAll('.cat-item').forEach(btn => {
         btn.onclick = () => {
             document.querySelector('.cat-item.active').classList.remove('active');
@@ -201,25 +200,55 @@ function setupEventListeners() {
         renderProducts(activeCat, e.target.value);
     });
 
-    document.getElementById('footer-feedback-btn').onclick = () => {
-        window.open('https://wa.me/918105750221?text=Hi, I have feedback regarding Bannada Daara:', '_blank');
-    };
-
+    // --- Order Checkout Logic ---
+    
+    // 1. Open Order Details Modal
     document.getElementById('checkout-btn').onclick = () => {
         if (cart.length === 0) return alert("Please add items to your bag first!");
-        
-        const cartList = cart.map(i => {
-            const isRequest = i.price === 0 || i.on_request === true;
-            const priceLabel = isRequest ? "[Custom Quote Needed]" : `Rs.${i.price * i.qty}`;
-            return `• ${i.name} [x${i.qty}] - ${priceLabel}`;
+        orderModal.style.display = "flex";
+    };
+
+    // 2. Close Modal Logic
+    document.querySelector('.close-order-modal').onclick = () => orderModal.style.display = "none";
+    
+    // 3. Confirm & Send to WhatsApp
+    document.getElementById('confirm-order-btn').onclick = () => {
+        const name = document.getElementById('cust-name').value.trim();
+        const address = document.getElementById('cust-address').value.trim();
+
+        if (!name || !address) {
+            return alert("Please fill in your name and address to proceed.");
+        }
+
+        // Generate Item List for WhatsApp
+        const cartText = cart.map(item => {
+            const isRequest = item.price === 0 || item.on_request;
+            const priceInfo = isRequest ? "[Price on Request]" : `Rs.${item.price * item.qty}`;
+            return `• ${item.name} (x${item.qty}) - ${priceInfo}`;
         }).join('%0A');
-        
+
         const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-        const totalText = total > 0 
-            ? `%0A%0A*Total Estimated: Rs.${total}*%0A(Excluding custom items)` 
-            : '%0A%0A*Requesting Price Quote for Order*';
         
-        window.open(`https://wa.me/918105750221?text=Hello Bannada Daara! I am interested in these treasures:%0A%0A${cartList}${totalText}`, '_blank');
+        // Final WhatsApp Template
+        const waMsg = `*New Order - Bannada Daara*%0A%0A` +
+                      `*Customer Details*%0A` +
+                      `*Name:* ${name}%0A` +
+                      `*Address:* ${address}%0A%0A` +
+                      `*Order Items:*%0A${cartText}%0A%0A` +
+                      `*Total Estimated:* Rs. ${total}%0A%0A` +
+                      `_Please confirm availability and delivery time._`;
+        
+        window.open(`https://wa.me/918105750221?text=${waMsg}`, '_blank');
+        
+        // Finalize: Hide modal and hide sidebar
+        orderModal.style.display = "none";
+        cartSidebar.classList.remove('open');
+    };
+
+    // Global click-away listeners
+    window.onclick = (event) => {
+        if (event.target == imgModal) imgModal.style.display = "none";
+        if (event.target == orderModal) orderModal.style.display = "none";
     };
 }
 
