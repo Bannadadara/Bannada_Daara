@@ -28,7 +28,7 @@ body {
 }
 
 /* =========================================
-   2. HEADER, NAVIGATION & PREMIUM BUTTONS
+   2. HEADER & NAVIGATION
    ========================================= */
 .navbar, .footer { 
     background: var(--black); 
@@ -80,7 +80,6 @@ body {
     width: 150px;
 }
 
-/* --- THE SEARCH BUTTON --- */
 .search-btn {
     background: var(--gold);
     color: white;
@@ -101,7 +100,7 @@ body {
     background: #d4af37;
 }
 
-/* --- THE MAIN BAG BUTTON (NAVBAR) --- */
+/* --- THE MAIN BAG BUTTON --- */
 .bag-btn {
     background: linear-gradient(135deg, #c5a059 0%, #a68544 100%);
     color: white;
@@ -134,11 +133,185 @@ body {
     padding: 2px 6px;
     border-radius: 10px;
     font-size: 0.7rem;
-    margin-left: 5px;
 }
 
 /* =========================================
-   3. PREMIUM FILTER BAR
+   3. SIDEBAR (CART) & CLOSE CONTROLS
+   ========================================= */
+.sidebar { 
+    position: fixed; 
+    right: -100%; 
+    top: 0; 
+    width: 380px; 
+    height: 100%; 
+    background: var(--black); 
+    color: var(--white); 
+    z-index: 2001; 
+    transition: var(--transition); 
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+}
+.sidebar.open { right: 0; }
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-left h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+}
+
+/* Top-Left Close Button */
+.close-sidebar-alt {
+    background: transparent;
+    border: 1px solid #444;
+    color: var(--gold);
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.close-sidebar-alt:hover {
+    background: var(--gold);
+    color: white;
+    border-color: var(--gold);
+}
+
+.clear-btn {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.clear-btn:hover {
+    background: var(--gold);
+    color: white;
+}
+
+.cart-items-container {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* =========================================
+   4. ADDRESS POPUP (MODAL)
+   ========================================= */
+#address-modal {
+    display: none; /* Controlled by JS */
+    justify-content: center;
+    align-items: center;
+}
+
+.address-popup-content {
+    background: #1a1a1a;
+    color: white;
+    width: 90%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--gold);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    position: relative;
+    animation: fadeInUp 0.4s ease-out;
+}
+
+.address-popup-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: 10px;
+}
+
+.input-group {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--gold);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.input-group input, .input-group textarea {
+    width: 100%;
+    background: #222;
+    border: 1px solid #444;
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+}
+
+.input-group input:focus, .input-group textarea:focus {
+    border-color: var(--gold);
+}
+
+.popup-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.cancel-btn {
+    flex: 1;
+    background: transparent;
+    color: #888;
+    border: 1px solid #444;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.confirm-btn {
+    flex: 2;
+    background: var(--gold);
+    color: white;
+    border: none;
+    padding: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.confirm-btn:hover {
+    background: #d4af37;
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   5. FILTER BAR & GRID
    ========================================= */
 .category-bar {
     padding: 30px 0 10px 0;
@@ -148,19 +321,11 @@ body {
     z-index: 900;
 }
 
-.cat-wrapper {
-    overflow-x: auto;
-    scrollbar-width: none;
-    display: flex;
-    justify-content: center;
-}
-
-.cat-wrapper::-webkit-scrollbar { display: none; }
-
 .cat-flex {
     display: flex;
     gap: 12px;
     padding: 10px 5px;
+    overflow-x: auto;
 }
 
 .cat-item {
@@ -170,40 +335,48 @@ body {
     background: #fdfdfd;
     border-radius: 50px;
     cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.85rem;
     font-weight: 600;
-    letter-spacing: 0.5px;
-    color: #555;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.cat-item:hover {
-    border-color: var(--gold);
-    color: var(--gold);
-    transform: translateY(-2px) scale(1.05);
+    font-size: 0.85rem;
+    transition: var(--transition);
 }
 
 .cat-item.active {
     background: var(--gold);
     color: white;
     border-color: var(--gold);
-    box-shadow: 0 8px 15px rgba(197, 160, 89, 0.3);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 40px 0;
+}
+
+.product-card {
+    border: 1px solid #eee; 
+    padding: 12px; 
+    display: flex; 
+    flex-direction: column;
+    background: var(--white); 
+    transition: var(--transition); 
+    position: relative;
+}
+
+.product-card:hover { 
+    border-color: var(--gold); 
+    transform: translateY(-5px); 
 }
 
 /* =========================================
-   4. HERO & ABOUT SECTIONS
+   6. HERO & ABOUT
    ========================================= */
-.hero-section, .about-section {
-    background-image: url('images/hero-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    position: relative;
-    width: 100%;
+.hero-section {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    background: url('images/hero-bg.jpg') center/cover fixed;
 }
-
-.hero-section { min-height: 60vh; display: flex; align-items: center; }
 
 .hero-overlay, .about-overlay { 
     background: rgba(0, 0, 0, 0.65); 
@@ -219,227 +392,6 @@ body {
     margin-bottom: 10px;
 }
 
-.hero-subtitle {
-    font-size: 1.2rem;
-    color: #f0f0f0;
-    margin-bottom: 30px;
-    font-weight: 300;
-}
-
-.about-section h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.8rem;
-    color: var(--gold);
-    margin-bottom: 20px;
-}
-
-.about-section p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    max-width: 800px;
-    margin: 0 auto;
-    color: #e0e0e0;
-}
-
-/* =========================================
-   5. PRODUCT GRID & CARDS
-   ========================================= */
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
-    padding: 40px 0;
-}
-
-.product-card {
-    border: 1px solid #eee; 
-    padding: 12px; 
-    display: flex; 
-    flex-direction: column;
-    background: var(--white); 
-    transition: var(--transition); 
-    height: 100%;
-    animation: productFadeIn 0.5s ease forwards;
-    position: relative;
-}
-
-.product-card:hover { 
-    border: 1px solid var(--gold); 
-    transform: translateY(-5px); 
-    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-}
-
-.img-container { 
-    width: 100%; 
-    aspect-ratio: 1/1; 
-    position: relative; 
-    overflow: hidden; 
-    background: #f9f9f9; 
-    cursor: pointer; 
-}
-
-.img-container img { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    transition: transform 0.5s ease;
-}
-
-.product-card:hover .img-container img { transform: scale(1.08); }
-
-/* --- RIBBON / BADGE --- */
-.request-badge {
-    position: absolute;
-    top: 10px;
-    right: -5px;
-    background: var(--gold);
-    color: white;
-    padding: 5px 12px;
-    font-size: 0.65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    z-index: 10;
-    box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
-}
-
-.request-badge::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    right: 0;
-    border-left: 5px solid transparent;
-    border-top: 5px solid #8a6d35;
-}
-
-.product-name { 
-    font-size: 0.95rem; 
-    height: 2.8em; 
-    overflow: hidden; 
-    margin: 12px 0 5px 0; 
-    color: #333; 
-}
-
-.product-price { 
-    font-size: 1.1rem; 
-    font-weight: 600; 
-    color: #B12704; 
-    margin-bottom: 12px; 
-}
-
-/* --- BUTTONS & ACTIONS --- */
-.card-actions { display: flex; gap: 8px; margin-top: auto; }
-
-.add-btn { 
-    flex: 2; 
-    padding: 10px; 
-    font-size: 0.85rem; 
-    background: var(--gold);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-weight: 600;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-}
-
-.add-btn::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -60%;
-    width: 20%;
-    height: 200%;
-    background: rgba(255,255,255,0.2);
-    transform: rotate(30deg);
-    transition: 0.5s;
-}
-
-.add-btn:hover::after { left: 120%; }
-
-.icon-btn { 
-    background: #f4f4f4; 
-    border: none; 
-    padding: 10px; 
-    border-radius: 4px; 
-    cursor: pointer; 
-    flex: 1; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: var(--transition);
-}
-
-.icon-btn:hover { background: #e8e8e8; }
-
-/* =========================================
-   6. SIDEBAR & BAG CONTROLS
-   ========================================= */
-.sidebar { 
-    position: fixed; 
-    right: -100%; 
-    top: 0; 
-    width: 350px; 
-    height: 100%; 
-    background: var(--black); 
-    color: var(--white); 
-    z-index: 2001; 
-    transition: var(--transition); 
-    padding: 20px;
-}
-.sidebar.open { right: 0; }
-
-.sidebar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-/* --- EMPTY BAG BUTTON --- */
-.clear-btn {
-    background: transparent;
-    color: var(--gold);
-    border: 1px solid var(--gold);
-    padding: 5px 12px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    font-weight: 600;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-}
-
-.clear-btn:hover {
-    background: var(--gold);
-    color: white;
-    box-shadow: 0 0 12px rgba(197, 160, 89, 0.5);
-}
-
-.qty-controls {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 8px;
-}
-
-.qty-btn {
-    background: #333;
-    color: white;
-    border: none;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.qty-btn:hover { background: var(--gold); }
-
 /* =========================================
    7. MODALS & ANIMATIONS
    ========================================= */
@@ -454,15 +406,6 @@ body {
     background: rgba(0,0,0,0.9); 
 }
 
-.modal-content { max-width: 90%; max-height: 80%; margin: auto; padding-top: 60px; display: block; }
-
-.close-modal { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
-
-@keyframes productFadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
 @keyframes bagSway {
     0%, 100% { transform: rotate(0deg); }
     25% { transform: rotate(-10deg); }
@@ -474,22 +417,12 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-.hero-animate { animation: fadeInUp 1s ease-out forwards; }
-
 /* =========================================
-   8. RESPONSIVE MEDIA QUERIES
+   8. RESPONSIVE
    ========================================= */
 @media (max-width: 768px) {
-    .hero-section { background-attachment: scroll; min-height: 50vh; }
     .hero-title { font-size: 2.2rem; }
-    .hero-overlay { padding: 60px 0; }
     .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .hide-mobile { display: none; }
     .sidebar { width: 100%; }
-    .cat-wrapper { justify-content: flex-start; }
-    #search-bar { width: 100px; }
-}
-
-@media (max-width: 480px) {
-    .product-grid { grid-template-columns: 1fr; }
+    .hide-mobile { display: none; }
 }
