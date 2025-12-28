@@ -28,7 +28,7 @@ body {
 }
 
 /* =========================================
-   2. HEADER & NAVIGATION
+   2. HEADER, NAVIGATION & PREMIUM BUTTONS
    ========================================= */
 .navbar, .footer { 
     background: var(--black); 
@@ -59,7 +59,7 @@ body {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid #444;
     border-radius: 25px;
-    padding: 2px 15px;
+    padding: 2px 5px 2px 15px;
     transition: var(--transition);
     align-items: center;
 }
@@ -77,6 +77,64 @@ body {
     padding: 8px;
     outline: none;
     font-family: 'Montserrat', sans-serif;
+    width: 150px;
+}
+
+/* --- THE SEARCH BUTTON --- */
+.search-btn {
+    background: var(--gold);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3);
+}
+
+.search-btn:hover {
+    transform: scale(1.1) rotate(15deg);
+    background: #d4af37;
+}
+
+/* --- THE MAIN BAG BUTTON (NAVBAR) --- */
+.bag-btn {
+    background: linear-gradient(135deg, #c5a059 0%, #a68544 100%);
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.bag-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(197, 160, 89, 0.4);
+}
+
+.bag-btn i {
+    font-size: 1.1rem;
+    animation: bagSway 3s infinite ease-in-out;
+}
+
+#cart-count {
+    background: white;
+    color: var(--black);
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    margin-left: 5px;
 }
 
 /* =========================================
@@ -85,7 +143,7 @@ body {
 .category-bar {
     padding: 30px 0 10px 0;
     position: sticky;
-    top: 60px; /* Sits below navbar */
+    top: 60px;
     background: white;
     z-index: 900;
 }
@@ -143,7 +201,6 @@ body {
     background-attachment: fixed;
     position: relative;
     width: 100%;
-    overflow: hidden;
 }
 
 .hero-section { min-height: 60vh; display: flex; align-items: center; }
@@ -154,15 +211,11 @@ body {
     text-align: center; 
     color: var(--white); 
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .hero-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: 3.5rem;
-    color: var(--white);
     margin-bottom: 10px;
 }
 
@@ -178,7 +231,6 @@ body {
     font-size: 2.8rem;
     color: var(--gold);
     margin-bottom: 20px;
-    letter-spacing: 2px;
 }
 
 .about-section p {
@@ -187,7 +239,6 @@ body {
     max-width: 800px;
     margin: 0 auto;
     color: #e0e0e0;
-    font-weight: 300;
 }
 
 /* =========================================
@@ -209,6 +260,7 @@ body {
     transition: var(--transition); 
     height: 100%;
     animation: productFadeIn 0.5s ease forwards;
+    position: relative;
 }
 
 .product-card:hover { 
@@ -235,29 +287,7 @@ body {
 
 .product-card:hover .img-container img { transform: scale(1.08); }
 
-.product-info { 
-    flex-grow: 1; 
-    padding: 12px 0; 
-    display: flex; 
-    flex-direction: column; 
-}
-
-.product-name { 
-    font-size: 0.95rem; 
-    height: 2.8em; 
-    overflow: hidden; 
-    margin-bottom: 5px; 
-    color: #333; 
-}
-
-.product-price { 
-    font-size: 1.1rem; 
-    font-weight: 600; 
-    color: #B12704; 
-    margin-bottom: 12px; 
-}
-
-/* --- BADGE / RIBBON --- */
+/* --- RIBBON / BADGE --- */
 .request-badge {
     position: absolute;
     top: 10px;
@@ -279,31 +309,42 @@ body {
     bottom: -5px;
     right: 0;
     border-left: 5px solid transparent;
-    border-top: 5px solid #8a6d35; /* Darker fold effect */
+    border-top: 5px solid #8a6d35;
+}
+
+.product-name { 
+    font-size: 0.95rem; 
+    height: 2.8em; 
+    overflow: hidden; 
+    margin: 12px 0 5px 0; 
+    color: #333; 
+}
+
+.product-price { 
+    font-size: 1.1rem; 
+    font-weight: 600; 
+    color: #B12704; 
+    margin-bottom: 12px; 
 }
 
 /* --- BUTTONS & ACTIONS --- */
 .card-actions { display: flex; gap: 8px; margin-top: auto; }
 
-.hero-btn, .feedback-btn, .add-btn, .checkout-btn {
+.add-btn { 
+    flex: 2; 
+    padding: 10px; 
+    font-size: 0.85rem; 
     background: var(--gold);
-    color: var(--white);
+    color: white;
     border: none;
-    cursor: pointer;
-    transition: var(--transition);
     border-radius: 4px;
     font-weight: 600;
-}
-
-.add-btn { flex: 2; padding: 10px; font-size: 0.85rem; }
-
-/* SHINE ANIMATION */
-.add-btn, .hero-btn {
+    cursor: pointer;
     position: relative;
     overflow: hidden;
 }
 
-.add-btn::after, .hero-btn::after {
+.add-btn::after {
     content: '';
     position: absolute;
     top: -50%;
@@ -315,7 +356,7 @@ body {
     transition: 0.5s;
 }
 
-.add-btn:hover::after, .hero-btn:hover::after { left: 120%; }
+.add-btn:hover::after { left: 120%; }
 
 .icon-btn { 
     background: #f4f4f4; 
@@ -327,7 +368,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: var(--transition);
 }
+
 .icon-btn:hover { background: #e8e8e8; }
 
 /* =========================================
@@ -347,6 +390,36 @@ body {
 }
 .sidebar.open { right: 0; }
 
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* --- EMPTY BAG BUTTON --- */
+.clear-btn {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.clear-btn:hover {
+    background: var(--gold);
+    color: white;
+    box-shadow: 0 0 12px rgba(197, 160, 89, 0.5);
+}
+
 .qty-controls {
     display: flex;
     align-items: center;
@@ -362,16 +435,13 @@ body {
     height: 24px;
     border-radius: 50%;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: 0.2s;
 }
+
 .qty-btn:hover { background: var(--gold); }
-.item-qty { font-weight: 600; font-size: 0.9rem; color: var(--gold); }
 
 /* =========================================
-   7. MODALS & KEYFRAMES
+   7. MODALS & ANIMATIONS
    ========================================= */
 .modal { 
     display: none; 
@@ -384,26 +454,19 @@ body {
     background: rgba(0,0,0,0.9); 
 }
 
-.modal-content { 
-    max-width: 90%; 
-    max-height: 80%; 
-    margin: auto; 
-    display: block; 
-    padding-top: 60px; 
-}
+.modal-content { max-width: 90%; max-height: 80%; margin: auto; padding-top: 60px; display: block; }
 
-.close-modal { 
-    position: absolute; 
-    top: 20px; 
-    right: 30px; 
-    color: var(--white); 
-    font-size: 40px; 
-    cursor: pointer; 
-}
+.close-modal { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
 
 @keyframes productFadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bagSway {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
 }
 
 @keyframes fadeInUp {
@@ -417,16 +480,14 @@ body {
    8. RESPONSIVE MEDIA QUERIES
    ========================================= */
 @media (max-width: 768px) {
-    .hero-section, .about-section { background-attachment: scroll; }
-    .hero-section { min-height: 50vh; }
+    .hero-section { background-attachment: scroll; min-height: 50vh; }
     .hero-title { font-size: 2.2rem; }
-    .hero-overlay, .about-overlay { padding: 60px 0; }
+    .hero-overlay { padding: 60px 0; }
     .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .hide-mobile { display: none; }
     .sidebar { width: 100%; }
-    .about-section h2 { font-size: 2rem; }
     .cat-wrapper { justify-content: flex-start; }
-    .category-bar { padding-left: 4%; }
+    #search-bar { width: 100px; }
 }
 
 @media (max-width: 480px) {
