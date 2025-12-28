@@ -57,7 +57,7 @@ body {
    3. DYNAMIC BACKGROUND SECTIONS (HERO & ABOUT)
    ========================================= */
 .hero-section, .about-section {
-    background-image: url('images/hero-bg.png');
+    background-image: url('images/hero-bg.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed; /* Parallax Effect */
