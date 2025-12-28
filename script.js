@@ -13,21 +13,18 @@ function init() {
 }
 
 /**
- * Render Product Grid with Staggered Animations & Custom Badges
- * @param {string} category - Category filter
- * @param {string} searchTerm - Search query filter
+ * Render Product Grid
  */
 function renderProducts(category = 'All', searchTerm = '') {
     const list = document.getElementById('product-list');
-    
-    // Multi-level filtering: Category + Search Term
+    if (!list) return;
+
     const filtered = products.filter(p => {
         const matchesCategory = category === 'All' || p.category === category;
         const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
         return matchesCategory && matchesSearch;
     });
 
-    // Handle Empty State
     if (filtered.length === 0) {
         list.innerHTML = `
             <div style="grid-column: 1/-1; text-align: center; padding: 80px 20px; color: #888;">
@@ -38,15 +35,11 @@ function renderProducts(category = 'All', searchTerm = '') {
         return;
     }
 
-    // Map through filtered products with animations
     list.innerHTML = filtered.map((p, index) => {
-        // Logic for "On Request" items
         const isRequestOnly = p.on_request === true || p.price === 0;
         const priceDisplay = isRequestOnly ? "Price on Request" : `Rs. ${p.price}`;
         const btnText = isRequestOnly ? "INQUIRE" : "ADD TO BAG";
         const btnIcon = isRequestOnly ? "fa-envelope" : "fa-plus";
-        
-        // Ribbon Badge HTML for Custom/Request items
         const badgeHTML = isRequestOnly ? `<div class="request-badge">Custom Order</div>` : '';
 
         return `
@@ -70,14 +63,13 @@ function renderProducts(category = 'All', searchTerm = '') {
                     </button>
                 </div>
             </div>
-        </div>
-    `;}).join('');
+        </div>`;
+    }).join('');
 }
 
 /**
- * Global Window Functions
+ * Global Window Functions for HTML Access
  */
-
 window.viewImage = (src, title) => {
     const modal = document.getElementById('image-modal');
     const modalImg = document.getElementById('modal-img');
@@ -121,7 +113,7 @@ window.changeQty = (id, delta) => {
 };
 
 /**
- * Persistence & UI Update Logic
+ * Persistence & UI Update
  */
 function saveAndUpdate() {
     localStorage.setItem('bd-cart', JSON.stringify(cart));
@@ -136,8 +128,8 @@ function updateUI() {
     const totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
     const totalPrice = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
 
-    cartCount.innerText = totalQty;
-    cartTotal.innerText = `Rs. ${totalPrice}`;
+    if (cartCount) cartCount.innerText = totalQty;
+    if (cartTotal) cartTotal.innerText = `Rs. ${totalPrice}`;
 
     if (cart.length === 0) {
         itemsDiv.innerHTML = `
@@ -165,22 +157,20 @@ function updateUI() {
                 <div style="font-weight:600; font-size:0.9rem;">
                     ${isRequest ? '--' : 'Rs. ' + (item.price * item.qty)}
                 </div>
-            </div>
-        `}).join('');
+            </div>`;
+        }).join('');
     }
 }
 
 /**
- * Core Event Listeners
+ * Event Listeners
  */
 function setupEventListeners() {
+    // Sidebar Controls
     document.getElementById('cart-toggle').onclick = () => document.getElementById('cart-sidebar').classList.add('open');
-    document.getElementById('close-cart').onclick = () => document.getElementById('cart-sidebar').classList.remove('open');
+    document.getElementById('close-cart-btn').onclick = () => document.getElementById('cart-sidebar').classList.remove('open');
     
-    const modal = document.getElementById('image-modal');
-    document.querySelector('.close-modal').onclick = () => modal.style.display = "none";
-    window.onclick = (event) => { if (event.target == modal) modal.style.display = "none"; };
-    
+    // Empty Cart
     document.getElementById('clear-cart').onclick = () => {
         if (cart.length > 0 && confirm("Remove all items from your bag?")) {
             cart = [];
@@ -188,6 +178,7 @@ function setupEventListeners() {
         }
     };
 
+    // Category Filtering
     document.querySelectorAll('.cat-item').forEach(btn => {
         btn.onclick = () => {
             document.querySelector('.cat-item.active').classList.remove('active');
@@ -196,30 +187,69 @@ function setupEventListeners() {
         };
     });
 
+    // Search Bar
     document.getElementById('search-bar').addEventListener('input', (e) => {
         const activeCat = document.querySelector('.cat-item.active').dataset.cat;
         renderProducts(activeCat, e.target.value);
     });
 
+    // Feedback
     document.getElementById('footer-feedback-btn').onclick = () => {
         window.open('https://wa.me/918105750221?text=Hi, I have feedback regarding Bannada Daara:', '_blank');
     };
 
-    document.getElementById('checkout-btn').onclick = () => {
+    // --- Order Popup Logic ---
+    const addressModal = document.getElementById('address-modal');
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const confirmWhatsapp = document.getElementById('confirm-whatsapp');
+    const cancelPopup = document.getElementById('cancel-popup');
+
+    checkoutBtn.onclick = () => {
         if (cart.length === 0) return alert("Please add items to your bag first!");
-        
-        const cartList = cart.map(i => {
+        addressModal.style.display = 'flex'; // Changed to flex for center centering
+    };
+
+    cancelPopup.onclick = () => {
+        addressModal.style.display = 'none';
+    };
+
+    confirmWhatsapp.onclick = () => {
+        const name = document.getElementById('cust-name').value.trim();
+        const address = document.getElementById('cust-address').value.trim();
+
+        if (!name || !address) {
+            alert("Please fill in your name and delivery address.");
+            return;
+        }
+
+        let message = `*NEW ORDER - BANNADA DAARA*%0A%0A`;
+        message += `*Customer:* ${name}%0A`;
+        message += `*Address:* ${address}%0A%0A`;
+        message += `*Items:*%0A`;
+
+        cart.forEach(i => {
             const isRequest = i.price === 0 || i.on_request === true;
-            const priceLabel = isRequest ? "[Custom Quote Needed]" : `Rs.${i.price * i.qty}`;
-            return `• ${i.name} [x${i.qty}] - ${priceLabel}`;
-        }).join('%0A');
-        
+            const priceLabel = isRequest ? "[Custom Quote]" : `Rs.${i.price * i.qty}`;
+            message += `• ${i.name} [x${i.qty}] - ${priceLabel}%0A`;
+        });
+
         const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-        const totalText = total > 0 
-            ? `%0A%0A*Total Estimated: Rs.${total}*%0A(Excluding custom items)` 
-            : '%0A%0A*Requesting Price Quote for Order*';
+        message += `%0A*Total Amount: Rs.${total}*`;
+
+        const phoneNumber = "918105750221"; 
+        window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
         
-        window.open(`https://wa.me/918105750221?text=Hello Bannada Daara! I am interested in these treasures:%0A%0A${cartList}${totalText}`, '_blank');
+        addressModal.style.display = 'none';
+        cart = []; // Optional: clear cart after ordering
+        saveAndUpdate();
+    };
+
+    // Image Modal Close
+    const imgModal = document.getElementById('image-modal');
+    document.querySelector('.close-modal').onclick = () => imgModal.style.display = "none";
+    window.onclick = (e) => { 
+        if (e.target == imgModal) imgModal.style.display = "none"; 
+        if (e.target == addressModal) addressModal.style.display = "none";
     };
 }
 
