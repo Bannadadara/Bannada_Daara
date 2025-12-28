@@ -1,51 +1,148 @@
+/* =========================================
+   1. CORE VARIABLES & RESET
+   ========================================= */
 :root {
     --gold: #c5a059;
     --black: #0a0a0a;
+    --white: #ffffff;
     --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Montserrat', sans-serif; background: #fff; overflow-x: hidden; scroll-behavior: smooth; }
-.container { max-width: 1300px; margin: auto; width: 92%; }
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
 
-/* --- HEADER & FOOTER BLACK BG --- */
-.navbar, .footer { background: var(--black); color: white; }
-.navbar { padding: 12px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
+body { 
+    font-family: 'Montserrat', sans-serif; 
+    background: var(--white); 
+    overflow-x: hidden; 
+    scroll-behavior: smooth; 
+}
 
-/* --- LOGO SIZING (SMALL) --- */
+.container { 
+    max-width: 1300px; 
+    margin: auto; 
+    width: 92%; 
+}
+
+/* =========================================
+   2. HEADER & FOOTER (BLACK THEME)
+   ========================================= */
+.navbar, .footer { 
+    background: var(--black); 
+    color: var(--white); 
+}
+
+.navbar { 
+    padding: 12px 0; 
+    position: sticky; 
+    top: 0; 
+    z-index: 1000; 
+    border-bottom: 1px solid #222; 
+}
+
+.nav-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .nav-logo { height: 25px; width: auto; margin-right: 10px; }
 .footer-logo { height: 22px; width: auto; margin-right: 10px; }
-.main-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: #fff; }
+.main-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--white); }
 
-/* --- GOLD THEME & ICONS --- */
-.search-btn i, .bag-btn i, .insta-link i, .feedback-btn i, .hero-btn i, .view-btn i, .share-btn i {
+/* =========================================
+   3. DYNAMIC BACKGROUND SECTIONS (HERO & ABOUT)
+   ========================================= */
+.hero-section, .about-section {
+    background-image: url('images/hero-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Parallax Effect */
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.hero-section { min-height: 60vh; display: flex; align-items: center; }
+
+.hero-overlay, .about-overlay { 
+    background: rgba(0, 0, 0, 0.65); 
+    padding: 100px 0; 
+    text-align: center; 
+    color: var(--white); 
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Text Styling within Sections */
+.hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    color: var(--white);
+    margin-bottom: 10px;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #f0f0f0;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+.about-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    color: var(--gold);
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.about-section p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+    color: #e0e0e0;
+    font-weight: 300;
+}
+
+/* =========================================
+   4. BUTTONS & GOLD THEME INTERACTION
+   ========================================= */
+.search-btn i, .bag-btn i, .insta-link i, .feedback-btn i, 
+.hero-btn i, .view-btn i, .share-btn i, .icon-btn i {
     color: var(--gold);
     transition: transform 0.3s ease;
 }
 
 .hero-btn, .feedback-btn, .cat-item.active, .add-btn, .checkout-btn {
     background: var(--gold);
-    color: white;
+    color: var(--white);
     border: none;
     cursor: pointer;
     transition: var(--transition);
     border-radius: 4px;
     font-weight: 600;
+    text-decoration: none;
 }
 
-.hero-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4); }
+.hero-btn { display: inline-block; padding: 15px 35px; }
 
-/* --- DYNAMIC BACKGROUND SECTIONS --- */
-.hero-section, .about-section {
-    background-image: url('images/hero-bg.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    position: relative;
+.hero-btn:hover { 
+    background: #a38446; 
+    transform: translateY(-3px); 
+    box-shadow: 0 10px 20px rgba(197, 160, 89, 0.4); 
 }
-.hero-overlay, .about-overlay { background: rgba(0,0,0,0.65); padding: 100px 0; text-align: center; color: white; }
 
-/* --- AMAZON STYLE GRID --- */
+/* =========================================
+   5. PRODUCT GRID (AMAZON STYLE)
+   ========================================= */
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -54,32 +151,149 @@ body { font-family: 'Montserrat', sans-serif; background: #fff; overflow-x: hidd
 }
 
 .product-card {
-    border: 1px solid #eee; padding: 12px; display: flex; flex-direction: column;
-    background: #fff; transition: 0.3s; height: 100%;
+    border: 1px solid #eee; 
+    padding: 12px; 
+    display: flex; 
+    flex-direction: column;
+    background: var(--white); 
+    transition: var(--transition); 
+    height: 100%;
 }
-.product-card:hover { border: 1px solid var(--gold); transform: translateY(-5px); }
 
-.img-container { width: 100%; aspect-ratio: 1/1; position: relative; overflow: hidden; background: #f9f9f9; cursor: pointer; }
-.img-container img { width: 100%; height: 100%; object-fit: cover; }
+.product-card:hover { 
+    border: 1px solid var(--gold); 
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
 
-.product-info { flex-grow: 1; padding: 12px 0; display: flex; flex-direction: column; }
-.product-name { font-size: 0.95rem; height: 2.8em; overflow: hidden; margin-bottom: 5px; color: #333; }
-.product-price { font-size: 1.1rem; font-weight: 600; color: #B12704; margin-bottom: 12px; }
+.img-container { 
+    width: 100%; 
+    aspect-ratio: 1/1; 
+    position: relative; 
+    overflow: hidden; 
+    background: #f9f9f9; 
+    cursor: pointer; 
+}
 
-/* --- CARD ACTIONS --- */
+.img-container img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .img-container img { transform: scale(1.08); }
+
+.product-info { 
+    flex-grow: 1; 
+    padding: 12px 0; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+.product-name { 
+    font-size: 0.95rem; 
+    height: 2.8em; 
+    overflow: hidden; 
+    margin-bottom: 5px; 
+    color: #333; 
+}
+
+.product-price { 
+    font-size: 1.1rem; 
+    font-weight: 600; 
+    color: #B12704; 
+    margin-bottom: 12px; 
+}
+
+/* Card Action Buttons */
 .card-actions { display: flex; gap: 8px; margin-top: auto; }
 .add-btn { flex: 2; padding: 10px; font-size: 0.85rem; }
-.icon-btn { background: #f4f4f4; border: none; padding: 10px; border-radius: 4px; cursor: pointer; flex: 1; }
+.icon-btn { 
+    background: #f4f4f4; 
+    border: none; 
+    padding: 10px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    flex: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .icon-btn:hover { background: #e8e8e8; }
 
-/* --- RESPONSIVE ADJUSTMENTS --- */
-@media (max-width: 768px) {
-    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .hide-mobile { display: none; }
-    .sidebar { width: 100%; }
+/* =========================================
+   6. MODALS, SIDEBARS & ANIMATIONS
+   ========================================= */
+.sidebar { 
+    position: fixed; 
+    right: -100%; 
+    top: 0; 
+    width: 350px; 
+    height: 100%; 
+    background: var(--black); 
+    color: var(--white); 
+    z-index: 2001; 
+    transition: var(--transition); 
+}
+.sidebar.open { right: 0; }
+
+.modal { 
+    display: none; 
+    position: fixed; 
+    z-index: 3000; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0,0,0,0.9); 
 }
 
-/* --- MODAL --- */
-.modal { display: none; position: fixed; z-index: 3000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); }
-.modal-content { max-width: 90%; max-height: 80%; margin: auto; display: block; padding-top: 60px; }
-.close-modal { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; cursor: pointer; }
+.modal-content { 
+    max-width: 90%; 
+    max-height: 80%; 
+    margin: auto; 
+    display: block; 
+    padding-top: 60px; 
+}
+
+.close-modal { 
+    position: absolute; 
+    top: 20px; 
+    right: 30px; 
+    color: var(--white); 
+    font-size: 40px; 
+    cursor: pointer; 
+}
+
+.hero-animate { animation: fadeInUp 1s ease-out forwards; }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   7. RESPONSIVE MEDIA QUERIES
+   ========================================= */
+@media (max-width: 768px) {
+    /* Hero Adjustments */
+    .hero-section, .about-section { 
+        background-attachment: scroll; /* Improved mobile performance */
+    }
+    .hero-section { min-height: 50vh; }
+    .hero-title { font-size: 2.2rem; }
+    .hero-overlay, .about-overlay { padding: 60px 0; }
+    
+    /* Product Grid Adjustments */
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    
+    /* Utility */
+    .hide-mobile { display: none; }
+    .sidebar { width: 100%; }
+    .about-section h2 { font-size: 2rem; }
+}
+
+@media (max-width: 480px) {
+    .product-grid { grid-template-columns: 1fr; }
+}
