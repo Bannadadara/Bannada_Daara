@@ -13,7 +13,7 @@ function init() {
 }
 
 /**
- * Render Product Grid
+ * Render Product Grid with Staggered Animations
  * @param {string} category - Category filter
  * @param {string} searchTerm - Search query filter
  */
@@ -27,26 +27,36 @@ function renderProducts(category = 'All', searchTerm = '') {
         return matchesCategory && matchesSearch;
     });
 
+    // Handle Empty State
     if (filtered.length === 0) {
         list.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 50px; color: #888;">
-                <i class="fas fa-search" style="font-size: 2rem; color: #c5a059; margin-bottom: 15px;"></i>
-                <p>No treasures found matching your search.</p>
+            <div style="grid-column: 1/-1; text-align: center; padding: 80px 20px; color: #888;">
+                <i class="fas fa-search" style="font-size: 3rem; color: #c5a059; opacity: 0.5; margin-bottom: 20px;"></i>
+                <h3 style="color: #333; margin-bottom: 10px;">No Treasures Found</h3>
+                <p>Try adjusting your search or category filters.</p>
             </div>`;
         return;
     }
 
-    list.innerHTML = filtered.map(p => `
-        <div class="product-card">
+    // Map through filtered products with animations
+    list.innerHTML = filtered.map((p, index) => {
+        // Handle "On Request" pricing logic
+        const isRequestOnly = p.on_request === true || p.price === 0;
+        const priceDisplay = isRequestOnly ? "Price on Request" : `Rs. ${p.price}`;
+        const btnText = isRequestOnly ? "INQUIRE" : "ADD TO BAG";
+        const btnIcon = isRequestOnly ? "fa-envelope" : "fa-plus";
+
+        return `
+        <div class="product-card" style="animation-delay: ${index * 0.05}s">
             <div class="img-container" onclick="window.viewImage('${p.img}', '${p.name}')">
                 <img src="${p.img}" alt="${p.name}" loading="lazy">
             </div>
             <div class="product-info">
                 <div class="product-name">${p.name}</div>
-                <div class="product-price">Rs. ${p.price}</div>
+                <div class="product-price" style="color: ${isRequestOnly ? '#666' : '#B12704'}">${priceDisplay}</div>
                 <div class="card-actions">
                     <button class="add-btn" onclick="window.addToCart(${p.id})">
-                        <i class="fas fa-plus"></i> ADD
+                        <i class="fas ${btnIcon}"></i> ${btnText}
                     </button>
                     <button class="icon-btn" onclick="window.viewImage('${p.img}', '${p.name}')" title="Quick View">
                         <i class="fas fa-eye"></i>
@@ -57,11 +67,11 @@ function renderProducts(category = 'All', searchTerm = '') {
                 </div>
             </div>
         </div>
-    `).join('');
+    `;}).join('');
 }
 
 /**
- * Global Functions (Attached to Window for HTML Access)
+ * Global Window Functions
  */
 
 // Image Modal Logic
@@ -75,7 +85,7 @@ window.viewImage = (src, title) => {
     modal.style.display = "flex";
 };
 
-// Share Product Logic
+// Share Logic (Native Mobile Share + Fallback)
 window.shareProduct = (name) => {
     const text = `Check out this handcrafted ${name} from Bannada Daara!`;
     const url = window.location.href;
@@ -118,7 +128,7 @@ window.changeQty = (id, delta) => {
 };
 
 /**
- * Persistence & UI Sync
+ * Persistence & UI Update Logic
  */
 function saveAndUpdate() {
     localStorage.setItem('bd-cart', JSON.stringify(cart));
@@ -130,55 +140,63 @@ function updateUI() {
     const cartTotal = document.getElementById('cart-total');
     const itemsDiv = document.getElementById('cart-items');
 
-    // Update Totals
     const totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
     const totalPrice = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
 
     cartCount.innerText = totalQty;
     cartTotal.innerText = `Rs. ${totalPrice}`;
 
-    // Render Bag Items with Controls
     if (cart.length === 0) {
-        itemsDiv.innerHTML = '<p style="text-align:center; padding:40px; color:#888;">Your bag is empty.</p>';
+        itemsDiv.innerHTML = `
+            <div style="text-align:center; padding:60px 20px; color:#888;">
+                <i class="fas fa-shopping-basket" style="font-size: 2rem; margin-bottom: 10px; opacity: 0.3;"></i>
+                <p>Your bag is empty.</p>
+            </div>`;
     } else {
         itemsDiv.innerHTML = cart.map(item => `
             <div class="cart-item-row" style="display:flex; gap:15px; padding:15px 0; border-bottom:1px solid #333; color:white;">
                 <img src="${item.img}" style="width:60px; height:60px; object-fit:cover; border-radius:4px;">
                 <div style="flex:1">
                     <div style="font-weight:600; font-size:0.9rem; margin-bottom: 2px;">${item.name}</div>
-                    <div style="color:#c5a059; font-size: 0.85rem; margin-bottom: 8px;">Rs. ${item.price}</div>
+                    <div style="color:#c5a059; font-size: 0.85rem; margin-bottom: 8px;">
+                        ${item.price === 0 ? 'Price on Request' : 'Rs. ' + item.price}
+                    </div>
                     <div class="qty-controls" style="display:flex; align-items:center; gap:10px;">
                         <button class="qty-btn" onclick="window.changeQty(${item.id}, -1)">-</button>
                         <span class="item-qty" style="color:#c5a059; font-weight:bold;">${item.qty}</span>
                         <button class="qty-btn" onclick="window.changeQty(${item.id}, 1)">+</button>
                     </div>
                 </div>
-                <div style="font-weight:600; font-size:0.9rem;">Rs. ${item.price * item.qty}</div>
+                <div style="font-weight:600; font-size:0.9rem;">
+                    ${item.price === 0 ? '--' : 'Rs. ' + (item.price * item.qty)}
+                </div>
             </div>
         `).join('');
     }
 }
 
 /**
- * Event Listeners
+ * Core Event Listeners
  */
 function setupEventListeners() {
-    // Sidebar Controls
+    // Sidebar Navigation
     document.getElementById('cart-toggle').onclick = () => document.getElementById('cart-sidebar').classList.add('open');
     document.getElementById('close-cart').onclick = () => document.getElementById('cart-sidebar').classList.remove('open');
     
-    // Modal Close
-    document.querySelector('.close-modal').onclick = () => document.getElementById('image-modal').style.display = "none";
+    // Modal Interaction
+    const modal = document.getElementById('image-modal');
+    document.querySelector('.close-modal').onclick = () => modal.style.display = "none";
+    window.onclick = (event) => { if (event.target == modal) modal.style.display = "none"; };
     
-    // Clear Cart
+    // Cart Actions
     document.getElementById('clear-cart').onclick = () => {
-        if (cart.length > 0 && confirm("Do you want to clear your bag?")) {
+        if (cart.length > 0 && confirm("Remove all items from your bag?")) {
             cart = [];
             saveAndUpdate();
         }
     };
 
-    // Category Filter Logic
+    // Category Filter Buttons
     document.querySelectorAll('.cat-item').forEach(btn => {
         btn.onclick = () => {
             document.querySelector('.cat-item.active').classList.remove('active');
@@ -187,24 +205,31 @@ function setupEventListeners() {
         };
     });
 
-    // Search Bar Real-time Filter
-    document.getElementById('search-bar').oninput = (e) => {
+    // Real-time Search Input
+    document.getElementById('search-bar').addEventListener('input', (e) => {
         const activeCat = document.querySelector('.cat-item.active').dataset.cat;
         renderProducts(activeCat, e.target.value);
-    };
+    });
 
-    // Footer & Checkout
+    // WhatsApp Integration
     document.getElementById('footer-feedback-btn').onclick = () => {
         window.open('https://wa.me/918105750221?text=Hi, I have feedback regarding Bannada Daara:', '_blank');
     };
 
     document.getElementById('checkout-btn').onclick = () => {
-        if (cart.length === 0) return alert("Your bag is empty!");
-        const msg = cart.map(i => `• ${i.name} (Qty: ${i.qty}) - Rs.${i.price * i.qty}`).join('%0A');
+        if (cart.length === 0) return alert("Please add items to your bag first!");
+        
+        const cartList = cart.map(i => {
+            const priceLabel = i.price === 0 ? "(Price on Request)" : `Rs.${i.price * i.qty}`;
+            return `• ${i.name} [x${i.qty}] - ${priceLabel}`;
+        }).join('%0A');
+        
         const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-        window.open(`https://wa.me/918105750221?text=Hello! I'd like to place an order:%0A%0A${msg}%0A%0A*Total: Rs.${total}*`, '_blank');
+        const totalText = total > 0 ? `%0A%0A*Total Estimated: Rs.${total}*` : '';
+        
+        window.open(`https://wa.me/918105750221?text=Hello! I am interested in these treasures:%0A%0A${cartList}${totalText}`, '_blank');
     };
 }
 
-// Start the app
+// Run Application
 init();

@@ -28,7 +28,7 @@ body {
 }
 
 /* =========================================
-   2. HEADER & FOOTER (BLACK THEME)
+   2. HEADER & NAVIGATION
    ========================================= */
 .navbar, .footer { 
     background: var(--black); 
@@ -80,7 +80,61 @@ body {
 }
 
 /* =========================================
-   3. BACKGROUND SECTIONS (HERO & ABOUT)
+   3. PREMIUM FILTER BAR
+   ========================================= */
+.category-bar {
+    padding: 30px 0 10px 0;
+    position: sticky;
+    top: 60px; /* Sits below navbar */
+    background: white;
+    z-index: 900;
+}
+
+.cat-wrapper {
+    overflow-x: auto;
+    scrollbar-width: none;
+    display: flex;
+    justify-content: center;
+}
+
+.cat-wrapper::-webkit-scrollbar { display: none; }
+
+.cat-flex {
+    display: flex;
+    gap: 12px;
+    padding: 10px 5px;
+}
+
+.cat-item {
+    white-space: nowrap;
+    padding: 10px 24px;
+    border: 1.5px solid #eee;
+    background: #fdfdfd;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #555;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cat-item:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-2px) scale(1.05);
+}
+
+.cat-item.active {
+    background: var(--gold);
+    color: white;
+    border-color: var(--gold);
+    box-shadow: 0 8px 15px rgba(197, 160, 89, 0.3);
+}
+
+/* =========================================
+   4. HERO & ABOUT SECTIONS
    ========================================= */
 .hero-section, .about-section {
     background-image: url('images/hero-bg.jpg');
@@ -100,7 +154,6 @@ body {
     text-align: center; 
     color: var(--white); 
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -138,78 +191,6 @@ body {
 }
 
 /* =========================================
-   4. BUTTONS & MICRO-INTERACTIONS
-   ========================================= */
-.search-btn i, .bag-btn i, .insta-link i, .feedback-btn i, 
-.hero-btn i, .view-btn i, .share-btn i, .icon-btn i {
-    color: var(--gold);
-    transition: transform 0.3s ease;
-}
-
-.hero-btn, .feedback-btn, .cat-item.active, .add-btn, .checkout-btn {
-    background: var(--gold);
-    color: var(--white);
-    border: none;
-    cursor: pointer;
-    transition: var(--transition);
-    border-radius: 4px;
-    font-weight: 600;
-    text-decoration: none;
-}
-
-/* --- BUTTON SHINE ANIMATION --- */
-.add-btn, .hero-btn {
-    position: relative;
-    overflow: hidden;
-}
-
-.add-btn::after, .hero-btn::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -60%;
-    width: 20%;
-    height: 200%;
-    background: rgba(255,255,255,0.2);
-    transform: rotate(30deg);
-    transition: 0.5s;
-}
-
-.add-btn:hover::after, .hero-btn:hover::after {
-    left: 120%;
-}
-
-.hero-btn { display: inline-block; padding: 15px 35px; }
-.hero-btn:hover { 
-    background: #a38446; 
-    transform: translateY(-3px); 
-    box-shadow: 0 10px 20px rgba(197, 160, 89, 0.4); 
-}
-
-/* --- FILTER BUTTON ANIMATIONS --- */
-.cat-item {
-    padding: 10px 20px;
-    border: 1px solid #ddd;
-    background: white;
-    border-radius: 20px;
-    cursor: pointer;
-    margin: 5px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.cat-item:hover {
-    transform: scale(1.05);
-    border-color: var(--gold);
-}
-
-.cat-item.active {
-    background: var(--gold);
-    color: white;
-    border-color: var(--gold);
-    box-shadow: 0 4px 12px rgba(197, 160, 89, 0.3);
-}
-
-/* =========================================
    5. PRODUCT GRID & CARDS
    ========================================= */
 .product-grid {
@@ -227,6 +208,7 @@ body {
     background: var(--white); 
     transition: var(--transition); 
     height: 100%;
+    animation: productFadeIn 0.5s ease forwards;
 }
 
 .product-card:hover { 
@@ -275,8 +257,41 @@ body {
     margin-bottom: 12px; 
 }
 
+/* --- BUTTONS & ACTIONS --- */
 .card-actions { display: flex; gap: 8px; margin-top: auto; }
+
+.hero-btn, .feedback-btn, .add-btn, .checkout-btn {
+    background: var(--gold);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    border-radius: 4px;
+    font-weight: 600;
+}
+
 .add-btn { flex: 2; padding: 10px; font-size: 0.85rem; }
+
+/* SHINE ANIMATION */
+.add-btn, .hero-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.add-btn::after, .hero-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 20%;
+    height: 200%;
+    background: rgba(255,255,255,0.2);
+    transform: rotate(30deg);
+    transition: 0.5s;
+}
+
+.add-btn:hover::after, .hero-btn:hover::after { left: 120%; }
+
 .icon-btn { 
     background: #f4f4f4; 
     border: none; 
@@ -291,7 +306,7 @@ body {
 .icon-btn:hover { background: #e8e8e8; }
 
 /* =========================================
-   6. SIDEBAR & QUANTITY CONTROLS
+   6. SIDEBAR & BAG CONTROLS
    ========================================= */
 .sidebar { 
     position: fixed; 
@@ -307,7 +322,6 @@ body {
 }
 .sidebar.open { right: 0; }
 
-/* --- QUANTITY CONTROLS IN BAG --- */
 .qty-controls {
     display: flex;
     align-items: center;
@@ -328,12 +342,11 @@ body {
     justify-content: center;
     transition: 0.2s;
 }
-
 .qty-btn:hover { background: var(--gold); }
 .item-qty { font-weight: 600; font-size: 0.9rem; color: var(--gold); }
 
 /* =========================================
-   7. MODALS & ANIMATIONS
+   7. MODALS & KEYFRAMES
    ========================================= */
 .modal { 
     display: none; 
@@ -363,20 +376,23 @@ body {
     cursor: pointer; 
 }
 
-.hero-animate { animation: fadeInUp 1s ease-out forwards; }
+@keyframes productFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
+.hero-animate { animation: fadeInUp 1s ease-out forwards; }
+
 /* =========================================
    8. RESPONSIVE MEDIA QUERIES
    ========================================= */
 @media (max-width: 768px) {
-    .hero-section, .about-section { 
-        background-attachment: scroll; 
-    }
+    .hero-section, .about-section { background-attachment: scroll; }
     .hero-section { min-height: 50vh; }
     .hero-title { font-size: 2.2rem; }
     .hero-overlay, .about-overlay { padding: 60px 0; }
@@ -384,6 +400,8 @@ body {
     .hide-mobile { display: none; }
     .sidebar { width: 100%; }
     .about-section h2 { font-size: 2rem; }
+    .cat-wrapper { justify-content: flex-start; }
+    .category-bar { padding-left: 4%; }
 }
 
 @media (max-width: 480px) {

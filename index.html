@@ -7,7 +7,6 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -45,12 +44,16 @@
     </section>
 
     <main class="container" id="shop-section">
-        <nav class="category-bar" style="padding-top: 40px; text-align: center;">
-            <div class="cat-flex" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;">
-                <button class="cat-item active" data-cat="All">All Items</button>
-                <button class="cat-item" data-cat="Bags">Bags</button>
-                <button class="cat-item" data-cat="Pouches">Pouches</button>
-                <button class="cat-item" data-cat="Stationery">Stationery</button>
+        <nav class="category-bar">
+            <div class="cat-wrapper">
+                <div class="cat-flex">
+                    <button class="cat-item active" data-cat="All">All Treasures</button>
+                    <button class="cat-item" data-cat="Bags">Bags</button>
+                    <button class="cat-item" data-cat="Pouches">Pouches</button>
+                    <button class="cat-item" data-cat="Stationery">Stationery</button>
+                    <button class="cat-item" data-cat="Accessories">Accessories</button>
+                    <button class="cat-item" data-cat="Decor">Home Decor</button>
+                </div>
             </div>
         </nav>
 
@@ -96,7 +99,7 @@
         <div id="modal-caption"></div>
     </div>
 
-    <footer class="footer" style="padding: 40px 0;">
+    <footer class="footer">
         <div class="container" style="text-align: center;">
             <div class="footer-brand" style="margin-bottom: 20px;">
                 <img src="images/logo.png" alt="Logo" class="footer-logo">
