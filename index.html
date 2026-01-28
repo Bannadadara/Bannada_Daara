@@ -166,6 +166,8 @@
                     style="display:flex; gap:20px; border-bottom:1px solid #333; margin-bottom:15px; padding-bottom:5px;">
                     <span class="p-tab active" onclick="switchTab('desc')" id="tab-desc"
                         style="cursor:pointer; color:var(--gold); font-weight:600; font-size:0.9rem;">Description</span>
+                    <span class="p-tab" onclick="switchTab('images')" id="tab-images"
+                        style="cursor:pointer; color:#888; font-weight:600; font-size:0.9rem;">Images</span>
                     <span class="p-tab" onclick="switchTab('reviews')" id="tab-reviews"
                         style="cursor:pointer; color:#888; font-weight:600; font-size:0.9rem;">Reviews (<span
                             id="review-count">0</span>)</span>
@@ -174,6 +176,13 @@
                 <div id="content-desc" class="tab-content">
                     <div id="p-desc" class="p-desc">
                         Description goes here...
+                    </div>
+                </div>
+
+                <div id="content-images" class="tab-content"
+                    style="display:none; color:#999; flex:1; overflow-y:auto; margin-bottom:20px;">
+                    <div id="p-images-grid" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:10px;">
+                        <!-- All product images injected here -->
                     </div>
                 </div>
 

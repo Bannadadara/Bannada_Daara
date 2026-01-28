@@ -69,22 +69,37 @@ window.openProductModal = (id) => {
 
     // Gallery Logic
     const gallery = document.getElementById('p-gallery');
+    const imagesGrid = document.getElementById('p-images-grid');
     gallery.innerHTML = ''; // Clear previous
+    if (imagesGrid) imagesGrid.innerHTML = '';
 
     if (p.images && p.images.length > 0) {
         p.images.forEach((imgSrc, index) => {
+            // Thumbnails for left side
             const thumb = document.createElement('img');
             thumb.src = imgSrc;
             thumb.className = `p-thumb ${index === 0 ? 'active' : ''}`;
             thumb.onclick = () => {
                 const mainImg = document.getElementById('p-main-img');
                 mainImg.src = imgSrc;
-                // Reset zoom transform when switching images
                 mainImg.style.transform = 'scale(1)';
                 document.querySelectorAll('.p-thumb').forEach(t => t.classList.remove('active'));
                 thumb.classList.add('active');
             };
             gallery.appendChild(thumb);
+
+            // Grid items for Images tab
+            if (imagesGrid) {
+                const gridImg = document.createElement('img');
+                gridImg.src = imgSrc;
+                gridImg.style.width = '100%';
+                gridImg.style.height = '150px';
+                gridImg.style.objectFit = 'cover';
+                gridImg.style.borderRadius = '8px';
+                gridImg.style.cursor = 'pointer';
+                gridImg.onclick = () => window.viewImage(imgSrc, p.name);
+                imagesGrid.appendChild(gridImg);
+            }
         });
     }
 
