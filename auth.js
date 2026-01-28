@@ -117,7 +117,7 @@ const initAuth = () => {
             setTimeout(() => {
                 const res = Auth.register(name, email, pass);
                 if (res.success) {
-                    window.location.href = 'index.html';
+                    window.location.href = 'account.html';
                 } else {
                     alert(res.message);
                     btn.innerText = 'CREATE MY ACCOUNT';
