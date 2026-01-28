@@ -117,10 +117,11 @@ const initAuth = () => {
             setTimeout(() => {
                 const res = Auth.register(name, email, pass);
                 if (res.success) {
-                    window.location.href = 'account.html';
+                    alert('Profile created successfully! Welcome to Bannada Daara.');
+                    window.location.href = 'account.html?new=true';
                 } else {
                     alert(res.message);
-                    btn.innerText = 'CREATE MY ACCOUNT';
+                    btn.innerText = 'CREATE PROFILE & LOGIN';
                 }
             }, 800);
         });

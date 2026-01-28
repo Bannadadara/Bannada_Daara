@@ -203,6 +203,12 @@
             document.getElementById('prof-joined').innerText = new Date(user.joined).toLocaleDateString();
 
             renderOrders();
+
+            // Auto-show profile if brand new
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('new') === 'true') {
+                showSection('profile');
+            }
         }
 
         function renderOrders() {
