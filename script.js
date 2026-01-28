@@ -44,12 +44,18 @@ window.openProductModal = (id) => {
     const descContent = document.getElementById('p-desc');
     if (p.dimensions) {
         descContent.innerHTML = `
-            <p>${p.description}</p>
-            <div class="product-dims" style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed #444;">
-                <span style="color: var(--gold); font-weight: 600;"><i class="fas fa-ruler-combined"></i> Dimensions:</span>
-                <span style="color: #ccc; margin-left: 10px;">${p.dimensions.length} (L) x ${p.dimensions.width} (W)</span>
+            <p style="margin-bottom: 15px;">${p.description}</p>
+            <div class="product-dims">
+                <div style="color: var(--gold); font-weight: 700; font-size: 0.85rem; margin-bottom: 5px; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-ruler-combined"></i> PRODUCT DIMENSIONS
+                </div>
+                <div style="color: #eee; font-size: 0.9rem; font-weight: 500;">
+                    ${p.dimensions.length} (Length) &times; ${p.dimensions.width} (Width)
+                </div>
             </div>
         `;
+    } else {
+        descContent.innerText = p.description || "Handcrafted with love.";
     }
 
     document.getElementById('p-modal-price').innerText = p.on_request ? 'Price on Request' : `₹${p.price}`;
@@ -124,13 +130,15 @@ function renderSimilarProducts(currentP) {
     }
 
     similarContainer.innerHTML = `
-        <h3 style="color: var(--gold); font-size: 1rem; margin: 20px 0 10px 0; font-family: 'Cormorant Garamond', serif;">Similar Treasures</h3>
-        <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px;">
+        <h3 style="color: var(--gold); font-size: 0.9rem; margin: 25px 0 12px 0; font-family: 'Montserrat', sans-serif; font-weight: 700; letter-spacing: 1px;">SIMILAR TREASURES</h3>
+        <div style="display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none;">
             ${similar.map(p => `
-                <div class="similar-item" onclick="window.openProductModal(${p.id})" style="min-width: 100px; cursor: pointer;">
-                    <img src="${p.img}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 1px solid #333;">
-                    <div style="font-size: 0.75rem; color: #ccc; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.name}</div>
-                    <div style="font-size: 0.8rem; color: var(--gold); font-weight: bold;">₹${p.price || '--'}</div>
+                <div class="similar-item" onclick="window.openProductModal(${p.id})" style="min-width: 110px; cursor: pointer; transition: transform 0.2s;">
+                    <div style="width: 110px; height: 110px; overflow: hidden; border-radius: 8px; border: 1px solid #333;">
+                        <img src="${p.img}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1.0)'">
+                    </div>
+                    <div style="font-size: 0.7rem; color: #bbb; margin-top: 6px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.name}</div>
+                    <div style="font-size: 0.85rem; color: var(--gold); font-weight: 800;">₹${p.price || '--'}</div>
                 </div>
             `).join('')}
         </div>
