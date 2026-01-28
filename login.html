@@ -218,10 +218,6 @@
         </div>
 
         <div class="auth-forms">
-            <div class="form-toggle" style="border: none; margin-bottom: 10px;">
-                <!-- Toggles removed as requested -->
-            </div>
-
             <!-- LOGIN FORM -->
             <div id="login-container">
                 <form id="login-form">
@@ -234,15 +230,25 @@
                         <label>Password</label>
                         <input type="password" id="login-pass" placeholder="Enter your password" required>
                     </div>
-                    <button type="submit" class="submit-btn" id="login-submit">Login</button>
+                    <button type="submit" class="submit-btn" id="login-submit"
+                        style="background: #000000;">Login</button>
                 </form>
-                <div
-                    style="text-align: center; margin-top: 30px; border-top: 1px solid var(--gray-border); padding-top: 20px;">
-                    <p style="color: #666; font-size: 1rem; margin-bottom: 15px;">New to Bannada Daara?</p>
+
+                <div style="text-align: center; margin-top: 25px;">
+                    <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">New to Bannada Daara?</p>
                     <button id="goto-register"
                         style="width: 100%; padding: 12px; background: none; border: 2px solid var(--primary); color: var(--primary); font-weight: 700; border-radius: 8px; cursor: pointer; transition: all 0.3s;">
                         CREATE AN ACCOUNT
                     </button>
+                </div>
+
+                <div
+                    style="text-align: center; margin-top: 20px; border-top: 1px solid var(--gray-border); padding-top: 20px;">
+                    <a href="admin.html"
+                        style="text-decoration: none; color: #555; font-size: 0.9rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: color 0.3s;"
+                        onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='#555'">
+                        <i class="fas fa-user-shield"></i> Admin Login
+                    </a>
                 </div>
             </div>
 
@@ -250,6 +256,8 @@
             <div id="register-container" style="display: none;">
                 <form id="register-form">
                     <h1 class="auth-title">Create Account</h1>
+                    <p style="color: #888; margin-bottom: 25px; font-size: 0.9rem;">Join the Bannada Daara community for
+                        a personalized experience.</p>
                     <div class="input-group">
                         <label>Full Name</label>
                         <input type="text" id="reg-name" placeholder="John Doe" required>
@@ -262,7 +270,8 @@
                         <label>Password</label>
                         <input type="password" id="reg-pass" placeholder="Create a strong password" required>
                     </div>
-                    <button type="submit" class="submit-btn" id="reg-submit">Register</button>
+                    <button type="submit" class="submit-btn" id="reg-submit"
+                        style="background: #000000;">Register</button>
                 </form>
                 <div style="text-align: center; margin-top: 20px;">
                     <p style="color: #666; font-size: 0.9rem;">Already have an account?
@@ -277,8 +286,6 @@
 
     <script src="auth.js"></script>
     <script>
-        // Simple Toggle Script for UI
-        const btnLogin = document.getElementById('btn-login');
         const loginContainer = document.getElementById('login-container');
         const registerContainer = document.getElementById('register-container');
         const gotoRegister = document.getElementById('goto-register');
@@ -287,94 +294,13 @@
         gotoRegister.addEventListener('click', () => {
             loginContainer.style.display = 'none';
             registerContainer.style.display = 'block';
-            if (btnLogin) btnLogin.classList.remove('active');
         });
 
         gotoLogin.addEventListener('click', () => {
             loginContainer.style.display = 'block';
             registerContainer.style.display = 'none';
-            if (btnLogin) btnLogin.classList.add('active');
         });
-
-        if (btnLogin) {
-            btnLogin.addEventListener('click', () => {
-                loginContainer.style.display = 'block';
-                registerContainer.style.display = 'none';
-                btnLogin.classList.add('active');
-            });
-        }
-
-        // Admin Login Prompt
-        function promptAdminLogin() {
-            const modal = document.getElementById('admin-auth-modal');
-            modal.style.display = 'flex';
-        }
-
-        function closeAdminModal() {
-            document.getElementById('admin-auth-modal').style.display = 'none';
-            document.getElementById('admin-username').value = '';
-            document.getElementById('admin-password').value = '';
-        }
-
-        function verifyAdminCredentials(e) {
-            e.preventDefault();
-            const username = document.getElementById('admin-username').value;
-            const password = document.getElementById('admin-password').value;
-
-            if (username === 'admin' && password === 'admin@1243') {
-                // Set session auth and redirect
-                sessionStorage.setItem('bd-admin-auth', 'true');
-                window.location.href = 'admin.html';
-            } else {
-                alert('Invalid admin credentials!');
-            }
-        }
     </script>
-
-    <!-- Admin Authentication Modal -->
-    <div id="admin-auth-modal"
-        style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 9999; align-items: center; justify-content: center; animation: fadeIn 0.3s ease;">
-        <div class="admin-modal-content"
-            style="background: linear-gradient(135deg, #1a1a1a 0%, #151515 100%); padding: 40px; border-radius: 20px; width: 90%; max-width: 420px; position: relative; border: 2px solid var(--gold); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.2); animation: modalFadeIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);">
-            <button onclick="closeAdminModal()"
-                style="position: absolute; top: 15px; right: 15px; background: rgba(255, 255, 255, 0.1); border: none; font-size: 1.5rem; cursor: pointer; color: #999; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s;"
-                onmouseover="this.style.background='rgba(255, 255, 255, 0.2)'; this.style.transform='rotate(90deg)'; this.style.color='#fff'"
-                onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='rotate(0deg)'; this.style.color='#999'">&times;</button>
-            <div style="text-align: center; margin-bottom: 30px;">
-                <i class="fas fa-shield-alt"
-                    style="font-size: 3rem; color: var(--gold); margin-bottom: 15px; display: block; animation: pulse 2s ease-in-out infinite;"></i>
-                <h2
-                    style="font-family: 'Cormorant Garamond', serif; margin-bottom: 10px; color: var(--gold); font-size: 2rem;">
-                    Admin Access</h2>
-                <p style="color: #999; font-size: 0.9rem;">Enter your credentials to continue</p>
-            </div>
-            <form onsubmit="verifyAdminCredentials(event)">
-                <div class="input-group" style="margin-bottom: 20px;">
-                    <label
-                        style="color: var(--gold); font-weight: 600; margin-bottom: 8px; display: block;">Username</label>
-                    <input type="text" id="admin-username" placeholder="Enter admin username" required
-                        style="width: 100%; padding: 15px; background: rgba(255, 255, 255, 0.05); border: 2px solid #333; border-radius: 10px; color: white; font-family: inherit; transition: all 0.3s;"
-                        onfocus="this.style.borderColor='var(--gold)'; this.style.background='rgba(255, 255, 255, 0.08)'"
-                        onblur="this.style.borderColor='#333'; this.style.background='rgba(255, 255, 255, 0.05)'">
-                </div>
-                <div class="input-group" style="margin-bottom: 25px;">
-                    <label
-                        style="color: var(--gold); font-weight: 600; margin-bottom: 8px; display: block;">Password</label>
-                    <input type="password" id="admin-password" placeholder="Enter admin password" required
-                        style="width: 100%; padding: 15px; background: rgba(255, 255, 255, 0.05); border: 2px solid #333; border-radius: 10px; color: white; font-family: inherit; transition: all 0.3s;"
-                        onfocus="this.style.borderColor='var(--gold)'; this.style.background='rgba(255, 255, 255, 0.08)'"
-                        onblur="this.style.borderColor='#333'; this.style.background='rgba(255, 255, 255, 0.05)'">
-                </div>
-                <button type="submit" class="submit-btn"
-                    style="width: 100%; padding: 16px; background: linear-gradient(135deg, var(--gold) 0%, #FFA500 100%); color: #000; border: none; border-radius: 50px; font-weight: 800; font-size: 1rem; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);"
-                    onmouseover="this.style.transform='translateY(-2px) scale(1.02)'; this.style.boxShadow='0 6px 25px rgba(255, 215, 0, 0.5)'"
-                    onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 4px 15px rgba(255, 215, 0, 0.3)'">
-                    <i class="fas fa-sign-in-alt"></i> ACCESS ADMIN PANEL
-                </button>
-            </form>
-        </div>
-    </div>
-
 </body>
 
 </html>
