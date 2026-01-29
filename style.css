@@ -1256,6 +1256,24 @@ body {
     color: white;
 }
 
+/* Form Layouts (for Admin/Auth) */
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-col {
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
 /* PRODUCT DETAIL MODAL STYLES */
 .p-modal-content {
     background: linear-gradient(135deg, #151515 0%, #1a1a1a 100%);
