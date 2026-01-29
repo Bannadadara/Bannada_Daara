@@ -585,9 +585,11 @@ h6,
 
 .product-price {
     font-family: 'Playfair Display', serif;
-    font-size: 1rem;
+    font-size: 1.3rem;
+    /* Larger font for prominence */
     font-weight: 700;
     color: var(--gold);
+    margin-bottom: 8px;
 }
 
 .request-badge {
@@ -620,12 +622,7 @@ h6,
     margin: 15px 0 5px 0;
 }
 
-.product-price {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #B12704;
-    margin-bottom: 15px;
-}
+
 
 .card-actions {
     display: flex;
