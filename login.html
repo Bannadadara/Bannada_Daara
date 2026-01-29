@@ -183,9 +183,7 @@
             color: var(--primary);
         }
 
-        #register-form {
-            display: none;
-        }
+
 
         @media (max-width: 768px) {
             .auth-container {
@@ -211,8 +209,9 @@
         <a href="index.html" class="home-link"><i class="fas fa-home"></i> Back to Home</a>
 
         <div class="auth-sidebar">
-            <h2 style="font-family: 'Cormorant Garamond'; font-size: 2.5rem; margin-bottom: 15px;">Welcome Back!</h2>
-            <p style="font-size: 1.1rem; opacity: 0.9; max-width: 300px;">
+            <h2 id="sidebar-title" style="font-family: 'Cormorant Garamond'; font-size: 2.5rem; margin-bottom: 15px;">
+                Welcome Back!</h2>
+            <p id="sidebar-desc" style="font-size: 1.1rem; opacity: 0.9; max-width: 300px;">
                 To keep connected with us please login with your personal info
             </p>
         </div>
@@ -289,15 +288,21 @@
         const registerContainer = document.getElementById('register-container');
         const gotoRegister = document.getElementById('goto-register');
         const gotoLogin = document.getElementById('goto-login');
+        const sidebarTitle = document.getElementById('sidebar-title');
+        const sidebarDesc = document.getElementById('sidebar-desc');
 
         gotoRegister.addEventListener('click', () => {
             loginContainer.style.display = 'none';
             registerContainer.style.display = 'block';
+            sidebarTitle.innerText = "Hello, Friend!";
+            sidebarDesc.innerText = "Enter your personal details and start journey with us";
         });
 
         gotoLogin.addEventListener('click', () => {
             loginContainer.style.display = 'block';
             registerContainer.style.display = 'none';
+            sidebarTitle.innerText = "Welcome Back!";
+            sidebarDesc.innerText = "To keep connected with us please login with your personal info";
         });
     </script>
 </body>
