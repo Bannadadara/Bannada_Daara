@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -21,9 +21,14 @@
         <div class="container nav-content">
             <div class="brand">
                 <a href="index.html"
-                    style="text-decoration: none; display: flex; align-items: center; gap: 10px; color: inherit;">
-                    <img src="images/logo.png" alt="Bannada Daara Logo" class="dynamic-logo nav-logo">
-                    <h1 class="main-title">Bannada Daara</h1>
+                    style="text-decoration: none; display: flex; align-items: center; gap: 15px; color: inherit;">
+                    <div class="logo-wrapper">
+                        <img src="images/logo.png" alt="Logo" class="dynamic-logo nav-logo">
+                    </div>
+                    <div class="brand-text">
+                        <h1 class="main-title">BANNADADARA</h1>
+                        <span class="tagline">THE LOOM & LATTICE</span>
+                    </div>
                 </a>
             </div>
 
@@ -63,10 +68,10 @@
     <section class="hero-section">
         <div class="hero-overlay">
             <div class="container hero-animate">
-                <h1 class="hero-title">Artistry in Every Stitch</h1>
-                <p class="hero-subtitle">Premium Handcrafted Treasures from Dakshina Kannada</p>
-                <a href="#shop-section" class="hero-btn" style="text-decoration: none; display: inline-block;">
-                    EXPLORE COLLECTION <i class="fas fa-chevron-right"></i>
+                <h1 class="hero-title">WHERE EVERY THREAD<br>TELLS A STORY</h1>
+                <a href="#shop-section" class="hero-btn"
+                    style="text-decoration: none; display: inline-block; margin-top: 20px;">
+                    EXPLORE THE CRAFTS <i class="fas fa-chevron-right"></i>
                 </a>
             </div>
         </div>
@@ -287,6 +292,11 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="floating-medallion" title="Bannadadara Heritage"
+        onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i class="fas fa-scroll"></i>
     </div>
 
     <script src="auth.js"></script>

@@ -2,12 +2,14 @@
    1. CORE VARIABLES & RESET
    ========================================= */
 :root {
-    /* Antique Luxury Palette */
-    --primary-maroon: #4A0E0E;
-    --base-maroon: #320A0A;
+    /* Heritage Antique Palette */
+    --primary-maroon: #2A0A0A;
+    /* Deeper Maroon */
+    --base-maroon: #1C0707;
     --gold-accent: #D4AF37;
     --gold-bright: #FFD700;
     --silk-white: #F4F1EA;
+    /* Cream/Off-white for images */
 
     /* Functional Mappings */
     --primary: var(--gold-accent);
@@ -16,23 +18,24 @@
 
     --bg-body: var(--primary-maroon);
     --bg-card: var(--base-maroon);
-    --bg-hover: #400c0c;
+    --bg-hover: #320c0c;
 
     --text-main: var(--silk-white);
-    --text-sub: rgba(244, 241, 234, 0.7);
+    --text-sub: rgba(212, 175, 55, 0.8);
+    /* Gold subtext */
     --text-btn: #000000;
 
     --gold: var(--gold-accent);
     --gold-dark: #8a6d35;
     --white: var(--silk-white);
 
-    --gray-border: rgba(212, 175, 55, 0.3);
+    --gray-border: rgba(212, 175, 55, 0.2);
 
     --transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-    --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    --gold-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
-    --radius: 8px;
-    /* More refined radius for luxury look */
+    --shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    --gold-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    --radius: 2px;
+    /* Sharper, more classic corners */
 }
 
 * {
@@ -151,16 +154,33 @@ h6,
     object-fit: contain;
 }
 
+.brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
 .main-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
     color: var(--white);
+    line-height: 1;
+}
+
+.tagline {
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    color: var(--gold);
+    font-weight: 600;
+    margin-top: 5px;
 }
 
 .nav-right {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 30px;
+    /* More spacing for minimalist look */
 }
 
 /* --- SEARCH BAR --- */
@@ -335,9 +355,11 @@ h6,
 }
 
 .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    margin-bottom: 10px;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.1;
+    margin-bottom: 30px;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
 }
 
 .hero-btn {
@@ -424,33 +446,16 @@ h6,
 }
 
 .product-card {
-    border: 1px solid var(--gray-border);
+    border: none;
     padding: 0;
     display: flex;
     flex-direction: column;
-    background: var(--bg-card);
+    background: transparent;
     transition: var(--transition);
     height: 100%;
     position: relative;
     border-radius: var(--radius);
     overflow: hidden;
-    box-shadow: var(--shadow);
-}
-
-.product-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border: 1px solid var(--gold);
-    opacity: 0.2;
-    pointer-events: none;
-    z-index: 2;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), var(--gold-shadow);
-    border-color: var(--gold);
 }
 
 .img-container {
@@ -458,49 +463,48 @@ h6,
     aspect-ratio: 1/1;
     position: relative;
     overflow: hidden;
-    background: #000;
-    border-bottom: 1px solid var(--gray-border);
+    background: var(--silk-white);
+    /* Off-white for image background */
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    /* Slight round for the image box itself */
 }
 
-/* Ornate Border (SVG implementation in pseudo-element) */
+/* Gold Medallion Stamp */
 .img-container::after {
     content: '';
     position: absolute;
-    inset: 10px;
-    border: 1px solid var(--gold);
-    mask-image: linear-gradient(45deg, #000 25%, transparent 25%, transparent 50%, #000 50%, #000 75%, transparent 75%, transparent);
-    mask-size: 20px 20px;
-    opacity: 0.4;
+    top: 15px;
+    right: 15px;
+    width: 24px;
+    height: 24px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="%23D4AF37" stroke-width="2"/><circle cx="50" cy="50" r="35" fill="none" stroke="%23D4AF37" stroke-width="1"/><path d="M40 30 L60 30 M40 70 L60 70 M50 30 L50 70" stroke="%23D4AF37" stroke-width="2"/></svg>');
+    background-size: contain;
+    opacity: 0.6;
     pointer-events: none;
+    z-index: 5;
 }
 
-.product-card:hover .img-container img {
-    transform: scale(1.05);
+.product-info {
+    padding: 15px 5px;
+    text-align: left;
 }
 
-/* Shimmer Effect */
-.product-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -150%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.2), transparent);
-    transform: skewX(-25deg);
-    transition: 0.7s;
-    z-index: 3;
+.product-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 5px;
 }
 
-.product-card:hover::after {
-    left: 150%;
-}
-
-.img-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.8s ease;
+.product-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gold);
 }
 
 .request-badge {
@@ -1528,5 +1532,52 @@ h6,
         overflow-x: auto !important;
         overflow-y: hidden !important;
         height: auto !important;
+    }
+}
+
+/* --- FLOATING HERITAGE MEDALLION --- */
+.floating-medallion {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at 30% 30%, #FFD700, #D4AF37 70%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.floating-medallion::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px dashed rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+}
+
+.floating-medallion i {
+    color: #320A0A;
+    font-size: 1.5rem;
+    filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.3));
+}
+
+.floating-medallion:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 15px 35px rgba(212, 175, 55, 0.4);
+}
+
+@media (max-width: 768px) {
+    .floating-medallion {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
     }
 }
