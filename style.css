@@ -544,38 +544,6 @@ h6,
     transition: var(--transition);
 }
 
-/* Wax Seal Medallion Style */
-.img-container::after {
-    content: '';
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 35px;
-    height: 35px;
-    background: radial-gradient(circle at 35% 35%, #9e1b1b, #6b0f0f);
-    border-radius: 50%;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4), inset -1px -1px 3px rgba(0, 0, 0, 0.5);
-    z-index: 5;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-}
-
-.img-container::before {
-    content: 'BD';
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(212, 175, 55, 0.6);
-    font-size: 0.6rem;
-    font-weight: 900;
-    z-index: 6;
-    font-family: 'Cinzel', serif;
-}
-
 .product-card:hover .img-container img {
     transform: scale(1.12);
 }
