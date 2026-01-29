@@ -103,6 +103,12 @@ window.openProductModal = (id) => {
     // Initialize or re-attach zoom effect logic
     setupZoomEffect();
 
+    // DATA SYNC: Pre-fill review name if logged in
+    if (window.Auth && window.Auth.getCurrentUser()) {
+        const revNameInput = document.getElementById('rev-name');
+        if (revNameInput) revNameInput.value = window.Auth.getCurrentUser().name || "";
+    }
+
     modal.style.display = 'flex';
 };
 
@@ -525,6 +531,17 @@ function setupEventListeners() {
 
             // If the Order Modal exists, open it. Otherwise, send direct WhatsApp.
             if (orderModal) {
+                // DATA SYNC: Pre-fill if logged in
+                if (window.Auth && window.Auth.getCurrentUser()) {
+                    const user = window.Auth.getCurrentUser();
+                    document.getElementById('cust-name').value = user.name || "";
+
+                    // If they have addresses, use the last one (usually most recent)
+                    if (user.addresses && user.addresses.length > 0) {
+                        const lastAddr = user.addresses[user.addresses.length - 1];
+                        document.getElementById('cust-address').value = `${lastAddr.street}, ${lastAddr.city}, ${lastAddr.state} - ${lastAddr.zip}`;
+                    }
+                }
                 orderModal.style.display = 'flex';
             } else {
                 sendDirectWhatsApp();
