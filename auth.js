@@ -146,8 +146,7 @@ const initAuth = () => {
         });
     }
 
-    // 3. Update UI on Main Pages (Header)
-    updateHeaderUI();
+
 };
 
 if (document.readyState === 'loading') {
@@ -156,42 +155,7 @@ if (document.readyState === 'loading') {
     initAuth();
 }
 
-function updateHeaderUI() {
-    const user = Auth.getCurrentUser();
-    const navRight = document.querySelector('.nav-right');
 
-    // Check if we already added the profile button to avoid duplicates
-    if (document.getElementById('profile-btn-container')) return;
-
-    if (navRight) {
-        const container = document.createElement('div');
-        container.id = 'profile-btn-container';
-
-        if (user) {
-            // Logged In State
-            container.innerHTML = `
-                <a href="account.html" class="icon-btn" style="text-decoration:none; background:none; color:white; font-weight:600; font-size:0.9rem; display:flex; gap:5px; align-items:center;">
-                    <i class="fas fa-user-circle"></i> Hi, ${user.name.split(' ')[0]}
-                </a>
-            `;
-        } else {
-            // Guest State
-            container.innerHTML = `
-                 <a href="login.html" class="auth-link" style="color:white; text-decoration:none; font-weight:600; margin-right:15px; font-size:0.9rem;">
-                    Login
-                </a>
-            `;
-        }
-
-        // Insert before the Bag/Cart button
-        const cartBtn = document.getElementById('cart-toggle');
-        if (cartBtn) {
-            navRight.insertBefore(container, cartBtn);
-        } else {
-            navRight.appendChild(container);
-        }
-    }
-}
 
 // Export for use in other scripts if module, but we are using vanilla script tags mostly.
 // Attaching to window for global access
