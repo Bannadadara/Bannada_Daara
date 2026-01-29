@@ -95,7 +95,9 @@ window.openProductModal = (id) => {
     }
 
     // Main Image Click -> View Image
-    document.getElementById('p-main-img').onclick = () => window.viewImage(p.img, p.name);
+    document.getElementById('p-main-img').onclick = function () {
+        window.viewImage(this.src, p.name);
+    };
     document.getElementById('p-main-img').style.cursor = 'zoom-in';
 
     // Initialize or re-attach zoom effect logic
@@ -304,11 +306,25 @@ function renderReviews(productId) {
  * Global Window Functions (for HTML onclick access)
  */
 window.viewImage = (src, title) => {
-    const modal = document.getElementById('image-modal');
-    if (!modal) return;
-    document.getElementById('modal-img').src = src;
-    document.getElementById('modal-caption').innerText = title;
-    modal.style.display = "flex";
+    // Open image in a new browser tab for a clear view
+    const newWindow = window.open("", "_blank");
+    if (newWindow) {
+        newWindow.document.write(`
+            <html>
+                <head>
+                    <title>${title} - View Image</title>
+                    <style>
+                        body { margin: 0; background: #101010; display: flex; height: 100vh; justify-content: center; align-items: center; }
+                        img { max-width: 100%; max-height: 100%; object-fit: contain; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+                    </style>
+                </head>
+                <body>
+                    <img src="${src}" alt="${title}">
+                </body>
+            </html>
+        `);
+        newWindow.document.close();
+    }
 };
 
 window.shareProduct = (name) => {
