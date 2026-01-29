@@ -13,6 +13,21 @@ function init() {
     setupEventListeners();
     updateUI();
     setupThreadAnimation();
+    setupScrollReveals();
+}
+
+function setupScrollReveals() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('reveal');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('section, main, .thread-divider-container').forEach(el => {
+        observer.observe(el);
+    });
 }
 
 function setupThreadAnimation() {
