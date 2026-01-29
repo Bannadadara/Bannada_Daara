@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | Bannada Daara</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .product-page-content {
+            padding: 40px 0;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .p-page-card {
+            background: #181818;
+            border: 1px solid #333;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            padding: 40px;
+            gap: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .back-nav {
+            align-self: flex-start;
+            max-width: 1100px;
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 0 20px;
+        }
+
+        .back-link {
+            color: var(--gold);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            transition: var(--transition);
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #333;
+            border-radius: 30px;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+            background: rgba(255, 215, 0, 0.1);
+            border-color: var(--gold);
+        }
+
+        @media (max-width: 992px) {
+            .p-page-card {
+                flex-direction: column;
+                padding: 20px;
+                margin: 20px;
+                width: auto;
+            }
+
+            .product-page-content {
+                padding: 20px 0;
+            }
+
+            .p-modal-left,
+            .p-modal-right {
+                width: 100% !important;
+            }
+
+            .p-main-img-container {
+                height: 400px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="container nav-content">
+            <div class="brand">
+                <a href="index.html"
+                    style="text-decoration: none; display: flex; align-items: center; gap: 10px; color: inherit;">
+                    <img src="images/logo.png" alt="Bannada Daara Logo" class="dynamic-logo nav-logo">
+                    <h1 class="main-title">Bannada Daara</h1>
+                </a>
+            </div>
+
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" id="search-bar" placeholder="Search treasures...">
+                    <button class="search-btn" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                <a href="login.html" id="nav-auth-link" class="bag-btn" style="text-decoration: none;">
+                    <i class="fas fa-user"></i>
+                    <span id="nav-auth-text">LOGIN</span>
+                </a>
+
+                <button id="cart-toggle" class="bag-btn">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="hide-mobile">BAG</span>
+                    <span id="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container product-page-content">
+        <nav class="back-nav">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> BACK TO COLLECTIONS
+            </a>
+        </nav>
+
+        <div class="p-page-card">
+            <div class="p-modal-left" style="width: 50%; display: flex; gap: 20px;">
+                <div id="p-gallery" class="p-gallery">
+                    <!-- Thumbnails injected here -->
+                </div>
+                <div class="p-main-img-container" style="flex: 1; height: 500px;">
+                    <img id="p-main-img" src="" alt="Product Image">
+                </div>
+            </div>
+
+            <div class="p-modal-right" style="width: 50%; display: flex; flex-direction: column;">
+                <h2 id="p-title" class="p-title" style="font-size: 2.5rem; margin-bottom: 20px;">Product Name</h2>
+                <div id="p-dims-box" style="margin-bottom: 15px; font-size: 0.9rem; color: #888;">
+                    Dimensions: <span id="p-dims">--</span>
+                </div>
+
+                <div class="p-tabs"
+                    style="display:flex; gap:20px; border-bottom:1px solid #333; margin-bottom:15px; padding-bottom:10px; flex-shrink: 0;">
+                    <span class="p-tab active" id="tab-desc"
+                        style="cursor:pointer; color:var(--gold); font-weight:600; font-size:1rem;">Description</span>
+                    <span class="p-tab" id="tab-reviews"
+                        style="cursor:pointer; color:#888; font-weight:600; font-size:1rem;">Reviews (<span
+                            id="review-count">0</span>)</span>
+                </div>
+
+                <!-- Scrollable Body Content -->
+                <div id="p-scroll-content"
+                    style="flex: 1; overflow-y: auto; padding-right: 15px; margin-bottom: 20px; scroll-behavior: smooth;">
+                    <div id="content-desc" class="tab-content">
+                        <div id="p-desc" class="p-desc"
+                            style="font-size:1.1rem; color:#ccc; line-height:1.6; overflow-wrap: break-word; word-break: break-word;">
+                            Description goes here...
+                        </div>
+                    </div>
+
+                    <div id="content-reviews" class="tab-content" style="display:none; flex-direction: column;">
+                        <div id="reviews-list" style="margin-bottom:25px;">
+                            <!-- Reviews injected here -->
+                        </div>
+
+                        <div class="review-form"
+                            style="background:rgba(255,255,255,0.03); padding:20px; border-radius:12px; border:1px solid #333; margin-bottom: 20px;">
+                            <h4 style="color:var(--gold); margin-bottom:15px; font-size:1rem;">Leave a Review</h4>
+                            <div style="display:flex; gap:10px; margin-bottom:15px; flex-wrap: wrap;">
+                                <input type="text" id="rev-name" placeholder="Your Name"
+                                    style="flex:1; min-width: 150px; padding:12px; background:#222; border:1px solid #444; color:white; border-radius:8px;">
+                                <select id="rev-rating"
+                                    style="padding:12px; background:#222; border:1px solid #444; color:white; border-radius:8px;">
+                                    <option value="5">5 Stars</option>
+                                    <option value="4">4 Stars</option>
+                                    <option value="3">3 Stars</option>
+                                    <option value="2">2 Stars</option>
+                                    <option value="1">1 Star</option>
+                                </select>
+                            </div>
+                            <textarea id="rev-comment" rows="4" placeholder="Describe your experience..."
+                                style="width:100%; padding:12px; background:#222; border:1px solid #444; color:white; border-radius:8px; margin-bottom:15px; resize: vertical;"></textarea>
+                            <button id="submit-review-btn" class="hero-btn"
+                                style="padding:12px 30px; font-size:0.9rem; width:auto; border-radius:8px;">Submit
+                                Review</button>
+                        </div>
+                    </div>
+
+                    <div id="similar-products" style="margin-top: 40px; border-top: 1px solid #333; padding-top: 30px;">
+                        <!-- Similar products injected here -->
+                    </div>
+                </div>
+
+                <!-- Fixed Price and Add Button -->
+                <div
+                    style="padding-top:20px; border-top:1px solid #333; display:flex; align-items:center; justify-content:space-between; flex-shrink: 0; flex-wrap: wrap; gap: 15px;">
+                    <div id="p-modal-price" style="font-size:2rem; color:var(--primary); font-weight:700;">₹0</div>
+                    <button id="p-add-btn" class="add-btn" style="padding: 16px 40px; font-size: 1rem;">
+                        ADD TO BAG
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="cart-sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <button id="close-cart-back" class="back-btn"><i class="fas fa-arrow-left"></i> BACK</button>
+            <h3><i class="fas fa-shopping-bag" style="color:var(--gold)"></i> Your Selection</h3>
+            <button id="clear-cart" class="clear-btn"><i class="fas fa-trash-alt"></i> EMPTY</button>
+        </div>
+
+        <div id="cart-items" class="cart-items-container">
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="total-row">
+                <span>Subtotal</span>
+                <span id="cart-total">₹0</span>
+            </div>
+            <button id="checkout-btn" class="stylish-wa-btn">
+                <span>PROCEED TO ORDER</span>
+                <i class="fab fa-whatsapp"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="order-modal" class="modal">
+        <div class="modal-form-content">
+            <h3>Delivery Details</h3>
+            <div class="form-group">
+                <label for="cust-name">Full Name</label>
+                <input type="text" id="cust-name" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label for="cust-address">Delivery Address</label>
+                <textarea id="cust-address" rows="3" placeholder="Apartment, Street, Landmark, Pincode"></textarea>
+            </div>
+            <button id="confirm-order-btn" class="stylish-wa-btn">
+                CONFIRM & SEND <i class="fab fa-whatsapp"></i>
+            </button>
+            <button class="close-order-modal"
+                style="background: none; border: none; color: #888; margin-top: 15px; cursor: pointer; width: 100%;">Cancel</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container" style="text-align: center;">
+            <div class="footer-brand" style="margin-bottom: 20px;">
+                <img src="images/logo.png" alt="Logo" class="dynamic-logo footer-logo">
+                <div class="footer-title">Bannada Daara</div>
+            </div>
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; border-top: 1px solid #222; padding-top: 15px; font-size: 0.8rem; flex-wrap: wrap; gap: 10px;">
+                <p style="margin: 0; color: #777;">&copy; 2025 Crafted with Heart in Dakshina Kannada.</p>
+                <p style="margin: 0; color: #777; font-weight: 500;">Developed by MCA United, St. Agnes, Mangalore</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script type="module" src="script.js"></script>
+    <script type="module">
+        import { products } from './data.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = parseInt(params.get('id'));
+
+            // Try to find in the merged global list first (includes custom products)
+            // Fallback to the imported static list if global is not yet initialized
+            const allP = window.allProducts || products;
+            const p = allP.find(i => i.id === id);
+            if (p) {
+                // Set as current product for global functions in script.js
+                window.currentProduct = p;
+
+                document.getElementById('p-main-img').src = p.img;
+                document.getElementById('p-title').innerText = p.name;
+                document.getElementById('p-desc').innerText = p.description || "Handcrafted with love.";
+                document.getElementById('p-modal-price').innerText = (p.on_request || p.price === 0) ? 'Price on Request' : `₹${p.price}`;
+
+                // Add to cart logic
+                document.getElementById('p-add-btn').onclick = () => {
+                    if (window.addToCart) {
+                        window.addToCart(p.id);
+                    }
+                };
+
+                // Tabs functionality
+                document.getElementById('tab-desc').onclick = () => window.switchTab('desc');
+                document.getElementById('tab-reviews').onclick = () => window.switchTab('reviews');
+
+                document.getElementById('submit-review-btn').onclick = () => {
+                    if (window.submitReview) window.submitReview();
+                };
+
+                // Gallery Thumbnails
+                const gallery = document.getElementById('p-gallery');
+                gallery.innerHTML = '';
+                const images = (p.images && p.images.length > 0) ? p.images : [p.img];
+
+                images.forEach((imgSrc, index) => {
+                    const thumb = document.createElement('img');
+                    thumb.src = imgSrc;
+                    thumb.className = `p-thumb ${index === 0 ? 'active' : ''}`;
+                    thumb.onclick = () => {
+                        document.getElementById('p-main-img').src = imgSrc;
+                        document.querySelectorAll('.p-thumb').forEach(t => t.classList.remove('active'));
+                        thumb.classList.add('active');
+                    };
+                    gallery.appendChild(thumb);
+                });
+
+                // Load reviews and similar products
+                setTimeout(() => {
+                    if (window.renderReviews) window.renderReviews(p.id);
+                    if (typeof window.renderSimilarProducts === 'function') {
+                        window.renderSimilarProducts(p);
+                    }
+                }, 100);
+
+                // Populate dimensions if available
+                if (p.dimensions) {
+                    document.getElementById('p-dims').innerText = `${p.dimensions.length} x ${p.dimensions.width}`;
+                    document.getElementById('p-dims-box').style.display = 'block';
+                } else {
+                    document.getElementById('p-dims-box').style.display = 'none';
+                }
+            } else {
+                // Product not found
+                document.querySelector('.p-page-card').innerHTML = `<div style="text-align:center; width:100%; padding:50px; color:#888;"><h3>Product not found.</h3><a href="index.html" style="color:var(--gold);">Return to Home</a></div>`;
+            }
+        });
+    </script>
+</body>
+
+</html>
