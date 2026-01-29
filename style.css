@@ -1361,7 +1361,7 @@ body {
 .p-main-img-container {
     position: relative;
     overflow: hidden;
-    cursor: zoom-in;
+    cursor: default;
     border-radius: 12px;
     background: var(--bg-hover);
     height: 400px;
@@ -1380,9 +1380,6 @@ body {
     transform-origin: center center;
 }
 
-.p-main-img-container:hover #p-main-img {
-    transform: scale(2.5);
-}
 
 .p-gallery {
     display: flex;

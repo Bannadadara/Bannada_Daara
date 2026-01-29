@@ -98,10 +98,7 @@ window.openProductModal = (id) => {
     document.getElementById('p-main-img').onclick = function () {
         window.viewImage(this.src, p.name);
     };
-    document.getElementById('p-main-img').style.cursor = 'zoom-in';
-
-    // Initialize or re-attach zoom effect logic
-    setupZoomEffect();
+    document.getElementById('p-main-img').style.cursor = 'default';
 
     // DATA SYNC: Pre-fill review name if logged in
     if (window.Auth && window.Auth.getCurrentUser()) {
@@ -142,29 +139,7 @@ function renderSimilarProducts(currentP) {
     `;
 }
 
-function setupZoomEffect() {
-    const container = document.getElementById('p-zoom-container');
-    const img = document.getElementById('p-main-img');
 
-    if (!container || !img) return;
-
-    container.onmousemove = (e) => {
-        const { left, top, width, height } = container.getBoundingClientRect();
-        const x = ((e.clientX - left) / width) * 100;
-        const y = ((e.clientY - top) / height) * 100;
-
-        img.style.transformOrigin = `${x}% ${y}%`;
-    };
-
-    container.onmouseleave = () => {
-        img.style.transformOrigin = 'center center';
-        img.style.transform = 'scale(1)';
-    };
-
-    container.onmouseenter = () => {
-        img.style.transform = 'scale(2.5)';
-    };
-}
 
 window.closeProductModal = () => {
     document.getElementById('product-modal').style.display = 'none';
