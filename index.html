@@ -121,17 +121,9 @@
     </div>
 
     <div id="image-modal" class="modal">
-        <div class="lightbox-controls">
-            <button class="lb-btn" onclick="adjustZoom(0.2)" title="Zoom In"><i class="fas fa-search-plus"></i></button>
-            <button class="lb-btn" onclick="adjustZoom(-0.2)" title="Zoom Out"><i
-                    class="fas fa-search-minus"></i></button>
-            <button class="lb-btn" onclick="resetZoom()" title="Reset"><i class="fas fa-sync-alt"></i></button>
-            <button class="lb-btn close-lb" onclick="closeLightbox()" title="Close"><i
-                    class="fas fa-times"></i></button>
-        </div>
-        <div id="lightbox-container" class="lightbox-container">
-            <img class="lightbox-img" id="modal-img" alt="Enlarged product view">
-        </div>
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modal-img" alt="Enlarged product view">
+        <div id="modal-caption"></div>
     </div>
 
     <footer class="footer">
