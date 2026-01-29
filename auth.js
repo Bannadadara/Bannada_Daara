@@ -39,6 +39,7 @@ const Auth = {
             email,
             password,
             orders: [],
+            addresses: [],
             joined: new Date().toISOString()
         };
         Auth.saveUser(newUser);
@@ -54,6 +55,26 @@ const Auth = {
 
     getCurrentUser: () => {
         return JSON.parse(localStorage.getItem(SESSION_KEY));
+    },
+
+    updateUserData: (updates) => {
+        let user = Auth.getCurrentUser();
+        if (!user) return;
+
+        // Apply updates
+        user = { ...user, ...updates };
+
+        // Update session
+        localStorage.setItem(SESSION_KEY, JSON.stringify(user));
+
+        // Update in persistence
+        const users = Auth.getUsers();
+        const index = users.findIndex(u => u.email === user.email);
+        if (index !== -1) {
+            users[index] = user;
+            localStorage.setItem(USERS_KEY, JSON.stringify(users));
+        }
+        return user;
     },
 
     updateUserOrders: (order) => {
