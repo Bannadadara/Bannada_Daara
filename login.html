@@ -304,6 +304,34 @@
             sidebarTitle.innerText = "Welcome Back!";
             sidebarDesc.innerText = "To keep connected with us please login with your personal info";
         });
+
+        // ACTUAL AUTH LOGIC
+        document.getElementById('login-form').onsubmit = (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-pass').value;
+
+            const result = Auth.login(email, pass);
+            if (result.success) {
+                window.location.href = 'account.html';
+            } else {
+                alert(result.message);
+            }
+        };
+
+        document.getElementById('register-form').onsubmit = (e) => {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const pass = document.getElementById('reg-pass').value;
+
+            const result = Auth.register(name, email, pass);
+            if (result.success) {
+                window.location.href = 'account.html?new=true';
+            } else {
+                alert(result.message);
+            }
+        };
     </script>
 </body>
 

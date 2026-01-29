@@ -433,6 +433,20 @@ function updateUI() {
     if (cartCount) cartCount.innerText = totalQty;
     if (cartTotal) cartTotal.innerText = `₹${totalPrice}`;
 
+    // DATA SYNC: Update Navbar Auth Link
+    const authLink = document.getElementById('nav-auth-link');
+    const authText = document.getElementById('nav-auth-text');
+    if (authLink && authText && window.Auth) {
+        const user = window.Auth.getCurrentUser();
+        if (user) {
+            authLink.href = "account.html";
+            authText.innerText = user.name.split(' ')[0].toUpperCase(); // Show first name
+        } else {
+            authLink.href = "login.html";
+            authText.innerText = "LOGIN";
+        }
+    }
+
     if (!itemsDiv) return;
 
     if (cart.length === 0) {
