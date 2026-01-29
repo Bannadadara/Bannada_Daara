@@ -311,75 +311,82 @@ function renderReviews(productId) {
 /**
  * Global Window Functions (for HTML onclick access)
  */
-window.viewImage = (src, title) => {
-    // Open image in a new browser tab for a clear view
-    const newWindow = window.open("", "_blank");
-    if (newWindow) {
-        newWindow.document.write(`
-            <html>
-                <head>
-                    <title>${title} - View Image</title>
-                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-                    <style>
-                        body { margin: 0; background: #101010; display: flex; flex-direction: column; height: 100vh; overflow: hidden; font-family: sans-serif; }
-                        #controls {
-                            position: absolute; top: 20px; right: 20px; z-index: 100;
-                            display: flex; gap: 10px;
-                        }
-                        .btn {
-                            background: rgba(0, 0, 0, 0.6); color: white; border: 1px solid #444;
-                            width: 40px; height: 40px; border-radius: 50%; display: flex;
-                            justify-content: center; align-items: center; cursor: pointer;
-                            transition: all 0.2s; font-size: 1.2rem;
-                        }
-                        .btn:hover { background: #FFD700; color: black; border-color: #FFD700; }
-                        
-                        #img-container {
-                            flex: 1; display: flex; justify-content: center; align-items: center;
-                            overflow: auto; cursor: grab;
-                        }
-                        img { 
-                            max-width: 95%; max-height: 95%; object-fit: contain; 
-                            box-shadow: 0 0 20px rgba(0,0,0,0.5); 
-                            transition: transform 0.2s ease;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div id="controls">
-                        <div class="btn" onclick="zoom(0.2)" title="Zoom In"><i class="fas fa-plus"></i></div>
-                        <div class="btn" onclick="zoom(-0.2)" title="Zoom Out"><i class="fas fa-minus"></i></div>
-                        <div class="btn" onclick="window.close()" title="Close" style="background: rgba(200, 0, 0, 0.6);"><i class="fas fa-times"></i></div>
-                    </div>
-                    
-                    <div id="img-container">
-                        <img id="main-img" src="${src}" alt="${title}">
-                    </div>
+// --- ADVANCED LIGHTBOX LOGIC ---
+let lbScale = 1;
+let lbIsDragging = false;
+let lbStartX, lbStartY, lbCurrentX = 0, lbCurrentY = 0;
 
-                    <script>
-                        let scale = 1;
-                        const img = document.getElementById('main-img');
-                        
-                        function zoom(delta) {
-                            scale += delta;
-                            if (scale < 0.5) scale = 0.5;
-                            if (scale > 3) scale = 3;
-                            img.style.transform = \`scale(\${scale})\`;
-                            
-                            // Enable scroll if zoomed
-                            if(scale > 1) {
-                                img.style.cursor = 'grab';
-                            } else {
-                                img.style.cursor = 'default';
-                            }
-                        }
-                    </script>
-                </body>
-            </html>
-        `);
-        newWindow.document.close();
-    }
+window.viewImage = (src, title) => {
+    const modal = document.getElementById('image-modal');
+    const img = document.getElementById('modal-img');
+    const container = document.getElementById('lightbox-container');
+
+    img.src = src;
+    window.resetZoom(); // Reset state
+    modal.style.display = 'flex';
+
+    // Mouse Wheel Zoom
+    container.onwheel = (e) => {
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? -0.2 : 0.2;
+        window.adjustZoom(delta);
+    };
+
+    // Panning Logic
+    container.onmousedown = (e) => {
+        if (lbScale <= 1) return;
+        lbIsDragging = true;
+        lbStartX = e.clientX - lbCurrentX;
+        lbStartY = e.clientY - lbCurrentY;
+        container.style.cursor = 'grabbing';
+    };
+
+    window.onmousemove = (e) => {
+        if (!lbIsDragging) return;
+        lbCurrentX = e.clientX - lbStartX;
+        lbCurrentY = e.clientY - lbStartY;
+        updateImageTransform();
+    };
+
+    window.onmouseup = () => {
+        lbIsDragging = false;
+        container.style.cursor = lbScale > 1 ? 'grab' : 'default';
+    };
 };
+
+window.adjustZoom = (delta) => {
+    lbScale += delta;
+    if (lbScale < 1) lbScale = 1;
+    if (lbScale > 4) lbScale = 4;
+
+    // If zoomed out to 1, reset position
+    if (lbScale === 1) {
+        lbCurrentX = 0;
+        lbCurrentY = 0;
+    }
+
+    document.getElementById('lightbox-container').style.cursor = lbScale > 1 ? 'grab' : 'default';
+    updateImageTransform();
+};
+
+window.resetZoom = () => {
+    lbScale = 1;
+    lbCurrentX = 0;
+    lbCurrentY = 0;
+    updateImageTransform();
+    document.getElementById('lightbox-container').style.cursor = 'default';
+};
+
+window.closeLightbox = () => {
+    document.getElementById('image-modal').style.display = 'none';
+};
+
+function updateImageTransform() {
+    const img = document.getElementById('modal-img');
+    if (img) {
+        img.style.transform = `translate(${lbCurrentX}px, ${lbCurrentY}px) scale(${lbScale})`;
+    }
+}
 
 window.shareProduct = (name) => {
     const text = `Check out this handcrafted ${name} from Bannada Daara!`;
