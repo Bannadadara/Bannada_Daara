@@ -8,12 +8,14 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <div class="corner-accent corner-tr"><img src="images/mandala.png" alt="" style="width:100%;"></div>
+    <div class="corner-accent corner-bl"><img src="images/mandala.png" alt="" style="width:100%;"></div>
 
     <header class="navbar">
         <div class="container nav-content">
@@ -70,6 +72,20 @@
         </div>
     </section>
 
+    <div class="thread-divider-container">
+        <svg class="thread-divider" viewBox="0 0 1200 20" preserveAspectRatio="none">
+            <path class="thread-path" d="M0,10 Q300,0 600,10 T1200,10" fill="none" stroke="url(#thread-gradient)"
+                stroke-width="2" />
+            <defs>
+                <linearGradient id="thread-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#D4AF37;stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:#FFD700;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#D4AF37;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+
     <main class="container" id="shop-section">
         <nav class="category-bar">
             <div class="cat-wrapper">
@@ -87,6 +103,20 @@
         <div class="product-grid" id="product-list">
         </div>
     </main>
+
+    <div class="thread-divider-container">
+        <svg class="thread-divider" viewBox="0 0 1200 20" preserveAspectRatio="none">
+            <path class="thread-path" d="M0,10 Q300,0 600,10 T1200,10" fill="none" stroke="url(#thread-gradient-2)"
+                stroke-width="2" />
+            <defs>
+                <linearGradient id="thread-gradient-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#D4AF37;stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:#FFD700;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#D4AF37;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
 
     <section class="about-section">
         <div class="about-overlay">
@@ -143,6 +173,20 @@
         <span class="close-modal">&times;</span>
         <img class="modal-content" id="modal-img" alt="Enlarged product view">
         <div id="modal-caption"></div>
+    </div>
+
+    <div class="thread-divider-container">
+        <svg class="thread-divider" viewBox="0 0 1200 20" preserveAspectRatio="none">
+            <path class="thread-path" d="M0,10 Q300,0 600,10 T1200,10" fill="none" stroke="url(#thread-gradient-3)"
+                stroke-width="2" />
+            <defs>
+                <linearGradient id="thread-gradient-3" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#D4AF37;stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:#FFD700;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#D4AF37;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+        </svg>
     </div>
 
     <footer class="footer">

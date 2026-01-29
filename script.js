@@ -12,6 +12,21 @@ function init() {
     renderProducts();
     setupEventListeners();
     updateUI();
+    setupThreadAnimation();
+}
+
+function setupThreadAnimation() {
+    window.addEventListener('scroll', () => {
+        const paths = document.querySelectorAll('.thread-path');
+        const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+
+        // As user scrolls, the "Q" (quadratic curve) control point moves closer to 10 (horizontal line)
+        // This creates a "tightening" effect
+        const controlY = 20 - (scrollPercent * 20); // Moves from 20 to 0
+        paths.forEach(path => {
+            path.setAttribute('d', `M0,10 Q300,${controlY} 600,10 T1200,10`);
+        });
+    });
 }
 
 function loadAllProducts() {
