@@ -436,6 +436,20 @@ body {
     margin-top: auto;
 }
 
+.card-actions .add-btn {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-actions .icon-btn {
+    flex: 0 0 auto;
+    width: 40px;
+    /* Fixed width for the share button */
+}
+
 .add-btn {
     width: auto;
     padding: 6px 14px;
