@@ -128,23 +128,23 @@ function renderProducts(category = 'All', searchTerm = '') {
         const badgeHTML = isRequestOnly ? `<div class="request-badge">Custom Order</div>` : '';
 
         return `
-        <div class="product-card" style="animation-delay: ${index * 0.05}s">
-            <div class="img-container" onclick="window.openProductModal(${p.id})">
+        <div class="product-card" style="animation-delay: ${index * 0.05}s; cursor: pointer;" onclick="window.openProductModal(${p.id})">
+            <div class="img-container">
                 ${badgeHTML}
                 <img src="${p.img}" alt="${p.name}" loading="lazy">
             </div>
             <div class="product-info">
-                <div class="product-name" onclick="window.openProductModal(${p.id})">${p.name}</div>
+                <div class="product-name">${p.name}</div>
                 <div class="product-desc-short" style="font-size: 0.8rem; color: #888; margin-bottom: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 36px;">
                     ${p.description || "Handcrafted with love."}
                 </div>
                 <div class="product-price" style="color: ${isRequestOnly ? 'var(--gold)' : 'var(--text-sub)'}">${priceDisplay}</div>
                 <div class="card-actions">
-                    <button class="add-btn" onclick="window.addToCart(${p.id})">
+                    <button class="add-btn" onclick="event.stopPropagation(); window.addToCart(${p.id})">
                         <i class="fas ${btnIcon}"></i> ${btnText}
                     </button>
                     <!-- Quick View Removed as it's redundant now with main click -->
-                    <button class="icon-btn" onclick="window.shareProduct('${p.name}')" title="Share">
+                    <button class="icon-btn" onclick="event.stopPropagation(); window.shareProduct('${p.name}')" title="Share">
                         <i class="fas fa-share-alt"></i>
                     </button>
                 </div>
