@@ -674,8 +674,26 @@ body {
     border-radius: 12px;
     border: 1px solid var(--gold);
     width: 90%;
-    max-width: 420px;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
     color: var(--white);
+    position: relative;
+}
+
+/* Custom Scrollbar for Modals */
+.modal-form-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-form-content::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 10px;
+}
+
+.modal-form-content::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 10px;
 }
 
 .form-group {

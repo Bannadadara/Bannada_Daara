@@ -315,7 +315,16 @@
         <!-- EDIT PRODUCT MODAL -->
         <div id="edit-modal" class="modal">
             <div class="modal-form-content">
-                <h2 style="color: var(--gold); margin-bottom: 20px;">Customise Product Details</h2>
+                <div
+                    style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px; border-bottom: 1px solid #333; padding-bottom: 15px;">
+                    <button type="button" onclick="document.getElementById('edit-modal').style.display='none'"
+                        style="background: none; border: none; color: var(--gold); cursor: pointer; font-size: 1.2rem; padding: 5px; display: flex; align-items: center; justify-content: center; transition: transform 0.2s;"
+                        onmouseover="this.style.transform='translateX(-3px)'"
+                        onmouseout="this.style.transform='translateX(0)'">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2 style="color: var(--gold); margin: 0; font-size: 1.5rem;">Customise Product Details</h2>
+                </div>
                 <form id="edit-product-form">
                     <input type="hidden" id="edit-p-id">
                     <input type="hidden" id="edit-p-type">
