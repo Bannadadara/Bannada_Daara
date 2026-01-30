@@ -88,6 +88,8 @@ function setupTabs() {
             // Specific Tab Actions
             if (tabId === 'tab-community') {
                 renderSubscribers();
+            } else if (tabId === 'tab-analytics') {
+                renderAnalytics();
             }
         });
     });
@@ -131,6 +133,7 @@ function updateDashboard() {
     updateStats(list);
     renderProductList(list);
     renderSubscribers();
+    renderAnalytics();
 }
 
 function updateStats(list) {
@@ -602,3 +605,121 @@ async function notifySubscribers(product) {
         showToast("Notification failed (Check EmailJS setup)", "error");
     }
 }
+
+// --- ANALYTICS LOGIC ---
+window.renderAnalytics = () => {
+    if (!Auth) return;
+    const users = Auth.getUsers();
+    const allOrders = users.flatMap(u => (u.orders || []).map(o => ({ ...o, userEmail: u.email })));
+
+    // 1. Core Metrics
+    const totalRevenue = allOrders.reduce((sum, o) => sum + (parseFloat(o.total) || 0), 0);
+    const totalUsers = users.length;
+    const activeCustomers = users.filter(u => u.orders && u.orders.length > 0).length;
+
+    document.getElementById('ana-total-revenue').innerText = `₹${totalRevenue.toLocaleString()}`;
+    document.getElementById('ana-total-users').innerText = totalUsers;
+    document.getElementById('ana-active-customers').innerText = activeCustomers;
+
+    // 2. Sales Breakdown (Monthly/Yearly)
+    renderSalesBreakdown(allOrders);
+
+    // 3. Best Sellers
+    renderBestSellers(allOrders);
+
+    // 4. User Directory
+    renderUserDirectory(users);
+};
+
+function renderSalesBreakdown(orders) {
+    const tbody = document.getElementById('ana-sales-breakdown');
+    if (!tbody) return;
+
+    const breakdown = {};
+    orders.forEach(o => {
+        const date = new Date(o.date);
+        const key = `${date.getFullYear()} - ${date.toLocaleString('default', { month: 'short' })}`;
+        if (!breakdown[key]) breakdown[key] = { count: 0, revenue: 0 };
+        breakdown[key].count++;
+        breakdown[key].revenue += (parseFloat(o.total) || 0);
+    });
+
+    tbody.innerHTML = Object.entries(breakdown)
+        .sort((a, b) => b[0].localeCompare(a[0]))
+        .map(([period, data]) => `
+            <tr>
+                <td>${period}</td>
+                <td>${data.count} orders</td>
+                <td>₹${data.revenue.toLocaleString()}</td>
+            </tr>
+        `).join('');
+}
+
+function renderBestSellers(orders) {
+    const tbody = document.getElementById('ana-top-products');
+    if (!tbody) return;
+
+    const products = {};
+    orders.forEach(o => {
+        o.items.forEach(item => {
+            if (!products[item.name]) products[item.name] = { qty: 0, revenue: 0 };
+            products[item.name].qty += item.qty;
+            products[item.name].revenue += (parseFloat(item.price) * item.qty);
+        });
+    });
+
+    tbody.innerHTML = Object.entries(products)
+        .sort((a, b) => b[1].qty - a[1].qty)
+        .slice(0, 10)
+        .map(([name, data]) => `
+            <tr>
+                <td>${name}</td>
+                <td>${data.qty}</td>
+                <td>₹${data.revenue.toLocaleString()}</td>
+            </tr>
+        `).join('');
+}
+
+function renderUserDirectory(users) {
+    const tbody = document.getElementById('ana-user-list');
+    if (!tbody) return;
+
+    tbody.innerHTML = users.map(u => {
+        const orderCount = u.orders ? u.orders.length : 0;
+        const totalSpent = u.orders ? u.orders.reduce((sum, o) => sum + (parseFloat(o.total) || 0), 0) : 0;
+        const status = orderCount > 0 ? '<span style="color:#25D366;">Customer</span>' : '<span style="color:#888;">Lead</span>';
+        const joinedDate = u.joined ? new Date(u.joined).toLocaleDateString() : 'N/A';
+
+        return `
+            <tr>
+                <td>${u.email}</td>
+                <td>${joinedDate}</td>
+                <td>${orderCount}</td>
+                <td>₹${totalSpent.toLocaleString()}</td>
+                <td>${status}</td>
+            </tr>
+        `;
+    }).join('');
+}
+
+window.exportAnalytics = () => {
+    const users = Auth.getUsers();
+    let csv = "User Email,Joined Date,Total Orders,Total Spent,Status\n";
+
+    users.forEach(u => {
+        const orderCount = u.orders ? u.orders.length : 0;
+        const totalSpent = u.orders ? u.orders.reduce((sum, o) => sum + (parseFloat(o.total) || 0), 0) : 0;
+        const status = orderCount > 0 ? 'Customer' : 'Lead';
+        const joined = u.joined ? new Date(u.joined).toLocaleDateString() : 'N/A';
+
+        csv += `${u.email},${joined},${orderCount},${totalSpent},${status}\n`;
+    });
+
+    const encodedUri = encodeURI("data:text/csv;charset=utf-8," + csv);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "bannadadara_analytics.csv");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+};
