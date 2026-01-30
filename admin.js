@@ -240,11 +240,8 @@ function setupForm() {
         products.push(newProduct);
         saveCustomProducts(products);
 
-        // Check for Community Notification
-        const shouldNotify = document.getElementById('notify-community').checked;
-        if (shouldNotify) {
-            notifySubscribers(newProduct);
-        }
+        // Notify Community (Now Automated)
+        notifySubscribers(newProduct);
 
         form.reset();
         clearAllImagePreviews();
@@ -725,12 +722,21 @@ window.exportAnalytics = () => {
 };
 
 // --- SETTINGS MANAGEMENT ---
+const DEFAULT_EMAILJS_CONFIG = {
+    publicKey: 'YOUR_PUBLIC_KEY', // USER: Replace with your actual public key
+    serviceId: 'YOUR_SERVICE_ID',
+    joinTemplate: 'YOUR_JOIN_TEMPLATE',
+    productTemplate: 'YOUR_PRODUCT_TEMPLATE'
+};
+
 function getEmailJSConfig() {
-    return JSON.parse(localStorage.getItem('bd-emailjs-config')) || {
-        publicKey: '',
-        serviceId: '',
-        joinTemplate: '',
-        productTemplate: ''
+    const saved = JSON.parse(localStorage.getItem('bd-emailjs-config')) || {};
+    // Merge saved with defaults: Prefer saved values if they exist/not empty
+    return {
+        publicKey: saved.publicKey || DEFAULT_EMAILJS_CONFIG.publicKey,
+        serviceId: saved.serviceId || DEFAULT_EMAILJS_CONFIG.serviceId,
+        joinTemplate: saved.joinTemplate || DEFAULT_EMAILJS_CONFIG.joinTemplate,
+        productTemplate: saved.productTemplate || DEFAULT_EMAILJS_CONFIG.productTemplate
     };
 }
 
