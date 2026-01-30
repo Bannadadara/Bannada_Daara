@@ -152,26 +152,25 @@
                     Dimensions: <span id="p-dims">--</span>
                 </div>
 
-                <div class="p-tabs"
-                    style="display:flex; gap:20px; border-bottom:1px solid #333; margin-bottom:15px; padding-bottom:10px; flex-shrink: 0;">
-                    <span class="p-tab active" id="tab-desc"
-                        style="cursor:pointer; color:var(--gold); font-weight:600; font-size:1rem;">Description</span>
-                    <span class="p-tab" id="tab-reviews"
-                        style="cursor:pointer; color:#888; font-weight:600; font-size:1rem;">Reviews (<span
-                            id="review-count">0</span>)</span>
-                </div>
-
-                <!-- Scrollable Body Content -->
+                <!-- Stacked Description and Reviews (No Toggle) -->
                 <div id="p-scroll-content"
                     style="flex: 1; overflow-y: auto; padding-right: 15px; margin-bottom: 20px; scroll-behavior: smooth;">
-                    <div id="content-desc" class="tab-content">
+
+                    <h3
+                        style="color:var(--gold); font-size:1.2rem; margin-bottom:10px; border-bottom:1px solid #333; padding-bottom:5px;">
+                        Description</h3>
+                    <div id="content-desc" class="tab-content" style="margin-bottom: 30px;">
                         <div id="p-desc" class="p-desc"
                             style="font-size:1.1rem; color:#ccc; line-height:1.6; overflow-wrap: break-word; word-break: break-word;">
                             Description goes here...
                         </div>
                     </div>
 
-                    <div id="content-reviews" class="tab-content" style="display:none; flex-direction: column;">
+                    <h3
+                        style="color:var(--gold); font-size:1.2rem; margin-bottom:10px; border-bottom:1px solid #333; padding-bottom:5px;">
+                        Reviews (<span id="review-count">0</span>)
+                    </h3>
+                    <div id="content-reviews" class="tab-content" style="display:flex; flex-direction: column;">
                         <div id="reviews-list" style="margin-bottom:25px;">
                             <!-- Reviews injected here -->
                         </div>
@@ -400,10 +399,6 @@
                         window.addToCart(p.id);
                     }
                 };
-
-                // Tabs functionality
-                document.getElementById('tab-desc').onclick = () => window.switchTab('desc');
-                document.getElementById('tab-reviews').onclick = () => window.switchTab('reviews');
 
                 document.getElementById('submit-review-btn').onclick = () => {
                     if (window.submitReview) window.submitReview();
