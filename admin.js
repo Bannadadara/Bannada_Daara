@@ -299,6 +299,7 @@ function setupForm() {
 }
 
 // --- IMAGE UPLOAD LOGIC ---
+// --- IMAGE UPLOAD LOGIC ---
 window.handleImageFileSelect = async function (input, type) {
     const file = input.files[0];
     if (!file) return;
@@ -309,14 +310,16 @@ window.handleImageFileSelect = async function (input, type) {
         return;
     }
 
-    if (file.size > 2 * 1024 * 1024) {
-        showToast("File size too large (>2MB)", "error");
+    // Increased limit because we compress now, but still good to guard
+    if (file.size > 5 * 1024 * 1024) {
+        showToast("File size too large (>5MB)", "error");
         input.value = '';
         return;
     }
 
     try {
-        const base64 = await convertToBase64(file);
+        // Compress Image before saving
+        const base64 = await compressImage(file, 800, 0.7);
         document.getElementById(`p-image-${type}`).value = base64;
 
         const previewDiv = document.getElementById(`preview-${type}`);
@@ -324,7 +327,8 @@ window.handleImageFileSelect = async function (input, type) {
         previewDiv.style.display = 'block';
         document.getElementById(`btn-${type}`).style.display = 'none';
     } catch (error) {
-        showToast("Error processing image", "error");
+        console.error(error);
+        showToast("Error processing/compressing image", "error");
     }
 };
 
@@ -333,11 +337,12 @@ window.handleEditFileSelect = async function (input, type) {
     if (!file) return;
 
     try {
-        const base64 = await convertToBase64(file);
+        const base64 = await compressImage(file, 800, 0.7);
         document.getElementById(`edit-img-${type}`).value = base64;
         document.getElementById(`edit-preview-${type}`).src = base64;
     } catch (error) {
-        showToast("Error processing image", "error");
+        console.error(error);
+        showToast("Error processing/compressing image", "error");
     }
 };
 
@@ -352,7 +357,41 @@ function clearAllImagePreviews() {
     ['front', 'back', 'left', 'right'].forEach(type => removeDetailImage(type));
 }
 
+// COMPRESSION UTILITY
+function compressImage(file, maxWidth, quality) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                if (width > maxWidth) {
+                    height = (maxWidth / width) * height;
+                    width = maxWidth;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                // Compress to JPEG
+                const dataUrl = canvas.toDataURL('image/jpeg', quality);
+                resolve(dataUrl);
+            };
+            img.onerror = (err) => reject(err);
+        };
+        reader.onerror = (err) => reject(err);
+    });
+}
+
 function convertToBase64(file) {
+    // Fallback if needed, but we use compressImage now
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result);
@@ -360,6 +399,27 @@ function convertToBase64(file) {
         reader.readAsDataURL(file);
     });
 }
+
+// --- DATA BACKUP ---
+window.downloadBackup = () => {
+    const custom = getCustomProducts();
+    const hidden = getHiddenIds();
+
+    // Create a downloadable object
+    const backup = {
+        customProducts: custom,
+        hiddenProducts: hidden,
+        timestamp: new Date().toISOString()
+    };
+
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "bannadadara_backup.json");
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+};
 
 // --- ACTIONS & TOAST ---
 window.deleteProduct = (id, type) => {
@@ -442,3 +502,4 @@ function showToast(message, type = 'info') {
         setTimeout(() => toast.remove(), 300);
     }, 4000);
 }
+

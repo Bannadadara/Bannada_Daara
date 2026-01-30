@@ -570,3 +570,37 @@ document.addEventListener('DOMContentLoaded', () => {
 // Start Application
 init();
 
+
+/* =========================================
+   5. NEWSLETTER SUBSCRIPTION
+   ========================================= */
+const subBtn = document.getElementById('footer-subscribe-btn');
+if (subBtn) {
+    subBtn.addEventListener('click', () => {
+        document.getElementById('subscribe-modal').style.display = 'flex';
+    });
+}
+
+// Close Modal when clicking outside content
+const subModal = document.getElementById('subscribe-modal');
+if (subModal) {
+    subModal.addEventListener('click', (e) => {
+        if (e.target === subModal) {
+            subModal.style.display = 'none';
+        }
+    });
+}
+
+window.submitSubscription = (form) => {
+    const email = document.getElementById('sub-email').value;
+    // Here you would typically send this to a backend
+    // For now, we simulate a successful subscription
+
+    // Close modal
+    document.getElementById('subscribe-modal').style.display = 'none';
+
+    // Show success message (using alert for now, or could use custom toast if available)
+    alert(`Thank you! ${email} has been subscribed to our newsletter.`);
+    form.reset();
+};
+
