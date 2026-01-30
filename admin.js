@@ -23,6 +23,8 @@ const initAdmin = () => {
     setupForm();
     setupSettings();
     setupSearchFilter();
+    setupSearchFilter();
+    populateCategoryDropdowns();
     updateDashboard(); // Initial render
 };
 
@@ -191,6 +193,105 @@ function renderProductList(list) {
         `;
         tbody.appendChild(tr);
     });
+}
+
+// --- CATEGORY MANAGEMENT ---
+const CAT_KEY = 'bd-categories';
+const DEFAULT_CATS = ['Bags', 'Pouches', 'Stationery', 'Accessories', 'Decor'];
+
+function getCategories() {
+    return JSON.parse(localStorage.getItem(CAT_KEY)) || DEFAULT_CATS;
+}
+
+function saveCategory(newCat) {
+    const cats = getCategories();
+    if (!cats.includes(newCat)) {
+        cats.push(newCat);
+        localStorage.setItem(CAT_KEY, JSON.stringify(cats));
+        return true;
+    }
+    return false;
+}
+
+function populateCategoryDropdowns() {
+    const cats = getCategories();
+    const dropdowns = ['p-category', 'edit-p-category', 'admin-filter-category'];
+
+    dropdowns.forEach(id => {
+        const select = document.getElementById(id);
+        if (!select) return;
+
+        const currentVal = select.value;
+        select.innerHTML = '';
+
+        // Add "All" option for filter only
+        if (id === 'admin-filter-category') {
+            const allOpt = document.createElement('option');
+            allOpt.value = 'all';
+            allOpt.text = 'All Categories';
+            select.appendChild(allOpt);
+        } else {
+            // Add placeholder for add/edit forms
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = '';
+            defaultOpt.text = 'Select Category';
+            defaultOpt.disabled = true;
+            defaultOpt.selected = true;
+            select.appendChild(defaultOpt);
+        }
+
+        cats.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c;
+            opt.text = c;
+            select.appendChild(opt);
+        });
+
+        // Add "Create New" option for Add/Edit forms
+        if (id !== 'admin-filter-category') {
+            const newOpt = document.createElement('option');
+            newOpt.value = 'new_category_action';
+            newOpt.text = '+ Create New Category';
+            newOpt.style.fontWeight = 'bold';
+            newOpt.style.color = '#25D366';
+            select.appendChild(newOpt);
+        }
+
+        // Restore selection if possible, otherwise default
+        if (currentVal && cats.includes(currentVal)) {
+            select.value = currentVal;
+        } else if (id === 'admin-filter-category') {
+            select.value = 'all';
+        }
+    });
+
+    // Re-attach listeners to handle "Create New"
+    ['p-category', 'edit-p-category'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.onchange = (e) => handleCategoryChange(e);
+        }
+    });
+}
+
+function handleCategoryChange(e) {
+    if (e.target.value === 'new_category_action') {
+        const newCat = prompt("Enter new category name:");
+        if (newCat && newCat.trim() !== "") {
+            const trimmed = newCat.trim();
+            if (saveCategory(trimmed)) {
+                showToast(`Category "${trimmed}" added!`, "success");
+                populateCategoryDropdowns();
+                // Select the new category
+                e.target.value = trimmed;
+            } else {
+                showToast("Category already exists!", "error");
+                e.target.value = ''; // Reset
+            }
+        } else {
+            e.target.value = ''; // Reset if cancelled
+        }
+    }
 }
 
 // --- SEARCH & FILTER ---
