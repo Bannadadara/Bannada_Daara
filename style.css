@@ -2,41 +2,44 @@
    1. CORE VARIABLES & RESET
    ========================================= */
 :root {
-    /* Colorful Threads & Gold Palette */
-    --primary: #FFD700;
-    /* GOLD Buttons */
+    /* Premium Metallic Gold Palette */
+    --primary: #D4AF37;
+    /* Metallic Gold */
+    --gold-dark: #AA8C2C;
+
     --secondary: #616161;
     --accent: #E1306C;
-    /* Insta/Thread Gradient Pink */
 
-    --bg-body: #101010;
-    --bg-card: #181818;
-    --bg-hover: #212121;
+    --bg-body: #0a0a0a;
+    /* Slightly darker for contrast */
+    --bg-card: #121212;
+    --bg-hover: #1f1f1f;
 
     --text-main: #F3F5F7;
-    --text-sub: #999999;
+    --text-sub: #b3b3b3;
     --text-btn: #000000;
-    /* Black text on Gold buttons */
 
-    /* Semantic Mappings */
     --gold: var(--primary);
-    --gold-dark: #B8860B;
-    /* Darker Gold for hover */
     --black: var(--bg-body);
     --white: var(--text-main);
 
     --gray-bg: var(--bg-hover);
-    --gray-border: #333333;
+    --gray-border: #2a2a2a;
 
-    --transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-    --shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
     --radius: 16px;
 
-    /* Thread Gradient Colors */
-    --thread-1: #405DE6;
-    --thread-2: #833AB4;
-    --thread-3: #E1306C;
+    /* Vibrant Thread Gradient Colors */
+    --thread-1: #FF0080;
+    /* Pink */
+    --thread-2: #7928CA;
+    /* Purple */
+    --thread-3: #FF4D4D;
+    /* Red */
     --thread-4: #FCAF45;
+    /* Orange */
+    --thread-gradient: linear-gradient(135deg, var(--thread-1), var(--thread-2), var(--thread-3), var(--thread-4));
 }
 
 * {
@@ -48,18 +51,34 @@
 body {
     font-family: 'Montserrat', -apple-system, sans-serif;
     background: var(--bg-body);
-    /* Animated Colorful Threads Background Effect */
+    /* Refined Deep Mesh Gradient */
     background-image:
-        radial-gradient(circle at 10% 20%, rgba(64, 93, 230, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(225, 48, 108, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 50% 50%, rgba(252, 175, 69, 0.1) 0%, transparent 60%);
+        radial-gradient(circle at 15% 50%, rgba(121, 40, 202, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(255, 0, 128, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 50% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 60%);
     background-attachment: fixed;
-    background-size: 200% 200%;
-    animation: gradientShift 15s ease infinite;
+    background-size: 150% 150%;
+    animation: gradientShift 20s ease ultra-slow;
     overflow-x: hidden;
     scroll-behavior: smooth;
     line-height: 1.6;
     color: var(--text-main);
+}
+
+/* Thread Text Gradient Utility */
+.text-gradient-thread {
+    background: var(--thread-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% auto;
+    animation: textShimmer 4s linear infinite;
+}
+
+@keyframes textShimmer {
+    to {
+        background-position: 200% center;
+    }
 }
 
 .container {
