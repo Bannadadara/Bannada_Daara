@@ -561,46 +561,70 @@ const revealObserver = new IntersectionObserver((entries) => {
     rootMargin: "0px 0px -50px 0px"
 });
 
-// Observe elements after DOM Content Loaded
+// --- COMMUNITY MODAL & SUBSCRIPTION ---
+const SUBSCRIBERS_KEY = 'bd-subscribers';
+
+window.closeCommunityModal = function () {
+    const modal = document.getElementById('community-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        localStorage.setItem('bd-modal-dismissed', 'true');
+    }
+};
+
+function initCommunityModal() {
+    const modal = document.getElementById('community-modal');
+    if (!modal) return;
+
+    // Show modal after 5 seconds if not dismissed
+    if (!localStorage.getItem('bd-modal-dismissed')) {
+        setTimeout(() => {
+            modal.classList.add('active');
+        }, 5000);
+    }
+
+    const form = document.getElementById('community-form');
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('subscriber-email').value;
+            saveSubscriber(email);
+        });
+    }
+
+    // Also handle the static newsletter section if it exists
+    const staticForm = document.querySelector('.newsletter-form');
+    if (staticForm) {
+        staticForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = staticForm.querySelector('input');
+            if (input) saveSubscriber(input.value);
+        });
+    }
+}
+
+function saveSubscriber(email) {
+    let subscribers = JSON.parse(localStorage.getItem(SUBSCRIBERS_KEY)) || [];
+    if (!subscribers.includes(email)) {
+        subscribers.push(email);
+        localStorage.setItem(SUBSCRIBERS_KEY, JSON.stringify(subscribers));
+    }
+
+    alert("Thank you for joining our community! You will receive email notifications for new products.");
+    closeCommunityModal();
+}
+
+// Global function to get subscribers (for admin.js)
+window.getSubscribers = function () {
+    return JSON.parse(localStorage.getItem(SUBSCRIBERS_KEY)) || [];
+};
+
+// Start Application
 document.addEventListener('DOMContentLoaded', () => {
+    init();
+    initCommunityModal();
     const elements = document.querySelectorAll('.reveal');
     elements.forEach(el => revealObserver.observe(el));
 });
 
-// Start Application
-init();
-
-
-/* =========================================
-   5. NEWSLETTER SUBSCRIPTION
-   ========================================= */
-const subBtn = document.getElementById('footer-subscribe-btn');
-if (subBtn) {
-    subBtn.addEventListener('click', () => {
-        document.getElementById('subscribe-modal').style.display = 'flex';
-    });
-}
-
-// Close Modal when clicking outside content
-const subModal = document.getElementById('subscribe-modal');
-if (subModal) {
-    subModal.addEventListener('click', (e) => {
-        if (e.target === subModal) {
-            subModal.style.display = 'none';
-        }
-    });
-}
-
-window.submitSubscription = (form) => {
-    const email = document.getElementById('sub-email').value;
-    // Here you would typically send this to a backend
-    // For now, we simulate a successful subscription
-
-    // Close modal
-    document.getElementById('subscribe-modal').style.display = 'none';
-
-    // Show success message (using alert for now, or could use custom toast if available)
-    alert(`Thank you! ${email} has been subscribed to our newsletter.`);
-    form.reset();
-};
 

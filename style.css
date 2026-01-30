@@ -2699,3 +2699,121 @@ body {
     letter-spacing: 1px;
     margin-bottom: 35px;
 }
+
+/* =========================================
+   13. COMMUNITY MODAL & NOTIFICATIONS
+   ========================================= */
+
+.community-modal {
+    display: none;
+    position: fixed;
+    z-index: 10001;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.community-modal.active {
+    display: flex;
+}
+
+.community-card {
+    background: #111;
+    border: 2px solid var(--gold);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 450px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.2);
+    position: relative;
+    animation: modalSlideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes modalSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.community-icon {
+    font-size: 4rem;
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+
+.community-card h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    color: var(--gold);
+    margin-bottom: 15px;
+}
+
+.community-card p {
+    color: #ccc;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.community-input-group {
+    margin-bottom: 20px;
+}
+
+.community-input {
+    width: 100%;
+    padding: 15px 20px;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background: #1a1a1a;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.community-input:focus {
+    border-color: var(--gold);
+}
+
+.subscribe-now-btn {
+    width: 100%;
+    padding: 18px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(to right, #ffcc00, #ff9900);
+    color: #000;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(255, 153, 0, 0.4);
+    transition: all 0.3s ease;
+}
+
+.subscribe-now-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(255, 153, 0, 0.6);
+}
+
+.no-thanks {
+    display: inline-block;
+    margin-top: 20px;
+    color: #888;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.no-thanks:hover {
+    color: var(--gold);
+}
