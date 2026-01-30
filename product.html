@@ -404,6 +404,10 @@
                     }
                 };
 
+                // Tabs functionality
+                document.getElementById('tab-desc').onclick = () => window.switchTab('desc');
+                document.getElementById('tab-reviews').onclick = () => window.switchTab('reviews');
+
                 document.getElementById('submit-review-btn').onclick = () => {
                     if (window.submitReview) window.submitReview();
                 };
