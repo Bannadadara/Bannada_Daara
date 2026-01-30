@@ -128,12 +128,21 @@
         </nav>
 
         <div class="p-page-card">
-            <div class="p-modal-left" style="width: 50%; display: flex; gap: 20px;">
-                <div id="p-gallery" class="p-gallery">
-                    <!-- Thumbnails injected here -->
+            <!-- Changed flex-direction to column-reverse or just column, but we want Image TOP, Gallery BOTTOM. 
+                 Currently Image is 2nd div. So we swap them or use column-reverse. 
+                 Let's swap them in DOM for cleaner flow: Image Container first, then Gallery. 
+                 And set flex-direction: column. -->
+            <div class="p-modal-left" style="width: 50%; display: flex; flex-direction: column; gap: 20px;">
+                <div class="p-main-img-container"
+                    style="width: 100%; height: auto; border-radius: 12px; overflow: hidden; border: 1px solid #333;">
+                    <!-- Added class p-main-img for styling and ID for selection. Added cursor pointer. -->
+                    <img id="p-main-img" class="p-main-img" src="" alt="Product Image"
+                        style="width: 100%; height: 100%; object-fit: contain; cursor: zoom-in;">
                 </div>
-                <div class="p-main-img-container" style="flex: 1; height: 500px;">
-                    <img id="p-main-img" src="" alt="Product Image">
+                <!-- Gallery moved below image -->
+                <div id="p-gallery" class="p-gallery"
+                    style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px;">
+                    <!-- Thumbnails injected here -->
                 </div>
             </div>
 
@@ -248,6 +257,18 @@
         </div>
     </div>
 
+    <!-- Lightbox Container -->
+    <div id="lightbox" class="lightbox">
+        <span id="close-lightbox" class="lightbox-close">&times;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Full View">
+        </div>
+        <div class="lightbox-controls">
+            <button id="zoom-out" class="zoom-btn"><i class="fas fa-minus"></i></button>
+            <button id="zoom-in" class="zoom-btn"><i class="fas fa-plus"></i></button>
+        </div>
+    </div>
+
     <footer class="footer">
         <div class="container" style="text-align: center;">
             <div class="footer-brand" style="margin-bottom: 20px;">
@@ -267,6 +288,30 @@
     <script type="module">
         import { products } from './data.js';
 
+        let currentScale = 1;
+
+        // Lightbox Functions
+        window.openLightbox = (src) => {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
+            lightbox.classList.add('active');
+            currentScale = 1;
+            img.style.transform = `scale(${currentScale})`;
+        };
+
+        window.closeLightbox = () => {
+            document.getElementById('lightbox').classList.remove('active');
+        };
+
+        window.zoomLightbox = (step) => {
+            const img = document.getElementById('lightbox-img');
+            currentScale += step;
+            if (currentScale < 0.5) currentScale = 0.5;
+            if (currentScale > 3) currentScale = 3;
+            img.style.transform = `scale(${currentScale})`;
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
             const id = parseInt(params.get('id'));
@@ -275,6 +320,32 @@
             // Fallback to the imported static list if global is not yet initialized
             const allP = window.allProducts || products;
             const p = allP.find(i => i.id === id);
+
+            // UI References
+            const mainImg = document.getElementById('p-main-img');
+            const lightboxClose = document.getElementById('close-lightbox');
+            const zoomInBtn = document.getElementById('zoom-in');
+            const zoomOutBtn = document.getElementById('zoom-out');
+
+            // Setup Lightbox Event Listeners
+            if (mainImg) {
+                mainImg.onclick = () => window.openLightbox(mainImg.src);
+            }
+            if (lightboxClose) lightboxClose.onclick = window.closeLightbox;
+            if (zoomInBtn) zoomInBtn.onclick = () => window.zoomLightbox(0.2);
+            if (zoomOutBtn) zoomOutBtn.onclick = () => window.zoomLightbox(-0.2);
+
+            // Close on background click
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox) {
+                lightbox.onclick = (e) => {
+                    if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
+                        window.closeLightbox();
+                    }
+                }
+            }
+
+
             if (p) {
                 // Set as current product for global functions in script.js
                 window.currentProduct = p;
