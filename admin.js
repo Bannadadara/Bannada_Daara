@@ -233,7 +233,6 @@ function setupForm() {
         clearAllImagePreviews();
         showToast("Product added successfully!", "success");
         updateDashboard();
-        notifySubscribers(newProduct);
 
         // Switch to product list to show new item
         document.querySelector('[data-tab="tab-products"]').click();
@@ -503,36 +502,4 @@ function showToast(message, type = 'info') {
         setTimeout(() => toast.remove(), 300);
     }, 4000);
 }
-
-// --- NOTIFICATIONS ---
-async function notifySubscribers(product) {
-    const subscribers = JSON.parse(localStorage.getItem('bd-subscribers')) || [];
-
-    if (subscribers.length === 0) {
-        console.log("No subscribers to notify.");
-        return;
-    }
-
-    // Check if EmailJS is loaded
-    if (typeof emailjs === 'undefined') {
-        console.warn("EmailJS not loaded. Check index.html.");
-        return;
-    }
-
-    const serviceID = 'default_service';
-    const templateID = 'product_notification';
-
-    for (const email of subscribers) {
-        try {
-            // Note: Final integration requires user's API Key
-            console.log(`Sending email notification to: ${email}`);
-            // await emailjs.send(serviceID, templateID, { ... });
-        } catch (error) {
-            console.error(`Failed to notify ${email}:`, error);
-        }
-    }
-
-    showToast(`Notification sent to ${subscribers.length} community members!`, "success");
-}
-
 

@@ -128,18 +128,7 @@
         </div>
     </section>
 
-    <!-- NEW: Newsletter Section -->
-    <section class="newsletter-section reveal">
-        <div class="newsletter-overlay"></div>
-        <div class="newsletter-content container">
-            <h2 class="reveal">Join Our Community</h2>
-            <p class="reveal delay-100">Subscribe for exclusive updates, new launches, and eco-friendly tips.</p>
-            <form class="newsletter-form reveal delay-200" onsubmit="event.preventDefault(); alert('Subscribed!');">
-                <input type="email" placeholder="Enter your email" class="newsletter-input" required>
-                <button type="submit" class="hero-btn" style="padding: 15px 30px; margin:0;">Subscribe</button>
-            </form>
-        </div>
-    </section>
+
 
     <div id="cart-sidebar" class="sidebar">
         <div class="sidebar-header">
@@ -199,6 +188,9 @@
                 <a href="https://instagram.com/bannada_daara_21" target="_blank" class="insta-link">
                     <i class="fab fa-instagram"></i> @bannada_daara_21
                 </a>
+                <button id="footer-community-btn" class="feedback-btn stylish-animated" style="margin-right: 10px;">
+                    <i class="fas fa-users"></i> <span>JOIN COMMUNITY</span>
+                </button>
                 <button id="footer-feedback-btn" class="feedback-btn stylish-animated">
                     <i class="fas fa-comment"></i> <span>FEEDBACK</span>
                 </button>
@@ -288,33 +280,30 @@
         </div>
     </div>
 
-    <!-- COMMUNITY POPUP MODAL -->
-    <div id="community-modal" class="community-modal">
-        <div class="community-card">
-            <div class="community-icon">
-                <i class="fas fa-envelope-open-text"></i>
+    <!-- Subscribe Modal -->
+    <div id="subscribe-modal" class="modal">
+        <div class="modal-form-content" style="text-align: center;">
+            <div style="margin-bottom: 20px;">
+                <i class="fas fa-envelope-open-text" style="font-size: 3rem; color: var(--gold);"></i>
             </div>
-            <h2>Join Our Community</h2>
-            <p>Subscribe for exclusive updates, new launches, and eco-friendly tips delivered to your inbox.</p>
-            <form id="community-form">
-                <div class="community-input-group">
-                    <input type="email" id="subscriber-email" class="community-input"
-                        placeholder="Enter your email address" required>
+            <h2
+                style="font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--gold); margin-bottom: 10px;">
+                Join Our Community</h2>
+            <p style="color: #ccc; margin-bottom: 25px;">Subscribe for exclusive updates, new launches, and eco-friendly
+                tips.</p>
+            <form id="subscribe-form"
+                onsubmit="event.preventDefault(); showToast('Subscribed successfully!', 'success'); document.getElementById('subscribe-modal').style.display='none';">
+                <div class="form-group">
+                    <input type="email" id="subscribe-email" placeholder="Enter your email" required
+                        style="width:100%; padding:15px; background:#222; border:1px solid #444; color:white; border-radius:50px; text-align: center;">
                 </div>
-                <button type="submit" class="subscribe-now-btn">SUBSCRIBE NOW</button>
+                <button type="submit" class="hero-btn" style="width: 100%; margin-top: 10px;">SUBSCRIBE NOW</button>
             </form>
-            <span class="no-thanks" onclick="closeCommunityModal()">No, thanks</span>
+            <button onclick="document.getElementById('subscribe-modal').style.display='none'"
+                style="background: none; border: none; color: #888; margin-top: 20px; cursor: pointer; width: 100%; font-weight: 500;">Maybe
+                Later</button>
         </div>
     </div>
-
-    <!-- EmailJS SDK -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function () {
-            // NOTE TO USER: You need to initialize this with your Public Key
-            // emailjs.init("YOUR_PUBLIC_KEY");
-        })();
-    </script>
 
     <script src="auth.js"></script>
     <script type="module" src="script.js"></script>

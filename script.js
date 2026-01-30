@@ -142,15 +142,15 @@ function renderProducts(category = 'All', searchTerm = '') {
 
 // Ensure Modal Closes on Outside Click
 window.onclick = (event) => {
-    const modal = document.getElementById('product-modal');
-    if (event.target == modal) {
+    const productModal = document.getElementById('product-modal');
+    if (event.target == productModal) {
         window.closeProductModal();
     }
-    // Handle image modal closing too
-    const imgModal = document.getElementById('image-modal');
-    if (event.target == imgModal) {
-        imgModal.style.display = "none";
-    }
+    // Handle other modals
+    ['image-modal', 'order-modal', 'subscribe-modal'].forEach(id => {
+        const m = document.getElementById(id);
+        if (event.target == m) m.style.display = "none";
+    });
 };
 
 /**
@@ -447,6 +447,15 @@ function setupEventListeners() {
         });
     }
 
+    // Footer Community
+    const communityBtn = document.getElementById('footer-community-btn');
+    if (communityBtn) {
+        communityBtn.onclick = () => {
+            const modal = document.getElementById('subscribe-modal');
+            if (modal) modal.style.display = 'flex';
+        };
+    }
+
     // Footer Feedback
     const feedbackBtn = document.getElementById('footer-feedback-btn');
     if (feedbackBtn) {
@@ -561,70 +570,42 @@ const revealObserver = new IntersectionObserver((entries) => {
     rootMargin: "0px 0px -50px 0px"
 });
 
-// --- COMMUNITY MODAL & SUBSCRIPTION ---
-const SUBSCRIBERS_KEY = 'bd-subscribers';
-
-window.closeCommunityModal = function () {
-    const modal = document.getElementById('community-modal');
-    if (modal) {
-        modal.classList.remove('active');
-        localStorage.setItem('bd-modal-dismissed', 'true');
-    }
-};
-
-function initCommunityModal() {
-    const modal = document.getElementById('community-modal');
-    if (!modal) return;
-
-    // Show modal after 5 seconds if not dismissed
-    if (!localStorage.getItem('bd-modal-dismissed')) {
-        setTimeout(() => {
-            modal.classList.add('active');
-        }, 5000);
-    }
-
-    const form = document.getElementById('community-form');
-    if (form) {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('subscriber-email').value;
-            saveSubscriber(email);
-        });
-    }
-
-    // Also handle the static newsletter section if it exists
-    const staticForm = document.querySelector('.newsletter-form');
-    if (staticForm) {
-        staticForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const input = staticForm.querySelector('input');
-            if (input) saveSubscriber(input.value);
-        });
-    }
-}
-
-function saveSubscriber(email) {
-    let subscribers = JSON.parse(localStorage.getItem(SUBSCRIBERS_KEY)) || [];
-    if (!subscribers.includes(email)) {
-        subscribers.push(email);
-        localStorage.setItem(SUBSCRIBERS_KEY, JSON.stringify(subscribers));
-    }
-
-    alert("Thank you for joining our community! You will receive email notifications for new products.");
-    closeCommunityModal();
-}
-
-// Global function to get subscribers (for admin.js)
-window.getSubscribers = function () {
-    return JSON.parse(localStorage.getItem(SUBSCRIBERS_KEY)) || [];
-};
-
-// Start Application
+// Observe elements after DOM Content Loaded
 document.addEventListener('DOMContentLoaded', () => {
-    init();
-    initCommunityModal();
     const elements = document.querySelectorAll('.reveal');
     elements.forEach(el => revealObserver.observe(el));
 });
 
+window.showToast = (message, type = 'info') => {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+
+    let icon = 'info-circle';
+    if (type === 'success') icon = 'check-circle';
+    if (type === 'error') icon = 'exclamation-circle';
+
+    toast.innerHTML = `
+        <i class="fas fa-${icon}"></i>
+        <span>${message}</span>
+    `;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(50px)';
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
+};
+
+// Start Application
+init();
 
