@@ -8,6 +8,11 @@ let allProducts = [];
  * Initialize the Application
  */
 function init() {
+    // Initialize EmailJS with a placeholder - USER NEEDS TO REPLACE THIS
+    if (window.emailjs) {
+        emailjs.init("YOUR_PUBLIC_KEY");
+    }
+
     loadAllProducts();
     renderProducts();
     setupEventListeners();
@@ -456,6 +461,18 @@ function setupEventListeners() {
         };
     }
 
+    // Subscribe Form Logic
+    const subscribeForm = document.getElementById('subscribe-form');
+    if (subscribeForm) {
+        subscribeForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('subscribe-email').value;
+            await handleSubscription(email);
+            document.getElementById('subscribe-modal').style.display = 'none';
+            subscribeForm.reset();
+        };
+    }
+
     // Footer Feedback
     const feedbackBtn = document.getElementById('footer-feedback-btn');
     if (feedbackBtn) {
@@ -575,6 +592,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const elements = document.querySelectorAll('.reveal');
     elements.forEach(el => revealObserver.observe(el));
 });
+
+async function handleSubscription(email) {
+    try {
+        // 1. Save to local storage (Mock Database)
+        const subscribers = JSON.parse(localStorage.getItem('bd-subscribers')) || [];
+        if (!subscribers.includes(email)) {
+            subscribers.push(email);
+            localStorage.setItem('bd-subscribers', JSON.stringify(subscribers));
+        }
+
+        // 2. Send Welcome / Admin Notification Email via EmailJS
+        if (window.emailjs) {
+            const templateParams = {
+                subscriber_email: email,
+                to_email: 'bannada.dara@gmail.com',
+                message: `New member joined the community: ${email}`
+            };
+
+            // Using a placeholder service/template ID
+            await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams);
+        }
+
+        showToast('Subscribed successfully!', 'success');
+    } catch (error) {
+        console.error("Subscription Error:", error);
+        showToast('Subscribed! (Email notification pending setup)', 'info');
+    }
+}
 
 window.showToast = (message, type = 'info') => {
     let container = document.getElementById('toast-container');

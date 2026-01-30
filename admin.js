@@ -6,6 +6,11 @@ const AUTH_KEY = 'bd-admin-auth';
 
 // 1. Initialization
 const initAdmin = () => {
+    // Initialise EmailJS
+    if (window.emailjs) {
+        emailjs.init("YOUR_PUBLIC_KEY");
+    }
+
     // Strict Mode: Require login on refresh
     sessionStorage.removeItem(AUTH_KEY);
 
@@ -79,6 +84,11 @@ function setupTabs() {
             // Add active to current
             btn.classList.add('active');
             document.getElementById(tabId).classList.add('active');
+
+            // Specific Tab Actions
+            if (tabId === 'tab-community') {
+                renderSubscribers();
+            }
         });
     });
 }
@@ -120,6 +130,7 @@ function updateDashboard() {
     const list = getAllAdminProducts();
     updateStats(list);
     renderProductList(list);
+    renderSubscribers();
 }
 
 function updateStats(list) {
@@ -228,6 +239,12 @@ function setupForm() {
         const products = getCustomProducts();
         products.push(newProduct);
         saveCustomProducts(products);
+
+        // Check for Community Notification
+        const shouldNotify = document.getElementById('notify-community').checked;
+        if (shouldNotify) {
+            notifySubscribers(newProduct);
+        }
 
         form.reset();
         clearAllImagePreviews();
@@ -503,3 +520,85 @@ function showToast(message, type = 'info') {
     }, 4000);
 }
 
+// --- COMMUNITY MANAGEMENT ---
+function getSubscribers() {
+    return JSON.parse(localStorage.getItem('bd-subscribers')) || [];
+}
+
+window.renderSubscribers = () => {
+    const tbody = document.getElementById('admin-subscriber-list');
+    const emptyMsg = document.getElementById('no-subscribers-msg');
+    const subscribers = getSubscribers();
+
+    if (!tbody) return;
+    tbody.innerHTML = '';
+
+    if (subscribers.length === 0) {
+        emptyMsg.style.display = 'block';
+        return;
+    }
+    emptyMsg.style.display = 'none';
+
+    subscribers.forEach((email) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${email}</td>
+            <td>${new Date().toLocaleDateString()}</td>
+            <td>
+                <button class="delete-btn" onclick="window.deleteSubscriber('${email}')" style="padding: 5px 12px; font-size: 0.8rem;">
+                    <i class="fas fa-user-minus"></i> Remove
+                </button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+};
+
+window.deleteSubscriber = (email) => {
+    if (!confirm(`Remove ${email} from the community?`)) return;
+    let subs = getSubscribers();
+    subs = subs.filter(s => s !== email);
+    localStorage.setItem('bd-subscribers', JSON.stringify(subs));
+    renderSubscribers();
+    showToast("Subscriber removed", "info");
+};
+
+window.exportSubscribers = () => {
+    const subs = getSubscribers();
+    if (subs.length === 0) return showToast("No subscribers to export", "error");
+
+    const csvContent = "data:text/csv;charset=utf-8,Email Address\n" + subs.join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "bannadadara_subscribers.csv");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+};
+
+async function notifySubscribers(product) {
+    const subscribers = getSubscribers();
+    if (subscribers.length === 0) return;
+
+    showToast(`Notifying ${subscribers.length} community members...`, "info");
+
+    try {
+        if (window.emailjs) {
+            // In a real scenario, you'd loop or use a BCC field
+            // Here we send one notification to admin about the trigger
+            const templateParams = {
+                product_name: product.name,
+                product_price: product.price,
+                recipient_count: subscribers.length,
+                to_email: 'bannada.dara@gmail.com'
+            };
+
+            await emailjs.send('YOUR_SERVICE_ID', 'YOUR_NEW_PRODUCT_TEMPLATE', templateParams);
+        }
+        showToast("Community members notified!", "success");
+    } catch (error) {
+        console.error("Notification Error:", error);
+        showToast("Notification failed (Check EmailJS setup)", "error");
+    }
+}

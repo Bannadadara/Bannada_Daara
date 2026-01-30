@@ -67,6 +67,7 @@
                     Overview</button>
                 <button class="tab-btn" data-tab="tab-products"><i class="fas fa-box"></i> Manage Products</button>
                 <button class="tab-btn" data-tab="tab-add"><i class="fas fa-plus-circle"></i> Add Product</button>
+                <button class="tab-btn" data-tab="tab-community"><i class="fas fa-users"></i> Community</button>
             </div>
 
             <!-- TAB 1: OVERVIEW -->
@@ -306,9 +307,49 @@
                                                 <textarea id="p-desc" rows="3"
                                                     placeholder="Describe the product..."></textarea>
                                             </div>
+
+                                            <div class="form-group"
+                                                style="display: flex; align-items: center; gap: 10px; background: rgba(255, 215, 0, 0.05); padding: 15px; border-radius: 8px; border: 1px solid rgba(255, 215, 0, 0.1); margin-bottom: 20px;">
+                                                <input type="checkbox" id="notify-community"
+                                                    style="width: 20px; height: 20px; cursor: pointer;">
+                                                <label for="notify-community"
+                                                    style="margin: 0; cursor: pointer; color: var(--gold); font-weight: 600;">
+                                                    <i class="fas fa-paper-plane"></i> Notify Community Members via
+                                                    Email
+                                                </label>
+                                            </div>
+
                                             <button type="submit" class="hero-btn" style="width: 100%;">ADD
                                                 PRODUCT</button>
                     </form>
+                </div>
+            </div>
+            <!-- TAB 4: COMMUNITY -->
+            <div id="tab-community" class="tab-content">
+                <div class="admin-card">
+                    <div class="card-header-flex">
+                        <h2 style="color: var(--gold);">Community Members</h2>
+                        <button onclick="window.exportSubscribers()" class="icon-btn"
+                            style="background:none; border:1px solid var(--gold); padding: 5px 15px; border-radius: 20px; color: var(--gold); display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-file-export"></i> Export List
+                        </button>
+                    </div>
+                    <div class="product-table-wrapper" style="margin-top: 20px;">
+                        <table class="product-table">
+                            <thead>
+                                <tr>
+                                    <th>Email Address</th>
+                                    <th>Joined Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-subscriber-list">
+                                <!-- Subscribers rendered here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <p id="no-subscribers-msg" style="text-align: center; color: #666; padding: 20px; display: none;">No
+                        community members yet.</p>
                 </div>
             </div>
         </div>
