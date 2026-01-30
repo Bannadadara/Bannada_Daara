@@ -319,12 +319,17 @@ body {
 /* =========================================
    4. FILTER BAR
    ========================================= */
+/* Enhanced Category Bar */
 .category-bar {
-    padding: 30px 0 10px 0;
+    padding: 20px 0;
     position: sticky;
     top: 74px;
-    background: white;
+    background: rgba(16, 16, 16, 0.85);
+    /* Matches body background */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     z-index: 900;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.1);
 }
 
 .cat-wrapper {
@@ -332,38 +337,81 @@ body {
     scrollbar-width: none;
     display: flex;
     justify-content: center;
+    -ms-overflow-style: none;
+    /* IE/Edge */
 }
 
 .cat-wrapper::-webkit-scrollbar {
     display: none;
+    /* Chrome/Safari */
 }
 
 .cat-flex {
     display: flex;
-    gap: 12px;
-    padding: 10px 5px;
+    gap: 15px;
+    padding: 10px 20px;
+    min-width: max-content;
 }
 
 .cat-item {
-    background: var(--bg-body);
+    background: rgba(255, 255, 255, 0.05);
     color: var(--text-sub);
-    border: 1px solid var(--gray-border);
-    box-shadow: none;
-    padding: 10px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 24px;
     border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    box-shadow: none;
+    transform: none;
+}
+
+.cat-item i {
+    font-size: 1.1rem;
+    transition: transform 0.4s ease;
 }
 
 .cat-item:hover {
-    border-color: var(--text-main);
-    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    border-color: var(--gold);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+}
+
+.cat-item:hover i {
+    transform: scale(1.2) rotate(10deg);
 }
 
 .cat-item.active {
-    background: var(--text-main);
-    color: var(--bg-body);
-    border-color: var(--text-main);
-    box-shadow: none;
-    transform: none;
+    background: var(--gold);
+    color: var(--black);
+    border-color: var(--gold);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+}
+
+.cat-item.active i {
+    transform: scale(1.1);
+}
+
+/* Subtle Shimmer for Active Button */
+.cat-item.active::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -100%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transform: rotate(45deg);
+    animation: shimmer 3s infinite;
 }
 
 /* =========================================
