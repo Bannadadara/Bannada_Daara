@@ -32,12 +32,9 @@ const initAdmin = () => {
 
 // --- AUTHENTICATION ---
 function checkAuth() {
-    const isAuth = sessionStorage.getItem(AUTH_KEY);
-    if (isAuth === 'true') {
-        showDashboard();
-    } else {
-        showLogin();
-    }
+    // Strictly enforce login on every load/refresh as requested
+    // We do not check sessionStorage here anymore.
+    showLogin();
 }
 
 function setupLogin() {
@@ -50,7 +47,7 @@ function setupLogin() {
         const pass = document.getElementById('admin-pass').value;
 
         if (user === 'admin' && pass === 'admin@1243') {
-            sessionStorage.setItem(AUTH_KEY, 'true');
+            // sessionStorage.setItem(AUTH_KEY, 'true'); // Persistence removed
             showDashboard();
             showToast("Logged in successfully", "success");
         } else {
