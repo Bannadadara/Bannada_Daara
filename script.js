@@ -8,9 +8,10 @@ let allProducts = [];
  * Initialize the Application
  */
 function init() {
-    // Initialize EmailJS with a placeholder - USER NEEDS TO REPLACE THIS
-    if (window.emailjs) {
-        emailjs.init("YOUR_PUBLIC_KEY");
+    // Initialize EmailJS with saved config
+    const config = JSON.parse(localStorage.getItem('bd-emailjs-config')) || {};
+    if (window.emailjs && config.publicKey) {
+        emailjs.init(config.publicKey);
     }
 
     loadAllProducts();
@@ -603,15 +604,17 @@ async function handleSubscription(email) {
         }
 
         // 2. Send Welcome / Admin Notification Email via EmailJS
-        if (window.emailjs) {
+        const config = JSON.parse(localStorage.getItem('bd-emailjs-config')) || {};
+        if (window.emailjs && config.serviceId && config.joinTemplate) {
             const templateParams = {
                 subscriber_email: email,
                 to_email: 'bannada.dara@gmail.com',
                 message: `New member joined the community: ${email}`
             };
 
-            // Using a placeholder service/template ID
-            await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams);
+            await emailjs.send(config.serviceId, config.joinTemplate, templateParams);
+        } else {
+            console.warn("EmailJS not configured. Subscription saved locally only.");
         }
 
         showToast('Subscribed successfully!', 'success');

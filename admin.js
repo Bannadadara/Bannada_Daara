@@ -7,17 +7,16 @@ const AUTH_KEY = 'bd-admin-auth';
 // 1. Initialization
 const initAdmin = () => {
     // Initialise EmailJS
-    if (window.emailjs) {
-        emailjs.init("YOUR_PUBLIC_KEY");
+    const config = getEmailJSConfig();
+    if (window.emailjs && config.publicKey) {
+        emailjs.init(config.publicKey);
     }
-
-    // Strict Mode: Require login on refresh
-    sessionStorage.removeItem(AUTH_KEY);
 
     checkAuth();
     setupLogin();
     setupTabs();
     setupForm();
+    setupSettings();
     setupSearchFilter();
     updateDashboard(); // Initial render
 };
@@ -86,6 +85,8 @@ function setupTabs() {
                 renderSubscribers();
             } else if (tabId === 'tab-analytics') {
                 renderAnalytics();
+            } else if (tabId === 'tab-settings') {
+                loadSettings();
             }
         });
     });
@@ -580,12 +581,15 @@ async function notifySubscribers(product) {
     const subscribers = getSubscribers();
     if (subscribers.length === 0) return;
 
+    const config = getEmailJSConfig();
+    if (!config.serviceId || !config.productTemplate) {
+        return showToast("Notification failed: EmailJS not configured. Go to Settings.", "error");
+    }
+
     showToast(`Notifying ${subscribers.length} community members...`, "info");
 
     try {
         if (window.emailjs) {
-            // In a real scenario, you'd loop or use a BCC field
-            // Here we send one notification to admin about the trigger
             const templateParams = {
                 product_name: product.name,
                 product_price: product.price,
@@ -593,12 +597,12 @@ async function notifySubscribers(product) {
                 to_email: 'bannada.dara@gmail.com'
             };
 
-            await emailjs.send('YOUR_SERVICE_ID', 'YOUR_NEW_PRODUCT_TEMPLATE', templateParams);
+            await emailjs.send(config.serviceId, config.productTemplate, templateParams);
         }
         showToast("Community members notified!", "success");
     } catch (error) {
         console.error("Notification Error:", error);
-        showToast("Notification failed (Check EmailJS setup)", "error");
+        showToast("Notification failed (Check Settings & Template)", "error");
     }
 }
 
@@ -719,6 +723,45 @@ window.exportAnalytics = () => {
     link.click();
     link.remove();
 };
+
+// --- SETTINGS MANAGEMENT ---
+function getEmailJSConfig() {
+    return JSON.parse(localStorage.getItem('bd-emailjs-config')) || {
+        publicKey: '',
+        serviceId: '',
+        joinTemplate: '',
+        productTemplate: ''
+    };
+}
+
+function setupSettings() {
+    const form = document.getElementById('emailjs-config-form');
+    if (!form) return;
+
+    form.onsubmit = (e) => {
+        e.preventDefault();
+        const config = {
+            publicKey: document.getElementById('config-public-key').value,
+            serviceId: document.getElementById('config-service-id').value,
+            joinTemplate: document.getElementById('config-join-template').value,
+            productTemplate: document.getElementById('config-product-template').value
+        };
+        localStorage.setItem('bd-emailjs-config', JSON.stringify(config));
+        showToast("Settings saved successfully!", "success");
+
+        // Re-init EmailJS with new public key
+        if (window.emailjs && config.publicKey) emailjs.init(config.publicKey);
+    };
+}
+
+window.loadSettings = () => {
+    const config = getEmailJSConfig();
+    document.getElementById('config-public-key').value = config.publicKey;
+    document.getElementById('config-service-id').value = config.serviceId;
+    document.getElementById('config-join-template').value = config.joinTemplate;
+    document.getElementById('config-product-template').value = config.productTemplate;
+};
+
 
 // --- START APPLICATION ---
 if (document.readyState === 'loading') {
