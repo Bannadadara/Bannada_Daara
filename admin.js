@@ -8,8 +8,13 @@ const AUTH_KEY = 'bd-admin-auth';
 const initAdmin = () => {
     // Initialise EmailJS
     const config = getEmailJSConfig();
-    if (window.emailjs && config.publicKey) {
+    const isValidKey = config.publicKey && !config.publicKey.includes('YOUR_');
+
+    if (window.emailjs && isValidKey) {
         emailjs.init(config.publicKey);
+        console.log("EmailJS Initialized");
+    } else {
+        console.warn("EmailJS not initialized: Public Key missing or invalid.");
     }
 
     checkAuth();
@@ -579,8 +584,11 @@ async function notifySubscribers(product) {
     if (subscribers.length === 0) return;
 
     const config = getEmailJSConfig();
-    if (!config.serviceId || !config.productTemplate) {
-        return showToast("Notification failed: EmailJS not configured. Go to Settings.", "error");
+    const isConfigured = config.publicKey && config.serviceId && config.productTemplate &&
+        !config.publicKey.includes('YOUR_');
+
+    if (!isConfigured) {
+        return console.warn("Notification skipped: EmailJS not configured in Settings.");
     }
 
     showToast(`Notifying ${subscribers.length} community members...`, "info");
@@ -723,10 +731,10 @@ window.exportAnalytics = () => {
 
 // --- SETTINGS MANAGEMENT ---
 const DEFAULT_EMAILJS_CONFIG = {
-    publicKey: 'YOUR_PUBLIC_KEY', // USER: Replace with your actual public key
-    serviceId: 'YOUR_SERVICE_ID',
-    joinTemplate: 'YOUR_JOIN_TEMPLATE',
-    productTemplate: 'YOUR_PRODUCT_TEMPLATE'
+    publicKey: '',
+    serviceId: '',
+    joinTemplate: '',
+    productTemplate: ''
 };
 
 function getEmailJSConfig() {

@@ -10,8 +10,13 @@ let allProducts = [];
 function init() {
     // Initialize EmailJS with saved config
     const config = JSON.parse(localStorage.getItem('bd-emailjs-config')) || {};
-    if (window.emailjs && config.publicKey) {
+    const isValidKey = config.publicKey && !config.publicKey.includes('YOUR_');
+
+    if (window.emailjs && isValidKey) {
         emailjs.init(config.publicKey);
+        console.log("EmailJS Initialized");
+    } else {
+        console.warn("EmailJS not initialized: Public Key missing or invalid.");
     }
 
     loadAllProducts();
@@ -605,7 +610,10 @@ async function handleSubscription(email) {
 
         // 2. Send Welcome / Admin Notification Email via EmailJS
         const config = JSON.parse(localStorage.getItem('bd-emailjs-config')) || {};
-        if (window.emailjs && config.serviceId && config.joinTemplate) {
+        const isConfigured = config.publicKey && config.serviceId && config.joinTemplate &&
+            !config.publicKey.includes('YOUR_');
+
+        if (window.emailjs && isConfigured) {
             const templateParams = {
                 subscriber_email: email,
                 to_email: 'bannada.dara@gmail.com',
