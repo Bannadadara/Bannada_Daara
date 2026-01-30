@@ -22,11 +22,7 @@ const initAdmin = () => {
     updateDashboard(); // Initial render
 };
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAdmin);
-} else {
-    initAdmin();
-}
+// Executed at the bottom of the file to ensure all window functions are registered first.
 
 // --- AUTHENTICATION ---
 function checkAuth() {
@@ -608,8 +604,8 @@ async function notifySubscribers(product) {
 
 // --- ANALYTICS LOGIC ---
 window.renderAnalytics = () => {
-    if (!Auth) return;
-    const users = Auth.getUsers();
+    if (!window.Auth) return;
+    const users = window.Auth.getUsers();
     const allOrders = users.flatMap(u => (u.orders || []).map(o => ({ ...o, userEmail: u.email })));
 
     // 1. Core Metrics
@@ -703,7 +699,7 @@ function renderUserDirectory(users) {
 }
 
 window.exportAnalytics = () => {
-    const users = Auth.getUsers();
+    const users = window.Auth.getUsers();
     let csv = "User Email,Joined Date,Total Orders,Total Spent,Status\n";
 
     users.forEach(u => {
@@ -723,3 +719,11 @@ window.exportAnalytics = () => {
     link.click();
     link.remove();
 };
+
+// --- START APPLICATION ---
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAdmin);
+} else {
+    initAdmin();
+}
+
