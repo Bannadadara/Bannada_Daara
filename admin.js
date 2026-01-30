@@ -601,8 +601,8 @@ async function notifySubscribers(product) {
         }
         showToast("Community members notified!", "success");
     } catch (error) {
-        console.error("Notification Error:", error);
-        showToast("Notification failed (Check Settings & Template)", "error");
+        console.error("Full EmailJS Error Object:", error);
+        showToast(`Notification error: ${error.text || error.message || 'Check Settings & Template'}`, "error");
     }
 }
 
