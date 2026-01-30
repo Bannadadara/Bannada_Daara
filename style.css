@@ -2,40 +2,36 @@
    1. CORE VARIABLES & RESET
    ========================================= */
 :root {
-    /* Premium Light Theme Palette */
+    /* Premium Midnight Blue Palette */
     --primary: #D4AF37;
-    /* Metallic Gold */
     --gold-dark: #AA8C2C;
 
-    --secondary: #f0f0f0;
-    /* Light Gray for secondary elements */
+    --secondary: #8892b0;
+    /* Muted Blue-Gray */
     --accent: #E1306C;
 
-    --bg-body: #FDFBF7;
-    /* Soft Cream / Canvas White */
-    --bg-card: #FFFFFF;
-    /* Pure White Cards */
-    --bg-hover: #F5F5F5;
-    /* Light Gray Hover */
+    --bg-body: #0a0e17;
+    /* Deep Midnight Blue */
+    --bg-card: #151c2e;
+    /* Midnight Matte Card */
+    --bg-hover: #1f2940;
+    /* Lighter Midnight Hover */
 
-    --text-main: #1A1A1A;
-    /* Deep Charcoal for primary text */
-    --text-sub: #555555;
-    /* Medium Gray for secondary text */
+    --text-main: #ccd6f6;
+    /* Soft Blue-White */
+    --text-sub: #8892b0;
     --text-btn: #000000;
 
     --gold: var(--primary);
-    --black: var(--text-main);
-    /* Re-mapped for compatibility */
-    --white: #FFFFFF;
+    --black: #020c1b;
+    --white: #e6f1ff;
 
     --gray-bg: var(--bg-hover);
-    --gray-border: #E0E0E0;
-    /* Light Border */
+    --gray-border: #233554;
+    /* Dark Blue Border */
 
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    /* Softer, lighter shadow */
+    --shadow: 0 10px 30px rgba(2, 12, 27, 0.7);
     --radius: 16px;
 
     /* Vibrant Thread Gradient Colors (Maintained) */
@@ -57,16 +53,19 @@ body {
     background: var(--bg-body);
     color: var(--text-main);
 
-    /* Dynamic Light Mesh Gradient */
+    /* Graphical Background: Midnight Blue + Dynamic Mesh */
     background-image:
-        radial-gradient(circle at 10% 10%, rgba(255, 0, 128, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 90% 90%, rgba(121, 40, 202, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 60%),
-        radial-gradient(circle at 80% 20%, rgba(252, 175, 69, 0.05) 0%, transparent 30%);
+        /* Subtle Grid */
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        /* Glowing Auroras */
+        radial-gradient(circle at 10% 20%, var(--thread-1), transparent 40%),
+        radial-gradient(circle at 90% 80%, var(--thread-2), transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02), transparent 60%);
 
     background-attachment: fixed;
-    background-size: 200% 200%;
-    animation: gradientShift 25s ease infinite alternate;
+    background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%, 100% 100%;
+    animation: gradientShift 20s ease infinite alternate;
 
     overflow-x: hidden;
     scroll-behavior: smooth;
