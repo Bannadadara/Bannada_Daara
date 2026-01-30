@@ -61,16 +61,45 @@
     <section class="hero-section">
         <div class="hero-overlay">
             <div class="container hero-animate">
-                <h1 class="hero-title">Artistry in Every Stitch</h1>
-                <p class="hero-subtitle">Premium Handcrafted Treasures from Dakshina Kannada</p>
-                <a href="#shop-section" class="hero-btn" style="text-decoration: none; display: inline-block;">
+                <h1 class="hero-title reveal">Artistry in Every Stitch</h1>
+                <p class="hero-subtitle reveal delay-100">Premium Handcrafted Treasures from Dakshina Kannada</p>
+                <a href="#shop-section" class="hero-btn reveal delay-200"
+                    style="text-decoration: none; display: inline-block;">
                     EXPLORE COLLECTION <i class="fas fa-chevron-right"></i>
                 </a>
             </div>
         </div>
     </section>
 
-    <main class="container" id="shop-section">
+    <!-- NEW: Featured Categories Section -->
+    <section class="container featured-categories reveal">
+        <h2 class="section-title">Curated Collections</h2>
+        <div class="category-grid">
+            <div class="cat-card reveal delay-100" onclick="filterCategory('Bags')">
+                <img src="images/sling-patch-l.jpg" alt="Bags">
+                <div class="cat-overlay">
+                    <h3>Bags</h3>
+                    <p>Handcrafted & Durable</p>
+                </div>
+            </div>
+            <div class="cat-card reveal delay-200" onclick="filterCategory('Pouches')">
+                <img src="images/box-pouch.jpg" alt="Pouches">
+                <div class="cat-overlay">
+                    <h3>Pouches</h3>
+                    <p>Organize in Style</p>
+                </div>
+            </div>
+            <div class="cat-card reveal delay-300" onclick="filterCategory('Decor')">
+                <img src="images/quilt.jpg" alt="Home Decor">
+                <div class="cat-overlay">
+                    <h3>Home Decor</h3>
+                    <p>Warmth for your Home</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container reveal" id="shop-section">
         <nav class="category-bar">
             <div class="cat-wrapper">
                 <div class="cat-flex">
@@ -88,13 +117,53 @@
         </div>
     </main>
 
-    <section class="about-section">
+    <!-- NEW: Trust Features Section -->
+    <section class="features-section reveal">
+        <div class="container features-grid">
+            <div class="feature-item reveal delay-100">
+                <div class="feature-icon"><i class="fas fa-leaf"></i></div>
+                <h4>Eco-Friendly</h4>
+                <p>Sustainable materials that care for the planet.</p>
+            </div>
+            <div class="feature-item reveal delay-200">
+                <div class="feature-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                <h4>Handcrafted</h4>
+                <p>Made with love and precision by local artisans.</p>
+            </div>
+            <div class="feature-item reveal delay-300">
+                <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
+                <h4>Fast Delivery</h4>
+                <p>Secure and timely shipping across the region.</p>
+            </div>
+            <div class="feature-item reveal delay-100">
+                <div class="feature-icon"><i class="fas fa-star"></i></div>
+                <h4>Premium Quality</h4>
+                <p>Only the finest fabrics and threads used.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section reveal">
         <div class="about-overlay">
             <div class="container">
-                <h2>Our Story</h2>
-                <p>Preserving the heritage of Dakshina Kannada through modern craftsmanship. Every piece we create is a
+                <h2 class="reveal">Our Story</h2>
+                <p class="reveal delay-100">Preserving the heritage of Dakshina Kannada through modern craftsmanship.
+                    Every piece we create is a
                     blend of sustainability and tradition, designed for the conscious lifestyle.</p>
             </div>
+        </div>
+    </section>
+
+    <!-- NEW: Newsletter Section -->
+    <section class="newsletter-section reveal">
+        <div class="newsletter-overlay"></div>
+        <div class="newsletter-content container">
+            <h2 class="reveal">Join Our Community</h2>
+            <p class="reveal delay-100">Subscribe for exclusive updates, new launches, and eco-friendly tips.</p>
+            <form class="newsletter-form reveal delay-200" onsubmit="event.preventDefault(); alert('Subscribed!');">
+                <input type="email" placeholder="Enter your email" class="newsletter-input" required>
+                <button type="submit" class="hero-btn" style="padding: 15px 30px; margin:0;">Subscribe</button>
+            </form>
         </div>
     </section>
 

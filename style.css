@@ -2454,3 +2454,248 @@ body {
     color: black;
     transform: scale(1.1);
 }
+
+/* =========================================
+   12. HOMEPAGE ENHANCEMENTS (New Sections)
+   ========================================= */
+
+/* Section Titles */
+.section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    text-align: center;
+    margin: 60px 0 30px;
+    color: var(--gold);
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--gold);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+/* Featured Categories */
+.featured-categories {
+    padding: 20px 0;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.cat-card {
+    position: relative;
+    height: 300px;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cat-card:hover {
+    transform: translateY(-10px);
+}
+
+.cat-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.cat-card:hover img {
+    transform: scale(1.1);
+}
+
+.cat-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent 60%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 25px;
+    transition: background 0.3s ease;
+}
+
+.cat-card:hover .cat-overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2));
+}
+
+.cat-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--white);
+    margin-bottom: 5px;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.cat-card p {
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.cat-card:hover h3,
+.cat-card:hover p {
+    transform: translateY(-5px);
+}
+
+/* Trust Features Section */
+.features-section {
+    background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+    padding: 80px 0;
+    margin-top: 60px;
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+    text-align: center;
+}
+
+.feature-item {
+    padding: 20px;
+}
+
+.feature-icon {
+    font-size: 3rem;
+    color: var(--gold);
+    margin-bottom: 20px;
+    background: rgba(255, 215, 0, 0.05);
+    width: 90px;
+    height: 90px;
+    line-height: 90px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    transition: all 0.4s ease;
+}
+
+.feature-item:hover .feature-icon {
+    background: var(--gold);
+    color: var(--black);
+    transform: rotateY(180deg);
+}
+
+.feature-item h4 {
+    font-size: 1.2rem;
+    color: var(--white);
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.feature-item p {
+    color: #888;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Newsletter Section */
+.newsletter-section {
+    background: url('images/hero-bg.jpg') center/cover fixed no-repeat;
+    position: relative;
+    padding: 100px 0;
+    text-align: center;
+}
+
+.newsletter-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+}
+
+.newsletter-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.newsletter-content h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    color: var(--gold);
+    margin-bottom: 15px;
+}
+
+.newsletter-content p {
+    color: #ccc;
+    margin-bottom: 30px;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 10px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.newsletter-input {
+    flex: 1;
+    padding: 15px 25px;
+    border-radius: 50px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.newsletter-input:focus {
+    border-color: var(--gold);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Scroll Animations */
+.reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Delay classes */
+.delay-100 {
+    transition-delay: 0.1s;
+}
+
+.delay-200 {
+    transition-delay: 0.2s;
+}
+
+.delay-300 {
+    transition-delay: 0.3s;
+}
+
+/* Enhanced Hero Text */
+.hero-title {
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-subtitle {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-bottom: 35px;
+}

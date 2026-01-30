@@ -530,5 +530,43 @@ function setupEventListeners() {
     }
 }
 
+
+/* =========================================
+   3. HELPER FUNCTIONS FOR NEW HOMEPAGE
+   ========================================= */
+
+window.filterCategory = (catName) => {
+    // Scroll to shop section
+    const shopSection = document.getElementById('shop-section');
+    if (shopSection) shopSection.scrollIntoView({ behavior: 'smooth' });
+
+    // Trigger category filter
+    const catBtn = document.querySelector(`.cat-item[data-cat="${catName}"]`);
+    if (catBtn) {
+        catBtn.click(); // Reuse existing logic which updates styles and calls renderProducts
+    }
+};
+
+/* =========================================
+   4. SCROLL ANIMATION OBSERVER
+   ========================================= */
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+        }
+    });
+}, {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+});
+
+// Observe elements after DOM Content Loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const elements = document.querySelectorAll('.reveal');
+    elements.forEach(el => revealObserver.observe(el));
+});
+
 // Start Application
 init();
+
