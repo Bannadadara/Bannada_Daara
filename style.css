@@ -99,7 +99,7 @@ body {
    2. HEADER & NAVIGATION
    ========================================= */
 .navbar {
-    background: rgba(43, 43, 43, 0.95);
+    background: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(10px);
     color: #ffffff;
     padding: 12px 0;
