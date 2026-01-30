@@ -591,23 +591,33 @@ async function notifySubscribers(product) {
         return console.warn("Notification skipped: EmailJS not configured in Settings.");
     }
 
-    showToast(`Notifying ${subscribers.length} community members...`, "info");
+    showToast(`Sending updates to ${subscribers.length} community members...`, "info");
+
+    const productUrl = `${window.location.origin}/product.html?id=${product.id}`;
+    const baseMessage = `We are excited to announce a new addition to our collection: ${product.name}. Check it out here: ${productUrl}`;
 
     try {
         if (window.emailjs) {
-            const templateParams = {
-                product_name: product.name,
-                product_price: product.price,
-                recipient_count: subscribers.length,
-                to_email: 'bannada.dara@gmail.com'
-            };
+            // Send to each subscriber individually
+            const emailPromises = subscribers.map(email => {
+                const templateParams = {
+                    to_email: email,
+                    from_name: "Bannada Daara", // Ensure this matches template variable if used
+                    product_name: product.name,
+                    product_price: product.price,
+                    product_url: productUrl,
+                    message: baseMessage,
+                    reply_to: "bannada.dara@gmail.com"
+                };
+                return emailjs.send(config.serviceId, config.productTemplate, templateParams);
+            });
 
-            await emailjs.send(config.serviceId, config.productTemplate, templateParams);
+            await Promise.all(emailPromises);
         }
-        showToast("Community members notified!", "success");
+        showToast("All community members notified successfully!", "success");
     } catch (error) {
-        console.error("Full EmailJS Error Object:", error);
-        showToast(`Notification error: ${error.text || error.message || 'Check Settings & Template'}`, "error");
+        console.error("EmailJS Error:", error);
+        showToast(`Partial success or error. Check console for details.`, "error");
     }
 }
 
