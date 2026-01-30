@@ -124,7 +124,7 @@ function updateDashboard() {
 
 function updateStats(list) {
     document.getElementById('stat-total-products').innerText = list.length;
-    
+
     const categories = new Set(list.map(p => p.category));
     document.getElementById('stat-categories').innerText = categories.size;
 
@@ -168,8 +168,8 @@ function renderProductList(list) {
             <td>₹${p.price}</td>
             <td>
                 <div class="action-btns">
-                    <button class="edit-btn" onclick="editProduct(${p.id}, '${p.type}')">Edit</button>
-                    <button class="delete-btn" onclick="deleteProduct(${p.id}, '${p.type}')">Delete</button>
+                    <button class="edit-btn" onclick="editProduct(${p.id}, '${p.type}')"><i class="fas fa-edit"></i>Edit</button>
+                    <button class="delete-btn" onclick="deleteProduct(${p.id}, '${p.type}')"><i class="fas fa-trash"></i>Delete</button>
                 </div>
             </td>
         `;
@@ -233,7 +233,7 @@ function setupForm() {
         clearAllImagePreviews();
         showToast("Product added successfully!", "success");
         updateDashboard();
-        
+
         // Switch to product list to show new item
         document.querySelector('[data-tab="tab-products"]').click();
     });
@@ -424,7 +424,7 @@ function showToast(message, type = 'info') {
     const container = document.getElementById('toast-container');
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
-    
+
     let icon = 'info-circle';
     if (type === 'success') icon = 'check-circle';
     if (type === 'error') icon = 'exclamation-circle';
