@@ -2213,6 +2213,18 @@ body {
     transition: all 0.3s ease;
 }
 
+/* Category Select - Black Text */
+.form-group select {
+    color: #000000;
+    background: rgba(255, 255, 255, 0.95);
+    font-weight: 600;
+}
+
+.form-group select option {
+    color: #000000;
+    background: white;
+}
+
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
