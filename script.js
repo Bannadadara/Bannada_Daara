@@ -135,6 +135,9 @@ function renderProducts(category = 'All', searchTerm = '') {
             </div>
             <div class="product-info">
                 <div class="product-name" onclick="window.openProductModal(${p.id})">${p.name}</div>
+                <div class="product-desc-short" style="font-size: 0.8rem; color: #888; margin-bottom: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 36px;">
+                    ${p.description || "Handcrafted with love."}
+                </div>
                 <div class="product-price" style="color: ${isRequestOnly ? 'var(--gold)' : 'var(--text-sub)'}">${priceDisplay}</div>
                 <div class="card-actions">
                     <button class="add-btn" onclick="window.addToCart(${p.id})">
