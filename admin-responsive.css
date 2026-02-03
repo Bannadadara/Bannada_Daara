@@ -1,0 +1,284 @@
+/* =========================================
+   ADMIN PAGE RESPONSIVE DESIGN
+   ========================================= */
+
+/* Tablet and Below (992px) */
+@media (max-width: 992px) {
+    .admin-section {
+        padding: 20px 15px;
+    }
+
+    .admin-tabs {
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .tab-btn {
+        flex: 1 1 calc(33.33% - 8px);
+        min-width: 120px;
+        font-size: 0.85rem;
+        padding: 10px 12px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px;
+    }
+
+    .stat-card {
+        padding: 15px;
+    }
+
+    .stat-card h3 {
+        font-size: 1.5rem !important;
+    }
+
+    .stat-card p {
+        font-size: 0.85rem !important;
+    }
+
+    .product-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .product-table {
+        min-width: 600px;
+    }
+
+    .admin-card {
+        padding: 20px;
+    }
+}
+
+/* Tablet Portrait (768px) */
+@media (max-width: 768px) {
+    .admin-section {
+        padding: 15px 10px;
+    }
+
+    .nav-content {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .main-title {
+        font-size: 1.2rem !important;
+    }
+
+    .nav-right {
+        flex-wrap: wrap;
+        gap: 8px !important;
+    }
+
+    .tab-btn {
+        flex: 1 1 calc(50% - 8px);
+        font-size: 0.8rem;
+        padding: 8px 10px;
+    }
+
+    .tab-btn i {
+        display: none;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px;
+    }
+
+    .stat-card {
+        padding: 12px;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .stat-icon {
+        font-size: 1.5rem !important;
+    }
+
+    .stat-card h3 {
+        font-size: 1.3rem !important;
+    }
+
+    .stat-card p {
+        font-size: 0.8rem !important;
+    }
+
+    .admin-card {
+        padding: 15px;
+        margin: 10px 0;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .form-group {
+        width: 100% !important;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="password"],
+    textarea,
+    select {
+        font-size: 16px !important;
+        /* Prevents zoom on iOS */
+    }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+    .admin-section {
+        padding: 10px 5px;
+    }
+
+    .navbar {
+        padding: 8px 0;
+    }
+
+    .nav-content {
+        padding: 0 10px;
+    }
+
+    .brand img {
+        height: 30px !important;
+    }
+
+    .main-title {
+        font-size: 1rem !important;
+        display: none;
+        /* Hide on very small screens */
+    }
+
+    .nav-right button,
+    .nav-right a {
+        font-size: 0.75rem !important;
+        padding: 6px 10px !important;
+    }
+
+    .admin-tabs {
+        gap: 6px;
+    }
+
+    .tab-btn {
+        flex: 1 1 100%;
+        font-size: 0.75rem;
+        padding: 8px;
+        border-radius: 6px;
+    }
+
+    .stats-grid {
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 10px;
+    }
+
+    .stat-icon {
+        font-size: 1.2rem !important;
+    }
+
+    .stat-card h3 {
+        font-size: 1.1rem !important;
+    }
+
+    .stat-card p {
+        font-size: 0.75rem !important;
+    }
+
+    .admin-card {
+        padding: 12px;
+        margin: 8px 0;
+        border-radius: 8px;
+    }
+
+    .admin-card h2 {
+        font-size: 1.2rem !important;
+    }
+
+    .admin-card h3 {
+        font-size: 1rem !important;
+    }
+
+    .product-table {
+        font-size: 0.75rem;
+    }
+
+    .product-table th,
+    .product-table td {
+        padding: 8px 6px !important;
+    }
+
+    .product-table img {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .hero-btn,
+    .add-btn,
+    button[type="submit"] {
+        padding: 10px 15px !important;
+        font-size: 0.85rem !important;
+    }
+
+    .icon-btn {
+        padding: 6px 8px !important;
+        font-size: 0.75rem !important;
+    }
+
+    #login-section {
+        max-width: 100% !important;
+        padding: 15px !important;
+    }
+
+    .form-group label {
+        font-size: 0.85rem !important;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 10px !important;
+        font-size: 16px !important;
+    }
+}
+
+/* Extra Small Phones (360px and below) */
+@media (max-width: 360px) {
+    .admin-section {
+        padding: 8px 3px;
+    }
+
+    .tab-btn {
+        font-size: 0.7rem;
+        padding: 6px;
+    }
+
+    .stat-card h3 {
+        font-size: 1rem !important;
+    }
+
+    .stat-card p {
+        font-size: 0.7rem !important;
+    }
+
+    .admin-card {
+        padding: 10px;
+    }
+
+    .product-table {
+        font-size: 0.7rem;
+    }
+
+    .hero-btn,
+    .add-btn {
+        padding: 8px 12px !important;
+        font-size: 0.8rem !important;
+    }
+}
